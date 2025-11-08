@@ -420,7 +420,7 @@ export default function ComprehensiveReportViewer({
               </div>
 
               {/* Birth Date Row */}
-              {/* <div className="grid grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
+              <div className="grid grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
                 <div className="col-span-1">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Birth Date
@@ -431,7 +431,7 @@ export default function ComprehensiveReportViewer({
                     {patientInfo.birthDate}
                   </p>
                 </div>
-              </div> */}
+              </div>
 
               {/* Sample Code Row */}
               <div className="grid grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
