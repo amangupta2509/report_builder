@@ -824,10 +824,7 @@ export default function SportsFitnessAdmin({
               className="bg-red-600 hover:bg-red-700 w-full sm:w-auto"
             >
               Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          
     </div>
   );
 }
