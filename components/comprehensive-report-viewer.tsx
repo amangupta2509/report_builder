@@ -392,13 +392,14 @@ export default function ComprehensiveReportViewer({
           <div className="bg-gradient-to-br rounded-lg from-gray-50 to-gray-100 overflow-hidden border border-gray-200 print:bg-white print:border-gray-800">
             <div className="divide-y divide-gray-200 print:divide-gray-600">
               {/* Patient Name Row */}
-              <div className="grid  grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
-                <div className="col-span-1">
+              <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
+                <div className="w-2/5">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Name
                   </label>
                 </div>
-                <div className="col-span-3">
+                <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>
+                <div className="flex-1">
                   <p className="text-base font-semibold text-gray-900 break-words print:text-sm print:font-bold">
                     {patientInfo.name}
                   </p>
@@ -406,13 +407,14 @@ export default function ComprehensiveReportViewer({
               </div>
 
               {/* Gender Row */}
-              <div className="grid grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
-                <div className="col-span-1">
+              <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
+                <div className="w-2/5">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Gender
                   </label>
                 </div>
-                <div className="col-span-3">
+                <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>
+                <div className="flex-1">
                   <p className="text-base font-semibold text-gray-900 capitalize print:text-sm print:font-bold">
                     {patientInfo.gender}
                   </p>
@@ -420,13 +422,14 @@ export default function ComprehensiveReportViewer({
               </div>
 
               {/* Birth Date Row */}
-              <div className="grid grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
-                <div className="col-span-1">
+              <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
+                <div className="w-2/5">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
-                    Birth Date
+                    Age
                   </label>
                 </div>
-                <div className="col-span-3">
+                <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>
+                <div className="flex-1">
                   <p className="text-base font-semibold text-gray-900 print:text-sm print:font-bold">
                     {patientInfo.birthDate}
                   </p>
@@ -434,13 +437,14 @@ export default function ComprehensiveReportViewer({
               </div>
 
               {/* Sample Code Row */}
-              <div className="grid grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
-                <div className="col-span-1">
+              <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
+                <div className="w-2/5">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Sample Code
                   </label>
                 </div>
-                <div className="col-span-3">
+                <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>
+                <div className="flex-1">
                   <p className="text-base font-mono font-bold text-orange-600 break-all tracking-wide print:text-sm print:text-black print:font-extrabold">
                     {patientInfo.sampleCode}
                   </p>
@@ -448,27 +452,29 @@ export default function ComprehensiveReportViewer({
               </div>
 
               {/* Sample/Data Date Row */}
-              <div className="grid grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
-                <div className="col-span-1">
+              {/* <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
+                <div className="w-2/5">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Sample Collection Date
                   </label>
                 </div>
-                <div className="col-span-3">
+                <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>
+                <div className="flex-1">
                   <p className="text-base font-semibold text-gray-900 print:text-sm print:font-bold">
                     {patientInfo.sampleDate}
                   </p>
                 </div>
-              </div>
+              </div> */}
 
               {/* Report Date Row */}
-              <div className="grid grid-cols-4 items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
-                <div className="col-span-1">
+              <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
+                <div className="w-2/5">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Report Date
                   </label>
                 </div>
-                <div className="col-span-3">
+                <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>
+                <div className="flex-1">
                   <p className="text-base font-semibold text-gray-900 print:text-sm print:font-bold">
                     {patientInfo.reportDate}
                   </p>
@@ -2244,11 +2250,10 @@ export default function ComprehensiveReportViewer({
         <Separator className="my-4" />
         {/* Gene Test Results */}
         <div className="text-center mb-3">
-          <h2 className="text-base font-bold mb-2 bg-blue-600 text-white py-2 px-2 rounded">
-            GENE TEST RESULTS
+          <h2 className="text-base font-bold mb-2 bg-blue-600 text-white py-2 px-2 rounded uppercase">
+            Gene Test Results
           </h2>
         </div>
-        <SectionTitle title="Gene Test Results" icon="" />
         <div className="mb-4 overflow-x-auto">
           {geneTestResults.length === 0 ? (
             <p className="text-center text-gray-500 italic">

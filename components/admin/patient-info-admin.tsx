@@ -138,11 +138,11 @@ export default function PatientInfoAdmin({
                 htmlFor="birthDate"
                 className="text-sm font-semibold text-gray-700 required"
               >
-                Birth Date *
+                Age *
               </Label>
               <Input
                 id="birthDate"
-                type="date"
+                type="text"
                 value={patientInfo.birthDate}
                 onChange={(e) => updatePatientInfo("birthDate", e.target.value)}
                 className="border-2"
