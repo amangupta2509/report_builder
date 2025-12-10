@@ -122,7 +122,8 @@ model Report {
   addictionData              AddictionData[]
   sleepData                  SleepData[]
   allergyData                AllergyData[]
-  geneTestResults       
+  geneTestResults            GeneTestResult[]
+  geneticCategories          GeneticCategory[]
   preventiveTests            PreventiveTest[]
   nutritionalSupplements     NutritionalSupplement[]
   familyGeneticImpactDescription String? @db.Text
@@ -154,6 +155,16 @@ model DynamicDietField {
   id       String @id @default(uuid())
   
   definitionId String
+  definition   DynamicDietFieldDefinition @relation(fields: [definitionId], references: [id], onDelete: Cascade)
+
+  fieldId                String
+  label                  String
+  category               String
+  min                    Float
+  max                    Float
+  highRecommendation     String @db.Text
+  normalRecommendation   String @db.Text
+  lowRecommendation      String @db.Text
 
   @@map("dynamic_diet_fields")
 }
