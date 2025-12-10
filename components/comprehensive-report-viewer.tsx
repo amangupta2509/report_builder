@@ -452,7 +452,7 @@ export default function ComprehensiveReportViewer({
               </div>
 
               {/* Sample/Data Date Row */}
-              {/* <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
+              <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
                 <div className="w-2/5">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Sample Collection Date
@@ -464,7 +464,7 @@ export default function ComprehensiveReportViewer({
                     {patientInfo.sampleDate}
                   </p>
                 </div>
-              </div> */}
+              </div>
 
               {/* Report Date Row */}
               <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
