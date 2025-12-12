@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import ComprehensiveReportViewer from "@/components/comprehensive-report-viewer";
 import ReportPreview from "@/components/admin/ReportPreview";
 import { useSearchParams, useRouter } from "next/navigation";
+import ShareManagement from "@/components/admin/share-management";
 
 import {
   Select,
@@ -1957,6 +1958,13 @@ const AdminPage = () => {
               Import/Export
             </TabsTrigger>
 
+            <TabsTrigger
+              value="share"
+              className="text-xs sm:text-sm whitespace-nowrap"
+            >
+              Share Links
+            </TabsTrigger>
+
             <TabsTrigger value="preview">Preview</TabsTrigger>
           </TabsList>
         </div>
@@ -2514,6 +2522,15 @@ const AdminPage = () => {
               </div>
             )}
           </TabsContent>
+
+          <TabsContent className="w-full min-w-0" value="share">
+            <ShareManagement
+              reportId={selectedReport.id}
+              patientId={selectedPatient.id}
+              reportName={selectedReport.name}
+            />
+          </TabsContent>
+          
         </div>
       </Tabs>
     </div>

@@ -31,6 +31,7 @@ model Patient {
 
   // Relations
   reports Report[]
+  shareTokens   ShareToken[]
 
   @@map("patients")
 }
@@ -131,6 +132,8 @@ model Report {
   genomicAnalysisTable    GenomicAnalysisTable?
   healthSummaryDescription String? @db.Text
   healthSummaryEntries HealthSummaryEntry[]
+
+  shareTokens   ShareToken[]
 
   @@map("reports")
 }
@@ -448,3 +451,29 @@ model HealthSummaryEntry {
   
   @@map("health_summary_entries")
 }
+
+model ShareToken {
+  id            String   @id @default(uuid())
+  token         String   @db.Text  // long encrypted token
+  reportId      String
+  patientId     String
+
+  password      String?
+  expiresAt     DateTime?
+  maxViews      Int?
+  viewCount     Int      @default(0)
+
+  createdBy     String?
+  createdAt     DateTime @default(now())
+  lastAccessedAt DateTime?
+  isActive      Boolean  @default(true)
+
+  report        Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  patient       Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@unique([token(length: 255)])
+  @@index([reportId])
+  @@index([patientId])
+  @@index([expiresAt])
+}
+

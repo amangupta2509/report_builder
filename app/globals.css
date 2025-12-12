@@ -62,13 +62,13 @@
 }
 
 /* Hide scrollbar (for all browsers) */
-.scrollbar-hide {
+/* .scrollbar-hide {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
-}
+} */
 
 /* ------------------ 🧾 PRINT STYLES ------------------ */
 @media print {

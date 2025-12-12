@@ -425,7 +425,7 @@ export default function ComprehensiveReportViewer({
               <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
                 <div className="w-2/5">
                   <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
-                    Age
+                    Birth Date
                   </label>
                 </div>
                 <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>

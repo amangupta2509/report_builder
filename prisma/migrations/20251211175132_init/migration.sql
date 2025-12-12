@@ -334,6 +334,28 @@ CREATE TABLE `health_summary_entries` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `ShareToken` (
+    `id` VARCHAR(191) NOT NULL,
+    `token` TEXT NOT NULL,
+    `reportId` VARCHAR(191) NOT NULL,
+    `patientId` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NULL,
+    `expiresAt` DATETIME(3) NULL,
+    `maxViews` INTEGER NULL,
+    `viewCount` INTEGER NOT NULL DEFAULT 0,
+    `createdBy` VARCHAR(191) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `lastAccessedAt` DATETIME(3) NULL,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
+
+    INDEX `ShareToken_reportId_idx`(`reportId`),
+    INDEX `ShareToken_patientId_idx`(`patientId`),
+    INDEX `ShareToken_expiresAt_idx`(`expiresAt`),
+    UNIQUE INDEX `ShareToken_token_key`(`token`(255)),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `reports` ADD CONSTRAINT `reports_patientId_fkey` FOREIGN KEY (`patientId`) REFERENCES `patients`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -396,3 +418,9 @@ ALTER TABLE `genomic_subcategories` ADD CONSTRAINT `genomic_subcategories_genomi
 
 -- AddForeignKey
 ALTER TABLE `health_summary_entries` ADD CONSTRAINT `health_summary_entries_reportId_fkey` FOREIGN KEY (`reportId`) REFERENCES `reports`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ShareToken` ADD CONSTRAINT `ShareToken_reportId_fkey` FOREIGN KEY (`reportId`) REFERENCES `reports`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ShareToken` ADD CONSTRAINT `ShareToken_patientId_fkey` FOREIGN KEY (`patientId`) REFERENCES `patients`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
