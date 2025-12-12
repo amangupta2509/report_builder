@@ -2510,18 +2510,7 @@ const AdminPage = () => {
             />
           </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="preview">
-            {selectedReport && selectedPatient ? (
-              <ReportPreview
-                selectedReport={selectedReport}
-                selectedPatient={selectedPatient}
-              />
-            ) : (
-              <div className="text-center text-gray-500 italic py-10">
-                No patient or report selected for preview.
-              </div>
-            )}
-          </TabsContent>
+        
 
           <TabsContent className="w-full min-w-0" value="share">
             <ShareManagement
