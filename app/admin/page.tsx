@@ -2525,5 +2525,5 @@ const AdminPage = () => {
     </div>
   );
 };
-
+ 
 export default AdminPage;
