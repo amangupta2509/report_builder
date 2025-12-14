@@ -138,6 +138,21 @@ model Report {
   @@map("reports")
 }
 
+// Dynamic Diet Field Definition (Parent)
+model DynamicDietFieldDefinition {
+  id       String @id @default(uuid())
+  reportId String
+  report   Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  quote       String? @db.Text
+  description String? @db.Text
+
+  // Relations to child diet fields
+  fields DynamicDietField[]
+
+  @@map("dynamic_diet_field_definitions")
+}
+
 // Dynamic Diet Field (Child)
 model DynamicDietField {
   id       String @id @default(uuid())
