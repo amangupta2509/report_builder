@@ -10,7 +10,12 @@ const TAG_LENGTH = 16;
 const TAG_POSITION = SALT_LENGTH + IV_LENGTH;
 const ENCRYPTED_POSITION = TAG_POSITION + TAG_LENGTH;
 
-
+interface EncryptedData {
+  encrypted: string;
+  iv: string;
+  tag: string;
+  salt: string;
+}
 
 /**
  * Encrypt data using AES-256-GCM
