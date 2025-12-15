@@ -1,4 +1,21 @@
-
+[
+  {
+    "id": "f0ad57ad-c2f5-4c3e-a759-e89bde8f4812",
+    "info": {
+      "name": "Kobi",
+      "gender": "MALE",
+      "birthDate": "2004-12-12",
+      "sampleCode": "DNL0000000001",
+      "sampleDate": "2004-11-14",
+      "reportDate": "2022-05-04",
+      "reportAuth": "",
+      "genomicAnalytics": "",
+      "checkedBy": "Dr. Alice",
+      "scientificContent": "Dr. Cobra",
+      "disclaimer": "The present report tells you about genetic variations/mutations associated with certain traits and health conditions. They do not diagnose for any conditions  or determine medical action. Having a certain risk does not mean you will definitely develop the trait or condition. Similarly, you could still develop a trait or  condition even if you do not have a detected mutation, as there may be other genetic mutations not included in this report. Genetics is not a crystal ball—  it alone cannot predict what will or will not be. Factors like lifestyle and environment can also affect whether a person develops a health condition or trait.  The current report cannot tell you about your overall risk for these conditions, and they cannot determine if you will or will not develop a condition. ",
+      "signature1": "/uploads/signatures/e58addae-e27f-40af-b781-3d2953c19ed7-s1.png",
+      "signature2": "/uploads/signatures/d2553996-014b-45e4-8083-05e23d0d0218-s2.png"
+    },
     "reports": [
       {
         "id": "1ed925a6-f1a7-4c19-a001-504c72f9d8eb",
