@@ -1,14 +1,6 @@
 import crypto from "crypto";
 
-// Use environment variable for encryption key
-const ENCRYPTION_KEY =
-  process.env.ENCRYPTION_KEY || crypto.randomBytes(32).toString("hex");
-const ALGORITHM = "aes-256-gcm";
-const IV_LENGTH = 16;
-const SALT_LENGTH = 64;
-const TAG_LENGTH = 16;
-const TAG_POSITION = SALT_LENGTH + IV_LENGTH;
-const ENCRYPTED_POSITION = TAG_POSITION + TAG_LENGTH;
+
 
 interface EncryptedData {
   encrypted: string;
