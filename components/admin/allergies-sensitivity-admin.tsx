@@ -35,6 +35,14 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+interface AllergiesSensitivityAdminProps {
+  allergiesAndSensitivity: AllergiesAndSensitivity;
+  updateAllergiesAndSensitivity: (
+    data: Partial<AllergiesAndSensitivity>
+  ) => void;
+  onSave: () => void;
+  onReset: () => void;
+}
 
 interface Notification {
   type: "success" | "error";
