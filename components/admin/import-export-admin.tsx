@@ -10,7 +10,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-
+import {
+  Download,
+  Upload,
+  FileText,
+  CheckCircle,
+  AlertCircle,
+  Clock,
+  RefreshCw,
+  Database,
+  Shield,
+} from "lucide-react";
 import type { ComprehensiveReportData } from "@/types/report-types";
 
 interface ImportExportAdminProps {
