@@ -132,9 +132,7 @@ export default function PatientInfoAdmin({
                   <SelectItem value="OTHER">Other</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="space-y-2">
-              <Label
+           
                 htmlFor="birthDate"
                 className="text-sm font-semibold text-gray-700 required"
               >
