@@ -61,7 +61,7 @@ export default function PatientInfoAdmin({
       updatePatientInfo(key, url);
     } catch (err) {
       console.error(err);
-      alert("Failed to upload signature");
+      
     }
   };
 
