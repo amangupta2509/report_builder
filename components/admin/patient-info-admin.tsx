@@ -61,12 +61,11 @@ export default function PatientInfoAdmin({
       updatePatientInfo(key, url);
     } catch (err) {
       console.error(err);
-      
+      alert("Failed to upload signature");
     }
   };
 
-  const removeSignature = (
-    key: "signature1" | "signature2",
+
     ref: React.RefObject<HTMLInputElement>
   ) => {
     updatePatientInfo(key, null);
