@@ -9,6 +9,7 @@ import ComprehensiveReportViewer from "@/components/comprehensive-report-viewer"
 import ReportPreview from "@/components/admin/ReportPreview";
 import { useSearchParams, useRouter } from "next/navigation";
 import ShareManagement from "@/components/admin/share-management";
+import { HeaderWithAuth } from "@/components/header-with-auth";
 
 import {
   Select,
@@ -1625,92 +1626,96 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="max-w-8xl mx-auto py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8">
-      <div className="mb-6 sm:mb-8 no-print space-y-4">
-        {/* Patient & Report Selectors */}
-        <div className="flex flex-wrap gap-4 items-end">
-          {/* Patient Selector */}
-          <div className="flex flex-col gap-1 min-w-[160px]">
-            <label className="text-sm font-medium text-gray-700">
-              Select Patient
-            </label>
-            <div className="relative">
-              <Select
-                value={String(selectedPatientIndex)}
-                onValueChange={(value) =>
-                  setSelectedPatientIndex(Number(value))
-                }
-              >
-                <SelectTrigger className="w-[160px]">
-                  <SelectValue placeholder="Select Patient" />
-                </SelectTrigger>
-                <SelectContent>
-                  {patients.map((p, i) => (
-                    <SelectItem key={p.id} value={String(i)}>
-                      {p.info.name || `Patient ${i + 1}`}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+    <>
+      <HeaderWithAuth />
+      <div className="max-w-8xl mx-auto py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 sm:mb-8 no-print space-y-4">
+          {/* Patient & Report Selectors */}
+          <div className="flex flex-wrap gap-4 items-end">
+            {/* Patient Selector */}
+            <div className="flex flex-col gap-1 min-w-[160px]">
+              <label className="text-sm font-medium text-gray-700">
+                Select Patient
+              </label>
+              <div className="relative">
+                <Select
+                  value={String(selectedPatientIndex)}
+                  onValueChange={(value) =>
+                    setSelectedPatientIndex(Number(value))
+                  }
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                  <SelectTrigger className="w-[160px]">
+                    <SelectValue placeholder="Select Patient" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {patients.map((p, i) => (
+                      <SelectItem key={p.id} value={String(i)}>
+                        {p.info.name || `Patient ${i + 1}`}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Report Selector */}
-          <div className="flex flex-col gap-1 min-w-[160px]">
-            <label className="text-sm font-medium text-gray-700">
-              Select Report
-            </label>
-            <div className="relative">
-              <Select
-                value={String(selectedReportIndex)}
-                onValueChange={(value) => setSelectedReportIndex(Number(value))}
-              >
-                <SelectTrigger className="w-[200px]">
-                  <SelectValue placeholder="Select Report" />
-                </SelectTrigger>
-                <SelectContent>
-                  {selectedPatient?.reports?.map((r, i) => (
-                    <SelectItem key={r.id} value={String(i)}>
-                      {r.name || `Report ${i + 1}`}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            {/* Report Selector */}
+            <div className="flex flex-col gap-1 min-w-[160px]">
+              <label className="text-sm font-medium text-gray-700">
+                Select Report
+              </label>
+              <div className="relative">
+                <Select
+                  value={String(selectedReportIndex)}
+                  onValueChange={(value) =>
+                    setSelectedReportIndex(Number(value))
+                  }
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                  <SelectTrigger className="w-[200px]">
+                    <SelectValue placeholder="Select Report" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {selectedPatient?.reports?.map((r, i) => (
+                      <SelectItem key={r.id} value={String(i)}>
+                        {r.name || `Report ${i + 1}`}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* <div className="flex flex-col gap-1 min-w-[200px]">
+            {/* <div className="flex flex-col gap-1 min-w-[200px]">
             <label className="text-sm font-medium text-gray-700">
               Report Name
             </label>
@@ -1723,807 +1728,836 @@ const AdminPage = () => {
             />
           </div> */}
 
-          {/* Save Button */}
-          <div className="ml-auto">
-            <Button
-              onClick={saveReportData}
-              className="px-7 py-2.5"
-              title="Save all current patient and report data to storage"
-            >
-              Save Data
-            </Button>
+            {/* Save Button */}
+            <div className="ml-auto">
+              <Button
+                onClick={saveReportData}
+                className="px-7 py-2.5"
+                title="Save all current patient and report data to storage"
+              >
+                Save Data
+              </Button>
+            </div>
           </div>
-        </div>
 
-        {/* Actions Section */}
-        <div className="flex flex-wrap gap-3 items-center">
-          {/* New Patient */}
-          <div className="flex gap-2 flex-1 min-w-[250px]">
-            <Input
-              placeholder="Sample Code (e.g. DNL0000000001)"
-              value={newSampleCode}
-              onChange={(e) => setNewSampleCode(e.target.value)}
-              className="flex-1 border-1 border-red-400"
-              title="Enter a unique sample code for the new patient"
-            />
+          {/* Actions Section */}
+          <div className="flex flex-wrap gap-3 items-center">
+            {/* New Patient */}
+            <div className="flex gap-2 flex-1 min-w-[250px]">
+              <Input
+                placeholder="Sample Code (e.g. DNL0000000001)"
+                value={newSampleCode}
+                onChange={(e) => setNewSampleCode(e.target.value)}
+                className="flex-1 border-1 border-red-400"
+                title="Enter a unique sample code for the new patient"
+              />
+              <Button
+                onClick={() => addNewPatient(newSampleCode)}
+                className="whitespace-nowrap"
+                title="Create a new patient with the entered sample code"
+              >
+                Add Patient
+              </Button>
+            </div>
+
+            {/* Add Report */}
             <Button
-              onClick={() => addNewPatient(newSampleCode)}
+              onClick={handleAddReportClick}
               className="whitespace-nowrap"
-              title="Create a new patient with the entered sample code"
+              title="Add a new report to the currently selected patient"
             >
-              Add Patient
+              Add Report
+            </Button>
+
+            {/* Delete Buttons */}
+            <Button
+              variant="destructive"
+              onClick={deleteSelectedReport}
+              disabled={(selectedPatient?.reports?.length ?? 0) <= 1}
+              className="whitespace-nowrap"
+              title="Permanently delete the currently selected report"
+            >
+              Delete Report
+            </Button>
+
+            <Button
+              variant="destructive"
+              onClick={deleteSelectedPatient}
+              className="whitespace-nowrap"
+              title="Permanently delete the currently selected patient and all their reports"
+            >
+              Delete Patient
             </Button>
           </div>
 
-          {/* Add Report */}
-          <Button
-            onClick={handleAddReportClick}
-            className="whitespace-nowrap"
-            title="Add a new report to the currently selected patient"
-          >
-            Add Report
-          </Button>
-
-          {/* Delete Buttons */}
-          <Button
-            variant="destructive"
-            onClick={deleteSelectedReport}
-            disabled={(selectedPatient?.reports?.length ?? 0) <= 1}
-            className="whitespace-nowrap"
-            title="Permanently delete the currently selected report"
-          >
-            Delete Report
-          </Button>
-
-          <Button
-            variant="destructive"
-            onClick={deleteSelectedPatient}
-            className="whitespace-nowrap"
-            title="Permanently delete the currently selected patient and all their reports"
-          >
-            Delete Patient
-          </Button>
-        </div>
-
-        {showAddReportModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-              <h3 className="text-lg font-semibold mb-4">Add New Report</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Report Name
-                  </label>
-                  <Input
-                    placeholder="Enter report name (e.g., Initial Assessment, Follow-up, etc.)"
-                    value={newReportName}
-                    onChange={(e) => setNewReportName(e.target.value)}
-                    className="w-full"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleAddReportSubmit();
-                      }
-                    }}
-                  />
-                </div>
-                <div className="flex gap-3 justify-end">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setShowAddReportModal(false);
-                      setNewReportName("");
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button onClick={handleAddReportSubmit}>Add Report</Button>
+          {showAddReportModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                <h3 className="text-lg font-semibold mb-4">Add New Report</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Report Name
+                    </label>
+                    <Input
+                      placeholder="Enter report name (e.g., Initial Assessment, Follow-up, etc.)"
+                      value={newReportName}
+                      onChange={(e) => setNewReportName(e.target.value)}
+                      className="w-full"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleAddReportSubmit();
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="flex gap-3 justify-end">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setShowAddReportModal(false);
+                        setNewReportName("");
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button onClick={handleAddReportSubmit}>Add Report</Button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="w-full overflow-x-auto scrollbar-hide mb-4 sm:mb-6">
-          <TabsList className="flex gap-1 sm:gap-2 min-w-max bg-white shadow-sm px-2 sm:px-4 py-2 rounded-md border border-gray-200">
-            <TabsTrigger
-              value="settings"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Front Page
-            </TabsTrigger>
-            <TabsTrigger
-              value="patient-info"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Patient Info
-            </TabsTrigger>
-            <TabsTrigger
-              value="content"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Content
-            </TabsTrigger>
-            <TabsTrigger
-              value="genetic-parameters"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Table Of Content
-            </TabsTrigger>
-
-            <TabsTrigger
-              value="health-summary"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Health Summary
-            </TabsTrigger>
-
-            <TabsTrigger
-              value="diet-fields"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Diet Fields
-            </TabsTrigger>
-            <TabsTrigger
-              value="nutrition"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Nutrition
-            </TabsTrigger>
-            <TabsTrigger
-              value="sports-fitness"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Sports & Fitness
-            </TabsTrigger>
-            <TabsTrigger
-              value="lifestyle-conditions"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Lifestyle
-            </TabsTrigger>
-            <TabsTrigger
-              value="metabolic-core"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Metabolic Core
-            </TabsTrigger>
-            <TabsTrigger
-              value="digestive-health"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Digestive Health
-            </TabsTrigger>
-            <TabsTrigger
-              value="genes-addiction"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Genes & Addiction
-            </TabsTrigger>
-            <TabsTrigger
-              value="sleep-rest"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Sleep & Rest
-            </TabsTrigger>
-            <TabsTrigger
-              value="allergies-sensitivity"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Allergies
-            </TabsTrigger>
-            <TabsTrigger
-              value="preventive-health"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Preventive Health
-            </TabsTrigger>
-            <TabsTrigger
-              value="family-genetic-impact"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Family Impact
-            </TabsTrigger>
-            <TabsTrigger
-              value="genomic-analysis"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Genomic Analysis
-            </TabsTrigger>
-            <TabsTrigger
-              value="genes"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Gene Results
-            </TabsTrigger>
-
-            <TabsTrigger
-              value="summaries"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Summaries
-            </TabsTrigger>
-
-            <TabsTrigger
-              value="pdf-export"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              PDF Export
-            </TabsTrigger>
-            <TabsTrigger
-              value="import-export"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Import/Export
-            </TabsTrigger>
-
-            <TabsTrigger
-              value="share"
-              className="text-xs sm:text-sm whitespace-nowrap"
-            >
-              Share Links
-            </TabsTrigger>
-
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-          </TabsList>
+          )}
         </div>
 
-        <div className="w-full overflow-x-auto">
-          <TabsContent className="w-full min-w-0" value="patient-info">
-            <PatientInfoAdmin
-              patientInfo={selectedPatient?.info}
-              updatePatientInfo={updatePatientInfo}
-              onSave={saveReportData}
-              onReset={resetPatientInfo}
-            />
-          </TabsContent>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <div className="w-full overflow-x-auto scrollbar-hide mb-4 sm:mb-6">
+            <TabsList className="flex gap-1 sm:gap-2 min-w-max bg-white shadow-sm px-2 sm:px-4 py-2 rounded-md border border-gray-200">
+              <TabsTrigger
+                value="settings"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Front Page
+              </TabsTrigger>
+              <TabsTrigger
+                value="patient-info"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Patient Info
+              </TabsTrigger>
+              <TabsTrigger
+                value="content"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Content
+              </TabsTrigger>
+              <TabsTrigger
+                value="genetic-parameters"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Table Of Content
+              </TabsTrigger>
 
-          <TabsContent className="w-full min-w-0" value="content">
-            <ContentAdmin
-              content={selectedReport.content}
-              updateContent={updateReportContent}
-              onSave={saveReportData}
-              onReset={() => resetSection("content")}
-            />
-          </TabsContent>
+              <TabsTrigger
+                value="health-summary"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Health Summary
+              </TabsTrigger>
 
-          <TabsContent className="w-full min-w-0" value="genetic-parameters">
-            <GeneticParametersAdmin
-              categories={selectedReport.categories}
-              onUpdateCategories={(updated) => {
-                setPatients((prev) => {
-                  const updatedPatients = [...prev];
-                  const patient = { ...updatedPatients[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = {
-                    ...reports[selectedReportIndex],
-                    categories: updated,
-                  };
-                  reports[selectedReportIndex] = report;
-                  updatedPatients[selectedPatientIndex] = {
-                    ...patient,
-                    reports,
-                  };
-                  return updatedPatients;
-                });
-              }}
-              onSave={saveReportData}
-              onReset={() => resetSection("categories")}
-            />
-          </TabsContent>
+              <TabsTrigger
+                value="diet-fields"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Diet Fields
+              </TabsTrigger>
+              <TabsTrigger
+                value="nutrition"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Nutrition
+              </TabsTrigger>
+              <TabsTrigger
+                value="sports-fitness"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Sports & Fitness
+              </TabsTrigger>
+              <TabsTrigger
+                value="lifestyle-conditions"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Lifestyle
+              </TabsTrigger>
+              <TabsTrigger
+                value="metabolic-core"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Metabolic Core
+              </TabsTrigger>
+              <TabsTrigger
+                value="digestive-health"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Digestive Health
+              </TabsTrigger>
+              <TabsTrigger
+                value="genes-addiction"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Genes & Addiction
+              </TabsTrigger>
+              <TabsTrigger
+                value="sleep-rest"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Sleep & Rest
+              </TabsTrigger>
+              <TabsTrigger
+                value="allergies-sensitivity"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Allergies
+              </TabsTrigger>
+              <TabsTrigger
+                value="preventive-health"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Preventive Health
+              </TabsTrigger>
+              <TabsTrigger
+                value="family-genetic-impact"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Family Impact
+              </TabsTrigger>
+              <TabsTrigger
+                value="genomic-analysis"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Genomic Analysis
+              </TabsTrigger>
+              <TabsTrigger
+                value="genes"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Gene Results
+              </TabsTrigger>
 
-          <TabsContent className="w-full min-w-0" value="settings">
-            <SettingsAdmin
-              settings={selectedReport.settings}
-              updateSettings={updateReportSettings}
-              onSave={saveReportData}
-              onReset={() => resetSection("settings")}
-            />
-          </TabsContent>
+              <TabsTrigger
+                value="summaries"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Summaries
+              </TabsTrigger>
 
-          <TabsContent value="health-summary">
-            <HealthSummaryAdmin
-              healthSummary={
-                selectedReport.healthSummary || {
-                  description: "",
-                  data: [],
+              <TabsTrigger
+                value="pdf-export"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                PDF Export
+              </TabsTrigger>
+              <TabsTrigger
+                value="import-export"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Import/Export
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="share"
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                Share Links
+              </TabsTrigger>
+
+              <TabsTrigger value="preview">Preview</TabsTrigger>
+            </TabsList>
+          </div>
+
+          <div className="w-full overflow-x-auto">
+            <TabsContent className="w-full min-w-0" value="patient-info">
+              <PatientInfoAdmin
+                patientInfo={selectedPatient?.info}
+                updatePatientInfo={updatePatientInfo}
+                onSave={saveReportData}
+                onReset={resetPatientInfo}
+              />
+            </TabsContent>
+
+            <TabsContent className="w-full min-w-0" value="content">
+              <ContentAdmin
+                content={selectedReport.content}
+                updateContent={updateReportContent}
+                onSave={saveReportData}
+                onReset={() => resetSection("content")}
+              />
+            </TabsContent>
+
+            <TabsContent className="w-full min-w-0" value="genetic-parameters">
+              <GeneticParametersAdmin
+                categories={selectedReport.categories}
+                onUpdateCategories={(updated) => {
+                  setPatients((prev) => {
+                    const updatedPatients = [...prev];
+                    const patient = {
+                      ...updatedPatients[selectedPatientIndex],
+                    };
+                    const reports = [...patient.reports];
+                    const report = {
+                      ...reports[selectedReportIndex],
+                      categories: updated,
+                    };
+                    reports[selectedReportIndex] = report;
+                    updatedPatients[selectedPatientIndex] = {
+                      ...patient,
+                      reports,
+                    };
+                    return updatedPatients;
+                  });
+                }}
+                onSave={saveReportData}
+                onReset={() => resetSection("categories")}
+              />
+            </TabsContent>
+
+            <TabsContent className="w-full min-w-0" value="settings">
+              <SettingsAdmin
+                settings={selectedReport.settings}
+                updateSettings={updateReportSettings}
+                onSave={saveReportData}
+                onReset={() => resetSection("settings")}
+              />
+            </TabsContent>
+
+            <TabsContent value="health-summary">
+              <HealthSummaryAdmin
+                healthSummary={
+                  selectedReport.healthSummary || {
+                    description: "",
+                    data: [],
+                  }
                 }
-              }
-              onDescriptionUpdate={(value) =>
-                updateHealthSummaryDescription(
-                  selectedPatientIndex,
-                  selectedReportIndex,
-                  value
-                )
-              }
-              onUpdate={(entryIndex, field, value) =>
-                updateHealthSummaryEntry(
-                  selectedPatientIndex,
-                  selectedReportIndex,
-                  entryIndex,
-                  field,
-                  value
-                )
-              }
-              onAdd={() =>
-                addHealthSummaryEntry(selectedPatientIndex, selectedReportIndex)
-              }
-              onRemove={(entryIndex) =>
-                removeHealthSummaryEntry(
-                  selectedPatientIndex,
-                  selectedReportIndex,
-                  entryIndex
-                )
-              }
-              onSave={saveReportData}
-              isLoading={isLoading}
-            />
-          </TabsContent>
+                onDescriptionUpdate={(value) =>
+                  updateHealthSummaryDescription(
+                    selectedPatientIndex,
+                    selectedReportIndex,
+                    value
+                  )
+                }
+                onUpdate={(entryIndex, field, value) =>
+                  updateHealthSummaryEntry(
+                    selectedPatientIndex,
+                    selectedReportIndex,
+                    entryIndex,
+                    field,
+                    value
+                  )
+                }
+                onAdd={() =>
+                  addHealthSummaryEntry(
+                    selectedPatientIndex,
+                    selectedReportIndex
+                  )
+                }
+                onRemove={(entryIndex) =>
+                  removeHealthSummaryEntry(
+                    selectedPatientIndex,
+                    selectedReportIndex,
+                    entryIndex
+                  )
+                }
+                onSave={saveReportData}
+                isLoading={isLoading}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="diet-fields">
-            <DynamicDietFieldAdmin
-              dynamicDietFieldDefinitions={
-                selectedReport.dynamicDietFieldDefinitions
-              }
-              patientDietAnalysisResults={
-                selectedReport.patientDietAnalysisResults
-              }
-              categories={selectedReport.dietFieldCategories}
-              onUpdateCategories={(newCats) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = {
-                    ...reports[selectedReportIndex],
-                    dietFieldCategories: newCats,
-                  };
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              onUpdateFields={(fields) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = {
-                    ...reports[selectedReportIndex],
-                    dynamicDietFieldDefinitions: fields,
-                  };
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              onUpdateResults={(results) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = {
-                    ...reports[selectedReportIndex],
-                    patientDietAnalysisResults: results,
-                  };
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              onSave={saveReportData}
-              onReset={() => resetSection("dynamicDietFieldDefinitions")}
-            />
-          </TabsContent>
+            <TabsContent className="w-full min-w-0" value="diet-fields">
+              <DynamicDietFieldAdmin
+                dynamicDietFieldDefinitions={
+                  selectedReport.dynamicDietFieldDefinitions
+                }
+                patientDietAnalysisResults={
+                  selectedReport.patientDietAnalysisResults
+                }
+                categories={selectedReport.dietFieldCategories}
+                onUpdateCategories={(newCats) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = {
+                      ...reports[selectedReportIndex],
+                      dietFieldCategories: newCats,
+                    };
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                onUpdateFields={(fields) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = {
+                      ...reports[selectedReportIndex],
+                      dynamicDietFieldDefinitions: fields,
+                    };
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                onUpdateResults={(results) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = {
+                      ...reports[selectedReportIndex],
+                      patientDietAnalysisResults: results,
+                    };
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                onSave={saveReportData}
+                onReset={() => resetSection("dynamicDietFieldDefinitions")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="nutrition">
-            <NutritionAdmin
-              nutritionData={selectedReport.nutritionData}
-              updateNutritionData={updateNutritionData}
-              onSave={saveReportData}
-            />
-          </TabsContent>
+            <TabsContent className="w-full min-w-0" value="nutrition">
+              <NutritionAdmin
+                nutritionData={selectedReport.nutritionData}
+                updateNutritionData={updateNutritionData}
+                onSave={saveReportData}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="sports-fitness">
-            <SportsFitnessAdmin
-              sportsAndFitness={selectedReport.sportsAndFitness}
-              updateSportsAndFitness={updateSportsAndFitness}
-              onSave={saveReportData}
-              onReset={() => resetSection("sportsAndFitness")}
-            />
-          </TabsContent>
+            <TabsContent className="w-full min-w-0" value="sports-fitness">
+              <SportsFitnessAdmin
+                sportsAndFitness={selectedReport.sportsAndFitness}
+                updateSportsAndFitness={updateSportsAndFitness}
+                onSave={saveReportData}
+                onReset={() => resetSection("sportsAndFitness")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="lifestyle-conditions">
-            <LifestyleConditionsAdmin
-              lifestyleConditions={selectedReport.lifestyleConditions}
-              lifestyleCategoryImages={
-                selectedReport.lifestyleCategoryImages ?? {}
-              }
-              addCategory={(categoryId: string) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = { ...reports[selectedReportIndex] };
+            <TabsContent
+              className="w-full min-w-0"
+              value="lifestyle-conditions"
+            >
+              <LifestyleConditionsAdmin
+                lifestyleConditions={selectedReport.lifestyleConditions}
+                lifestyleCategoryImages={
+                  selectedReport.lifestyleCategoryImages ?? {}
+                }
+                addCategory={(categoryId: string) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = { ...reports[selectedReportIndex] };
 
-                  const existing = report.lifestyleConditions?.[categoryId];
-                  if (typeof existing === "object" && existing !== null)
-                    return prev;
+                    const existing = report.lifestyleConditions?.[categoryId];
+                    if (typeof existing === "object" && existing !== null)
+                      return prev;
 
-                  report.lifestyleConditions = {
-                    ...report.lifestyleConditions,
-                    [categoryId]: {},
-                  };
+                    report.lifestyleConditions = {
+                      ...report.lifestyleConditions,
+                      [categoryId]: {},
+                    };
 
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              addField={(categoryId, fieldName, status) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = { ...reports[selectedReportIndex] };
-                  const category = report.lifestyleConditions?.[categoryId];
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                addField={(categoryId, fieldName, status) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = { ...reports[selectedReportIndex] };
+                    const category = report.lifestyleConditions?.[categoryId];
 
-                  if (typeof category !== "object" || category === null)
-                    return prev;
+                    if (typeof category !== "object" || category === null)
+                      return prev;
 
-                  report.lifestyleConditions = {
-                    ...report.lifestyleConditions,
-                    [categoryId]: {
-                      ...category,
-                      [fieldName]: {
-                        status,
-                        description: "",
-                        sensitivity: "low",
-                        avoid: [],
-                        follow: [],
-                        consume: [],
-                        monitor: [],
-                        avoidLabel: "AVOID",
-                        followLabel: "FOLLOW",
-                        consumeLabel: "CONSUME",
-                        monitorLabel: "MONITOR",
+                    report.lifestyleConditions = {
+                      ...report.lifestyleConditions,
+                      [categoryId]: {
+                        ...category,
+                        [fieldName]: {
+                          status,
+                          description: "",
+                          sensitivity: "low",
+                          avoid: [],
+                          follow: [],
+                          consume: [],
+                          monitor: [],
+                          avoidLabel: "AVOID",
+                          followLabel: "FOLLOW",
+                          consumeLabel: "CONSUME",
+                          monitorLabel: "MONITOR",
+                        },
                       },
-                    },
-                  };
+                    };
 
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              updateFieldStatus={updateFieldStatus} // already refactored previously
-              deleteField={(categoryId, fieldName) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = { ...reports[selectedReportIndex] };
-                  const category = report.lifestyleConditions?.[categoryId];
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                updateFieldStatus={updateFieldStatus} // already refactored previously
+                deleteField={(categoryId, fieldName) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = { ...reports[selectedReportIndex] };
+                    const category = report.lifestyleConditions?.[categoryId];
 
-                  if (typeof category !== "object" || category === null)
-                    return prev;
+                    if (typeof category !== "object" || category === null)
+                      return prev;
 
-                  const { [fieldName]: _, ...restFields } = category;
+                    const { [fieldName]: _, ...restFields } = category;
 
-                  report.lifestyleConditions = {
-                    ...report.lifestyleConditions,
-                    [categoryId]: restFields,
-                  };
+                    report.lifestyleConditions = {
+                      ...report.lifestyleConditions,
+                      [categoryId]: restFields,
+                    };
 
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              deleteCategory={(categoryId: string) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = { ...reports[selectedReportIndex] };
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                deleteCategory={(categoryId: string) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = { ...reports[selectedReportIndex] };
 
-                  const { [categoryId]: _, ...restConditions } =
-                    report.lifestyleConditions;
-                  const { [categoryId]: __, ...restImages } =
-                    report.lifestyleCategoryImages ?? {};
+                    const { [categoryId]: _, ...restConditions } =
+                      report.lifestyleConditions;
+                    const { [categoryId]: __, ...restImages } =
+                      report.lifestyleCategoryImages ?? {};
 
-                  report.lifestyleConditions = restConditions;
-                  report.lifestyleCategoryImages = restImages;
+                    report.lifestyleConditions = restConditions;
+                    report.lifestyleCategoryImages = restImages;
 
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              updateQuoteAndDescription={(
-                quote: string,
-                description: string
-              ) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = {
-                    ...reports[selectedReportIndex],
-                    lifestyleConditions: {
-                      ...reports[selectedReportIndex].lifestyleConditions,
-                      quote,
-                      description,
-                    },
-                  };
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              updateCategoryImage={(categoryId: string, imageUrl: string) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
-                  const report = {
-                    ...reports[selectedReportIndex],
-                    lifestyleCategoryImages: {
-                      ...(reports[selectedReportIndex]
-                        .lifestyleCategoryImages ?? {}),
-                      [categoryId]: imageUrl,
-                    },
-                  };
-                  reports[selectedReportIndex] = report;
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              onSave={saveReportData}
-              onReset={() => resetSection("lifestyleConditions")}
-            />
-          </TabsContent>
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                updateQuoteAndDescription={(
+                  quote: string,
+                  description: string
+                ) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = {
+                      ...reports[selectedReportIndex],
+                      lifestyleConditions: {
+                        ...reports[selectedReportIndex].lifestyleConditions,
+                        quote,
+                        description,
+                      },
+                    };
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                updateCategoryImage={(categoryId: string, imageUrl: string) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+                    const report = {
+                      ...reports[selectedReportIndex],
+                      lifestyleCategoryImages: {
+                        ...(reports[selectedReportIndex]
+                          .lifestyleCategoryImages ?? {}),
+                        [categoryId]: imageUrl,
+                      },
+                    };
+                    reports[selectedReportIndex] = report;
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                onSave={saveReportData}
+                onReset={() => resetSection("lifestyleConditions")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="metabolic-core">
-            <MetabolicCoreAdmin
-              metabolicCore={selectedReport.metabolicCore}
-              setMetabolicCore={(valueOrUpdater) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
+            <TabsContent className="w-full min-w-0" value="metabolic-core">
+              <MetabolicCoreAdmin
+                metabolicCore={selectedReport.metabolicCore}
+                setMetabolicCore={(valueOrUpdater) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
 
-                  const prevMetabolicCore =
-                    reports[selectedReportIndex].metabolicCore;
-                  const nextMetabolicCore =
-                    typeof valueOrUpdater === "function"
-                      ? (
-                          valueOrUpdater as (
-                            prev: MetabolicCore
-                          ) => MetabolicCore
-                        )(prevMetabolicCore)
-                      : valueOrUpdater;
+                    const prevMetabolicCore =
+                      reports[selectedReportIndex].metabolicCore;
+                    const nextMetabolicCore =
+                      typeof valueOrUpdater === "function"
+                        ? (
+                            valueOrUpdater as (
+                              prev: MetabolicCore
+                            ) => MetabolicCore
+                          )(prevMetabolicCore)
+                        : valueOrUpdater;
 
-                  reports[selectedReportIndex] = {
-                    ...reports[selectedReportIndex],
-                    metabolicCore: nextMetabolicCore,
-                  };
+                    reports[selectedReportIndex] = {
+                      ...reports[selectedReportIndex],
+                      metabolicCore: nextMetabolicCore,
+                    };
 
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              updateMetabolicCore={updateMetabolicCore}
-              onSave={saveReportData}
-              onReset={() => resetSection("metabolicCore")}
-            />
-          </TabsContent>
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                updateMetabolicCore={updateMetabolicCore}
+                onSave={saveReportData}
+                onReset={() => resetSection("metabolicCore")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="digestive-health">
-            <DigestiveHealthAdmin
-              digestiveHealth={selectedReport.digestiveHealth}
-              updateField={updateDigestiveHealth}
-              addField={addDigestiveField}
-              deleteField={deleteDigestiveField}
-              updateQuoteAndDescription={updateDigestiveQuoteAndDescription}
-              onSave={saveReportData}
-              onReset={() => resetSection("digestiveHealth")}
-            />
-          </TabsContent>
+            <TabsContent className="w-full min-w-0" value="digestive-health">
+              <DigestiveHealthAdmin
+                digestiveHealth={selectedReport.digestiveHealth}
+                updateField={updateDigestiveHealth}
+                addField={addDigestiveField}
+                deleteField={deleteDigestiveField}
+                updateQuoteAndDescription={updateDigestiveQuoteAndDescription}
+                onSave={saveReportData}
+                onReset={() => resetSection("digestiveHealth")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="genes-addiction">
-            <GenesAddictionAdmin
-              data={selectedReport.genesAndAddiction}
-              updateData={(updated) => {
-                setPatients((prev) => {
-                  const updatedPatients = [...prev];
-                  const patient = { ...updatedPatients[selectedPatientIndex] };
-                  const reports = [...patient.reports];
+            <TabsContent className="w-full min-w-0" value="genes-addiction">
+              <GenesAddictionAdmin
+                data={selectedReport.genesAndAddiction}
+                updateData={(updated) => {
+                  setPatients((prev) => {
+                    const updatedPatients = [...prev];
+                    const patient = {
+                      ...updatedPatients[selectedPatientIndex],
+                    };
+                    const reports = [...patient.reports];
 
-                  reports[selectedReportIndex] = {
-                    ...reports[selectedReportIndex],
-                    genesAndAddiction: {
-                      ...reports[selectedReportIndex].genesAndAddiction,
-                      ...updated,
-                    },
-                  };
+                    reports[selectedReportIndex] = {
+                      ...reports[selectedReportIndex],
+                      genesAndAddiction: {
+                        ...reports[selectedReportIndex].genesAndAddiction,
+                        ...updated,
+                      },
+                    };
 
-                  updatedPatients[selectedPatientIndex] = {
-                    ...patient,
-                    reports,
-                  };
-                  return updatedPatients;
-                });
-              }}
-              onSave={saveReportData}
-              onReset={() => resetSection("genesAndAddiction")}
-            />
-          </TabsContent>
+                    updatedPatients[selectedPatientIndex] = {
+                      ...patient,
+                      reports,
+                    };
+                    return updatedPatients;
+                  });
+                }}
+                onSave={saveReportData}
+                onReset={() => resetSection("genesAndAddiction")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="sleep-rest">
-            <SleepRestAdmin
-              data={selectedReport.sleepAndRest}
-              updateData={(update) => {
-                setPatients((prev) => {
-                  const updatedPatients = [...prev];
-                  const patient = { ...updatedPatients[selectedPatientIndex] };
-                  const reports = [...patient.reports];
+            <TabsContent className="w-full min-w-0" value="sleep-rest">
+              <SleepRestAdmin
+                data={selectedReport.sleepAndRest}
+                updateData={(update) => {
+                  setPatients((prev) => {
+                    const updatedPatients = [...prev];
+                    const patient = {
+                      ...updatedPatients[selectedPatientIndex],
+                    };
+                    const reports = [...patient.reports];
 
-                  reports[selectedReportIndex] = {
-                    ...reports[selectedReportIndex],
-                    sleepAndRest: {
-                      ...reports[selectedReportIndex].sleepAndRest,
-                      ...update,
-                    },
-                  };
+                    reports[selectedReportIndex] = {
+                      ...reports[selectedReportIndex],
+                      sleepAndRest: {
+                        ...reports[selectedReportIndex].sleepAndRest,
+                        ...update,
+                      },
+                    };
 
-                  updatedPatients[selectedPatientIndex] = {
-                    ...patient,
-                    reports,
-                  };
-                  return updatedPatients;
-                });
-              }}
-              onSave={saveReportData}
-              onReset={() => resetSection("sleepAndRest")}
-            />
-          </TabsContent>
+                    updatedPatients[selectedPatientIndex] = {
+                      ...patient,
+                      reports,
+                    };
+                    return updatedPatients;
+                  });
+                }}
+                onSave={saveReportData}
+                onReset={() => resetSection("sleepAndRest")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="allergies-sensitivity">
-            <AllergiesSensitivityAdmin
-              allergiesAndSensitivity={
-                selectedReport.allergiesAndSensitivity || {
-                  quote: "",
-                  description: "",
-                  generalAdvice: "",
-                  data: {},
+            <TabsContent
+              className="w-full min-w-0"
+              value="allergies-sensitivity"
+            >
+              <AllergiesSensitivityAdmin
+                allergiesAndSensitivity={
+                  selectedReport.allergiesAndSensitivity || {
+                    quote: "",
+                    description: "",
+                    generalAdvice: "",
+                    data: {},
+                  }
                 }
-              }
-              updateAllergiesAndSensitivity={updateAllergiesAndSensitivity}
-              onSave={saveReportData}
-              onReset={() => resetSection("allergiesAndSensitivity")}
-            />
-          </TabsContent>
+                updateAllergiesAndSensitivity={updateAllergiesAndSensitivity}
+                onSave={saveReportData}
+                onReset={() => resetSection("allergiesAndSensitivity")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="preventive-health">
-            <PreventiveHealthAdmin
-              preventiveHealth={selectedReport.preventiveHealth}
-              updatePreventiveHealth={updatePreventiveHealth}
-              onSave={saveReportData}
-              onReset={() => resetSection("preventiveHealth")}
-            />
-          </TabsContent>
+            <TabsContent className="w-full min-w-0" value="preventive-health">
+              <PreventiveHealthAdmin
+                preventiveHealth={selectedReport.preventiveHealth}
+                updatePreventiveHealth={updatePreventiveHealth}
+                onSave={saveReportData}
+                onReset={() => resetSection("preventiveHealth")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="family-genetic-impact">
-            <FamilyGeneticImpactAdmin
-              familyGeneticImpactSection={
-                selectedReport.familyGeneticImpactSection || {
-                  description: "",
-                  impacts: [],
+            <TabsContent
+              className="w-full min-w-0"
+              value="family-genetic-impact"
+            >
+              <FamilyGeneticImpactAdmin
+                familyGeneticImpactSection={
+                  selectedReport.familyGeneticImpactSection || {
+                    description: "",
+                    impacts: [],
+                  }
                 }
-              }
-              setFamilyGeneticImpactSection={(section) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
+                setFamilyGeneticImpactSection={(section) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
 
-                  reports[selectedReportIndex] = {
-                    ...reports[selectedReportIndex],
-                    familyGeneticImpactSection: section,
-                  };
+                    reports[selectedReportIndex] = {
+                      ...reports[selectedReportIndex],
+                      familyGeneticImpactSection: section,
+                    };
 
-                  updated[selectedPatientIndex] = { ...patient, reports };
-                  return updated;
-                });
-              }}
-              onSave={saveReportData}
-              onReset={() => resetSection("familyGeneticImpactSection")}
-            />
-          </TabsContent>
+                    updated[selectedPatientIndex] = { ...patient, reports };
+                    return updated;
+                  });
+                }}
+                onSave={saveReportData}
+                onReset={() => resetSection("familyGeneticImpactSection")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="genomic-analysis">
-            <GenomicAnalysisAdmin
-              genomicAnalysisTable={
-                selectedReport.genomicAnalysisTable || {
-                  description: "",
-                  categories: [],
+            <TabsContent className="w-full min-w-0" value="genomic-analysis">
+              <GenomicAnalysisAdmin
+                genomicAnalysisTable={
+                  selectedReport.genomicAnalysisTable || {
+                    description: "",
+                    categories: [],
+                  }
                 }
-              }
-              setGenomicAnalysisTable={updateGenomicAnalysisTable}
-              onSave={saveReportData}
-              onReset={() => resetSection("genomicAnalysisTable")}
-            />
-          </TabsContent>
+                setGenomicAnalysisTable={updateGenomicAnalysisTable}
+                onSave={saveReportData}
+                onReset={() => resetSection("genomicAnalysisTable")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="genes">
-            <GeneResultsAdmin
-              geneTestResults={selectedReport.geneTestResults}
-              updateGeneTestResult={updateGeneTestResult}
-              addGeneTestResult={addGeneTestResult}
-              removeGeneTestResult={removeGeneTestResult}
-              onSave={saveReportData}
-              onReset={() => resetSection("geneTestResults")}
-            />
-          </TabsContent>
+            <TabsContent className="w-full min-w-0" value="genes">
+              <GeneResultsAdmin
+                geneTestResults={selectedReport.geneTestResults}
+                updateGeneTestResult={updateGeneTestResult}
+                addGeneTestResult={addGeneTestResult}
+                removeGeneTestResult={removeGeneTestResult}
+                onSave={saveReportData}
+                onReset={() => resetSection("geneTestResults")}
+              />
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="pdf-export">
-            {selectedPatient && selectedReport && (
-              <PDFGenerator
+            <TabsContent className="w-full min-w-0" value="pdf-export">
+              {selectedPatient && selectedReport && (
+                <PDFGenerator
+                  reportData={{
+                    ...selectedReport,
+                    patientInfo: selectedPatient.info,
+                  }}
+                  reportIndex={selectedReportIndex}
+                  patientCode={selectedPatient.info.sampleCode}
+                />
+              )}
+            </TabsContent>
+
+            <TabsContent className="w-full min-w-0" value="import-export">
+              <ImportExportAdmin
                 reportData={{
                   ...selectedReport,
                   patientInfo: selectedPatient.info,
                 }}
-                reportIndex={selectedReportIndex}
-                patientCode={selectedPatient.info.sampleCode}
+                setReportData={(updatedReport: ComprehensiveReportData) => {
+                  setPatients((prev) => {
+                    const updated = [...prev];
+                    const patient = { ...updated[selectedPatientIndex] };
+                    const reports = [...patient.reports];
+
+                    // Destructure into patientInfo and the rest of the report
+                    const { patientInfo, ...reportRest } = updatedReport;
+
+                    reports[selectedReportIndex] = reportRest; // already typed as Report
+
+                    updated[selectedPatientIndex] = {
+                      ...patient,
+                      reports,
+                      info: patientInfo,
+                    };
+
+                    return updated;
+                  });
+                }}
               />
-            )}
-          </TabsContent>
+            </TabsContent>
 
-          <TabsContent className="w-full min-w-0" value="import-export">
-            <ImportExportAdmin
-              reportData={{
-                ...selectedReport,
-                patientInfo: selectedPatient.info,
-              }}
-              setReportData={(updatedReport: ComprehensiveReportData) => {
-                setPatients((prev) => {
-                  const updated = [...prev];
-                  const patient = { ...updated[selectedPatientIndex] };
-                  const reports = [...patient.reports];
+            <TabsContent className="w-full min-w-0" value="preview">
+              {selectedReport && selectedPatient ? (
+                <ReportPreview
+                  selectedReport={selectedReport}
+                  selectedPatient={selectedPatient}
+                />
+              ) : (
+                <div className="text-center text-gray-500 italic py-10">
+                  No patient or report selected for preview.
+                </div>
+              )}
+            </TabsContent>
 
-                  // Destructure into patientInfo and the rest of the report
-                  const { patientInfo, ...reportRest } = updatedReport;
-
-                  reports[selectedReportIndex] = reportRest; // already typed as Report
-
-                  updated[selectedPatientIndex] = {
-                    ...patient,
-                    reports,
-                    info: patientInfo,
-                  };
-
-                  return updated;
-                });
-              }}
-            />
-          </TabsContent>
-
-        
-
-          <TabsContent className="w-full min-w-0" value="share">
-            <ShareManagement
-              reportId={selectedReport.id}
-              patientId={selectedPatient.id}
-              reportName={selectedReport.name}
-            />
-          </TabsContent>
-          
-        </div>
-      </Tabs>
-    </div>
+            <TabsContent className="w-full min-w-0" value="share">
+              <ShareManagement
+                reportId={selectedReport.id}
+                patientId={selectedPatient.id}
+                reportName={selectedReport.name}
+              />
+            </TabsContent>
+          </div>
+        </Tabs>
+      </div>
+    </>
   );
 };
- 
+
 export default AdminPage;
