@@ -34,12 +34,3 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <HeaderWithAuth />
-            {children}
-            <Toaster />
-          </AuthProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-}
