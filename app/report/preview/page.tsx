@@ -70,6 +70,11 @@ export default function ReportPreviewPage() {
     );
   }
 
+  if (!reportData) {
+    return (
+      <div className="text-center text-gray-500 py-10">Loading report...</div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 print:bg-white">
