@@ -62,19 +62,7 @@ export default function ReportPreviewPage() {
     fetchData();
   }, [searchParams]);
 
-  if (error) {
-    return (
-      <div className="text-center text-red-500 py-10 font-semibold">
-        ⚠️ {error}
-      </div>
-    );
-  }
 
-  if (!reportData) {
-    return (
-      <div className="text-center text-gray-500 py-10">Loading report...</div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-100 print:bg-white">
