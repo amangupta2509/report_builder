@@ -218,7 +218,8 @@ export default function DietAnalysisAdmin({
         {/* Taste Sensitivities Section */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-gray-800 border-b-2 border-amber-200 pb-2">
-           
+            👅 Taste Sensitivities
+          </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderMacronutrientField(
               "tasteSensitivities",
