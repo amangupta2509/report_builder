@@ -211,7 +211,8 @@ export default function DietAnalysisAdmin({
               "saltSensitivity",
               dietAnalysis.foodSensitivities.saltSensitivity,
               "Salt Sensitivity"
-        v>
+            )}
+          </div>
         </div>
 
         {/* Taste Sensitivities Section */}
