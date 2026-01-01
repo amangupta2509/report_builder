@@ -105,7 +105,9 @@ export default function HomePage() {
                 </h4>
                 <p className="text-sm text-indigo-600">
                   Gut health, intolerances
-           
+                </p>
+              </div>
+            </div>
 
             <div className="flex items-center gap-3 p-4 bg-pink-50 rounded-lg">
               <Dna className="h-8 w-8 text-pink-600" />
