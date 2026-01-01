@@ -765,12 +765,6 @@ export default function GenesAddictionAdmin({
                       </div>
                     )}
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+     
+     
 }
