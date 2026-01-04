@@ -64,9 +64,7 @@ export default function ReportPreviewPage() {
 
   if (error) {
     return (
-      <div className="text-center text-red-500 py-10 font-semibold">
-        ⚠️ {error}
-      </div>
+    
     );
   }
 
