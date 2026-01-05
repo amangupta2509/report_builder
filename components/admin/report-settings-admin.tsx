@@ -211,18 +211,7 @@ export default function ReportSettingsAdmin({
           </div>
         </div>
 
-        <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
-          <h4 className="font-semibold text-purple-800 mb-2">
-            💡 Customization Tips:
-          </h4>
-          <ul className="text-sm text-purple-700 space-y-1">
-            <li>• Use hex codes for precise color matching (e.g., #RRGGBB).</li>
-            <li>• Choose fonts that align with your brand's aesthetic.</li>
-            <li>
-              • Ensure sufficient contrast for readability, especially for text.
-            </li>
-          </ul>
-        </div>
+        
       </CardContent>
     </Card>
   );
