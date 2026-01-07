@@ -24,7 +24,16 @@ import {
 } from "@/components/ui/alert-dialog";
 import Image from "next/image";
 import { toast } from "sonner";
-
+import {
+  X,
+  Plus,
+  Save,
+  Upload,
+  Edit3,
+  FileImage,
+  Trash2,
+  AlertTriangle,
+} from "lucide-react";
 import type { GeneticCategory } from "@/types/report-types";
 
 // Custom hook for data fetching

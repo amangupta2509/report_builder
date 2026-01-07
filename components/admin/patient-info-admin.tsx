@@ -65,13 +65,7 @@ export default function PatientInfoAdmin({
     }
   };
 
-  const removeSignature = (
-    key: "signature1" | "signature2",
-    ref: React.RefObject<HTMLInputElement>
-  ) => {
-    updatePatientInfo(key, null);
-    if (ref.current) ref.current.value = "";
-  };
+
 
   return (
     <Card className="shadow-lg border-0 bg-white">
