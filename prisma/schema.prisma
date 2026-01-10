@@ -5,32 +5,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
 
 // Main Patient model
-model Patient {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Patient Info
-  name              String
-  gender            String
-  birthDate         String
-  sampleCode        String   @unique
-  sampleDate        String
-  reportDate        String
-  checkedBy         String
-  scientificContent String
-  disclaimer        String   @db.Text
-  signature1        String?
-  signature2        String?
-
-  // Relations
-  reports Report[]
-  shareTokens   ShareToken[]
-
-  @@map("patients")
-}
 
 // Report model
 model Report {
