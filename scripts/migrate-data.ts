@@ -373,7 +373,9 @@ function createSampleData() {
           geneTestResults: [],
           categories: [],
           summaries: {
-    
+            nutrigenomicsSummary: "Your nutrition genetics summary.",
+            exerciseGenomicsSummary: "Your exercise genetics summary.",
+          },
           metabolicSummary: { strengths: [], weaknesses: [] },
           preventiveHealth: {
             diagnosticTests: { halfYearly: [], yearly: [] },
