@@ -2,16 +2,7 @@ declare module "html2pdf.js" {
   import type { Options as Html2CanvasOptions } from "html2canvas";
 
   export interface Html2PdfOptions {
-    margin?: number | [number, number, number, number];
-    filename?: string;
-    image?: { type?: string; quality?: number };
-    html2canvas?: Partial<Html2CanvasOptions>;
-    jsPDF?: {
-      unit?: "pt" | "mm" | "cm" | "in";
-      format?: string | [number, number];
-      orientation?: "portrait" | "landscape";
-    };
-    pagebreak?: { mode?: string[] | string };
+?: { mode?: string[] | string };
   }
 
   export interface Html2PdfInstance {
