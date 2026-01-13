@@ -302,8 +302,7 @@ async function migrateReportData(reportId, report) {
     }
   } catch (error) {
     console.log(
-      `    ⚠️ Warning: Some report data could not be migrated:`,
-      error.message
+     
     );
   }
 }
