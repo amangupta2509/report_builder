@@ -308,7 +308,85 @@ async function migrateReportData(reportId, report) {
   }
 }
 
-
+function createSampleData() {
+  return [
+    {
+      id: "sample-patient-1",
+      info: {
+        name: "John Doe",
+        gender: "MALE",
+        birthDate: "1990-01-15",
+        sampleCode: "DNL0000000001",
+        sampleDate: "2025-01-01",
+        reportDate: "2025-01-15",
+        checkedBy: "Lab Technician",
+        scientificContent: "Dr. Johnson",
+        disclaimer: "This is a sample disclaimer for genetic testing results.",
+        signature1: null,
+        signature2: null,
+      },
+      reports: [
+        {
+          id: "sample-report-1",
+          content: {
+            introduction: "Welcome to your genetic report.",
+            genomicsExplanation: "Genomics is the study of your DNA.",
+            genesHealthImpact: "Your genes affect your health in various ways.",
+            fundamentalsPRS: "Polygenic Risk Scores explained.",
+            utilityDoctors: "How doctors can use this information.",
+            microarrayExplanation: "Microarray technology explanation.",
+            microarrayData: "Your microarray results.",
+          },
+          settings: {
+            title: "Genetic Health Report",
+            subtitle: "Personalized Insights",
+            companyName: "Sample Genetics Inc.",
+            headerColor: "#2563eb",
+            accentColor: "#dc2626",
+            fonts: {
+              primary: "Arial, sans-serif",
+              secondary: "Georgia, serif",
+              mono: "Courier New, monospace",
+            },
+          },
+          dynamicDietFieldDefinitions: [],
+          patientDietAnalysisResults: [],
+          dietFieldCategories: [],
+          nutritionData: { quote: "", description: "", data: {} },
+          sportsAndFitness: {
+            exerciseType: [],
+            performance: [],
+            customImages: {},
+          },
+          lifestyleConditions: {},
+          lifestyleCategoryImages: {},
+          metabolicCore: {},
+          digestiveHealth: { quote: "", description: "", data: {} },
+          genesAndAddiction: { quote: "", description: "", data: {} },
+          sleepAndRest: { quote: "", description: "", data: {} },
+          allergiesAndSensitivity: {
+            quote: "",
+            description: "",
+            generalAdvice: "",
+            data: {},
+          },
+          geneTestResults: [],
+          categories: [],
+          summaries: {
+            nutrigenomicsSummary: "Your nutrition genetics summary.",
+            exerciseGenomicsSummary: "Your exercise genetics summary.",
+          },
+          metabolicSummary: { strengths: [], weaknesses: [] },
+          preventiveHealth: {
+            diagnosticTests: { halfYearly: [], yearly: [] },
+            nutritionalSupplements: [],
+          },
+          familyGeneticImpact: [],
+        },
+      ],
+    },
+  ];
+}
 
 // Run the migration
 console.log("🔬 Genetic Reports Database Migration Tool");
