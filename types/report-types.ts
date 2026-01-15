@@ -55,15 +55,7 @@ export interface GenomicCategoryGroup {
   }[];
 }
 
-export interface GeneticCategory {
-  id: string;
-  category: string;
-  imageUrl: string;
-  description: string;
-  parameters: string[];
-  isActive: boolean;
-  order: number;
-}
+
 
 export interface PatientInfo {
   name: string;
