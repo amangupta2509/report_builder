@@ -37,7 +37,15 @@ type Action =
       toastId?: ToasterToast["id"]
     }
   | {
-      tg, ReturnType<typeof setTimeout>>()
+      type: ActionType["REMOVE_TOAST"]
+      toastId?: ToasterToast["id"]
+    }
+
+interface State {
+  toasts: ToasterToast[]
+}
+
+const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
 
 const addToRemoveQueue = (toastId: string) => {
   if (toastTimeouts.has(toastId)) {
