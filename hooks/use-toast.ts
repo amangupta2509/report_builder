@@ -88,6 +88,12 @@ const addToRemoveQueue = (toastId: string) => {
         ...state,
         toasts: state.toasts.filter((t) => t.id !== action.toastId),
       }
+  }
+}
+
+const listeners: Array<(state: State) => void> = []
+
+let memoryState: State = { toasts: [] }
 
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action)
