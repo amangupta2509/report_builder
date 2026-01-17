@@ -10,28 +10,17 @@ const TAG_LENGTH = 16;
 const TAG_POSITION = SALT_LENGTH + IV_LENGTH;
 const ENCRYPTED_POSITION = TAG_POSITION + TAG_LENGTH;
 
-
+interface EncryptedData {
+  encrypted: string;
+  iv: string;
+  tag: string;
+  salt: string;
+}
 
 /**
  * Encrypt data using AES-256-GCM
  */
-export function encrypt(text: string): string {
-  const key = Buffer.from(ENCRYPTION_KEY, "hex");
-  const iv = crypto.randomBytes(IV_LENGTH);
-  const salt = crypto.randomBytes(SALT_LENGTH);
 
-  const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
-
-  let encrypted = cipher.update(text, "utf8", "hex");
-  encrypted += cipher.final("hex");
-
-  const tag = cipher.getAuthTag();
-
-  // Combine salt + iv + tag + encrypted
-  const result = Buffer.concat([salt, iv, tag, Buffer.from(encrypted, "hex")]);
-
-  return result.toString("base64url"); // URL-safe base64
-}
 
 /**
  * Decrypt data using AES-256-GCM
