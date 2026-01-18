@@ -50,7 +50,11 @@ export default function GenomicAnalysisAdmin({
     });
   };
 
-
+  const updateCategoryName = (catIndex: number, value: string) => {
+    const updated = [...genomicAnalysisTable.categories];
+    updated[catIndex] = { ...updated[catIndex], category: value };
+    setGenomicAnalysisTable({ ...genomicAnalysisTable, categories: updated });
+  };
 
   const addSubcategory = (catIndex: number) => {
     const updated = [...genomicAnalysisTable.categories];
