@@ -50,45 +50,9 @@ export default function GenomicAnalysisAdmin({
     });
   };
 
-  const updateCategoryName = (catIndex: number, value: string) => {
-    const updated = [...genomicAnalysisTable.categories];
-    updated[catIndex] = { ...updated[catIndex], category: value };
-    setGenomicAnalysisTable({ ...genomicAnalysisTable, categories: updated });
-  };
 
-  const addSubcategory = (catIndex: number) => {
-    const updated = [...genomicAnalysisTable.categories];
-    const newSub = { area: "", trait: "", genes: [] };
-    updated[catIndex] = {
-      ...updated[catIndex],
-      subcategories: [...updated[catIndex].subcategories, newSub],
-    };
-    setGenomicAnalysisTable({ ...genomicAnalysisTable, categories: updated });
-  };
 
-  const removeSubcategory = (catIndex: number, subIndex: number) => {
-    const updated = [...genomicAnalysisTable.categories];
-    updated[catIndex] = {
-      ...updated[catIndex],
-      subcategories: updated[catIndex].subcategories.filter(
-        (_, i) => i !== subIndex
-      ),
-    };
-    setGenomicAnalysisTable({ ...genomicAnalysisTable, categories: updated });
-  };
 
-  const updateSubcategory = (
-    catIndex: number,
-    subIndex: number,
-    field: "area" | "trait" | "genes",
-    value: string | string[]
-  ) => {
-    const updated = [...genomicAnalysisTable.categories];
-    const subs = [...updated[catIndex].subcategories];
-    subs[subIndex] = { ...subs[subIndex], [field]: value };
-    updated[catIndex] = { ...updated[catIndex], subcategories: subs };
-    setGenomicAnalysisTable({ ...genomicAnalysisTable, categories: updated });
-  };
 
   return (
     <Card className="shadow-lg border-0 bg-white w-full">
