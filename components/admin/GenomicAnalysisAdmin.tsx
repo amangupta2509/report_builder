@@ -52,7 +52,18 @@ export default function GenomicAnalysisAdmin({
 
 
 
-
+  const updateSubcategory = (
+    catIndex: number,
+    subIndex: number,
+    field: "area" | "trait" | "genes",
+    value: string | string[]
+  ) => {
+    const updated = [...genomicAnalysisTable.categories];
+    const subs = [...updated[catIndex].subcategories];
+    subs[subIndex] = { ...subs[subIndex], [field]: value };
+    updated[catIndex] = { ...updated[catIndex], subcategories: subs };
+    setGenomicAnalysisTable({ ...genomicAnalysisTable, categories: updated });
+  };
 
   return (
     <Card className="shadow-lg border-0 bg-white w-full">
