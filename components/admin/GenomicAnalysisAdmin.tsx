@@ -52,6 +52,17 @@ export default function GenomicAnalysisAdmin({
 
 
 
+  const removeSubcategory = (catIndex: number, subIndex: number) => {
+    const updated = [...genomicAnalysisTable.categories];
+    updated[catIndex] = {
+      ...updated[catIndex],
+      subcategories: updated[catIndex].subcategories.filter(
+        (_, i) => i !== subIndex
+      ),
+    };
+    setGenomicAnalysisTable({ ...genomicAnalysisTable, categories: updated });
+  };
+
   const updateSubcategory = (
     catIndex: number,
     subIndex: number,
