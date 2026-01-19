@@ -5,7 +5,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
-
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+  createdAt: Date;
+  lastLogin?: Date;
+}
 
 interface AuthContextType {
   user: User | null;
