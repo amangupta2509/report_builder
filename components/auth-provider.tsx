@@ -5,14 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
-  createdAt: Date;
-  lastLogin?: Date;
-}
+
 
 interface AuthContextType {
   user: User | null;
@@ -33,12 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await fetch("/api/auth/me");
       
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.user);
-      } else {
-        setUser(null);
-      }
+     
     } catch (error) {
       console.error("Failed to fetch user:", error);
       setUser(null);
