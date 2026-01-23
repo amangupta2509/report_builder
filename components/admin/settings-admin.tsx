@@ -197,7 +197,15 @@ export default function SettingsAdmin({
             <Label
               htmlFor="monoFont"
               className="text-sm font-semibold text-gray-700"
-     Name="border-2 focus:border-purple-500"
+            >
+              Monospace Font
+            </Label>
+            <Input
+              id="monoFont"
+              value={settings.fonts.mono}
+              onChange={(e) => updateFontSetting("mono", e.target.value)}
+              placeholder="e.g., Courier New, monospace"
+              className="border-2 focus:border-purple-500"
             />
           </div>
         </div>
