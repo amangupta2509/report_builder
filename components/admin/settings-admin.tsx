@@ -114,7 +114,9 @@ export default function SettingsAdmin({
               value={settings.companyName}
               onChange={(e) => updateSettings("companyName", e.target.value)}
               className="border-2 focus:border-purple-500"
-              pla
+              placeholder="Enter company name"
+            />
+          </div>
           <div className="space-y-2">
             <Label
               htmlFor="headerColor"
