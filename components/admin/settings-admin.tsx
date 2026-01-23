@@ -80,21 +80,11 @@ export default function SettingsAdmin({
               Report Title
             </Label>
             <Input
-              id="title"
-              value={settings.title}
-              onChange={(e) => updateSettings("title", e.target.value)}
-              className="border-2 focus:border-purple-500 font-bold"
-              placeholder="Enter report title"
-            />
-          </div>
+              id="t
           <div className="space-y-2">
             <Label
               htmlFor="subtitle"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Report Subtitle
-            </Label>
-            <Input
+        
               id="subtitle"
               value={settings.subtitle}
               onChange={(e) => updateSettings("subtitle", e.target.value)}
@@ -114,9 +104,7 @@ export default function SettingsAdmin({
               value={settings.companyName}
               onChange={(e) => updateSettings("companyName", e.target.value)}
               className="border-2 focus:border-purple-500"
-              placeholder="Enter company name"
-            />
-          </div>
+              pla
           <div className="space-y-2">
             <Label
               htmlFor="headerColor"
@@ -129,11 +117,7 @@ export default function SettingsAdmin({
                 id="headerColor"
                 type="color"
                 value={settings.headerColor}
-                onChange={(e) => updateSettings("headerColor", e.target.value)}
-                className="w-16 h-10 border-2 focus:border-purple-500"
-              />
-              <Input
-                value={settings.headerColor}
+                onCtings.headerColor}
                 onChange={(e) => updateSettings("headerColor", e.target.value)}
                 className="flex-1 border-2 focus:border-purple-500 font-mono"
                 placeholder="#000000"
@@ -143,10 +127,7 @@ export default function SettingsAdmin({
           <div className="space-y-2">
             <Label
               htmlFor="accentColor"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Accent Color
-            </Label>
+             
             <div className="flex gap-2">
               <Input
                 id="accentColor"
@@ -156,56 +137,28 @@ export default function SettingsAdmin({
                 className="w-16 h-10 border-2 focus:border-purple-500"
               />
               <Input
-                value={settings.accentColor}
-                onChange={(e) => updateSettings("accentColor", e.target.value)}
-                className="flex-1 border-2 focus:border-purple-500 font-mono"
-                placeholder="#000000"
-              />
+                value={s
             </div>
           </div>
           <div className="space-y-2">
             <Label
-              htmlFor="primaryFont"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Primary Font
-            </Label>
-            <Input
+              htmlFo="primaryFont"
+              cla
               id="primaryFont"
               value={settings.fonts.primary}
               onChange={(e) => updateFontSetting("primary", e.target.value)}
               placeholder="e.g., Helvetica, Arial, sans-serif"
               className="border-2 focus:border-purple-500"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label
-              htmlFor="secondaryFont"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Secondary Font
+         
             </Label>
             <Input
               id="secondaryFont"
-              value={settings.fonts.secondary}
-              onChange={(e) => updateFontSetting("secondary", e.target.value)}
-              placeholder="e.g., Georgia, serif"
-              className="border-2 focus:border-purple-500"
-            />
           </div>
           <div className="space-y-2">
             <Label
               htmlFor="monoFont"
               className="text-sm font-semibold text-gray-700"
-            >
-              Monospace Font
-            </Label>
-            <Input
-              id="monoFont"
-              value={settings.fonts.mono}
-              onChange={(e) => updateFontSetting("mono", e.target.value)}
-              placeholder="e.g., Courier New, monospace"
-              className="border-2 focus:border-purple-500"
+     Name="border-2 focus:border-purple-500"
             />
           </div>
         </div>
