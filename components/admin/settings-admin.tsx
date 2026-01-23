@@ -156,7 +156,11 @@ export default function SettingsAdmin({
                 className="w-16 h-10 border-2 focus:border-purple-500"
               />
               <Input
-                value={s
+                value={settings.accentColor}
+                onChange={(e) => updateSettings("accentColor", e.target.value)}
+                className="flex-1 border-2 focus:border-purple-500 font-mono"
+                placeholder="#000000"
+              />
             </div>
           </div>
           <div className="space-y-2">
