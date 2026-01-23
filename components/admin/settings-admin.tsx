@@ -80,7 +80,13 @@ export default function SettingsAdmin({
               Report Title
             </Label>
             <Input
-              id="t
+              id="title"
+              value={settings.title}
+              onChange={(e) => updateSettings("title", e.target.value)}
+              className="border-2 focus:border-purple-500 font-bold"
+              placeholder="Enter report title"
+            />
+          </div>
           <div className="space-y-2">
             <Label
               htmlFor="subtitle"
