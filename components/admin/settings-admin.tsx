@@ -176,7 +176,14 @@ export default function SettingsAdmin({
               onChange={(e) => updateFontSetting("primary", e.target.value)}
               placeholder="e.g., Helvetica, Arial, sans-serif"
               className="border-2 focus:border-purple-500"
-         
+            />
+          </div>
+          <div className="space-y-2">
+            <Label
+              htmlFor="secondaryFont"
+              className="text-sm font-semibold text-gray-700"
+            >
+              Secondary Font
             </Label>
             <Input
               id="secondaryFont"
