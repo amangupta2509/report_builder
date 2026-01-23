@@ -90,7 +90,11 @@ export default function SettingsAdmin({
           <div className="space-y-2">
             <Label
               htmlFor="subtitle"
-        
+              className="text-sm font-semibold text-gray-700"
+            >
+              Report Subtitle
+            </Label>
+            <Input
               id="subtitle"
               value={settings.subtitle}
               onChange={(e) => updateSettings("subtitle", e.target.value)}
