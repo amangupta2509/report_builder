@@ -166,7 +166,11 @@ export default function SettingsAdmin({
           <div className="space-y-2">
             <Label
               htmlFo="primaryFont"
-              cla
+              className="text-sm font-semibold text-gray-700"
+            >
+              Primary Font
+            </Label>
+            <Input
               id="primaryFont"
               value={settings.fonts.primary}
               onChange={(e) => updateFontSetting("primary", e.target.value)}
