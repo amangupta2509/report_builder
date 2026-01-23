@@ -165,7 +165,7 @@ export default function SettingsAdmin({
           </div>
           <div className="space-y-2">
             <Label
-              htmlFo="primaryFont"
+              htmlFor="primaryFont"
               className="text-sm font-semibold text-gray-700"
             >
               Primary Font
@@ -180,6 +180,11 @@ export default function SettingsAdmin({
             </Label>
             <Input
               id="secondaryFont"
+              value={settings.fonts.secondary}
+              onChange={(e) => updateFontSetting("secondary", e.target.value)}
+              placeholder="e.g., Georgia, serif"
+              className="border-2 focus:border-purple-500"
+            />
           </div>
           <div className="space-y-2">
             <Label
