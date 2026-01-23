@@ -129,7 +129,11 @@ export default function SettingsAdmin({
                 id="headerColor"
                 type="color"
                 value={settings.headerColor}
-                onCtings.headerColor}
+                onChange={(e) => updateSettings("headerColor", e.target.value)}
+                className="w-16 h-10 border-2 focus:border-purple-500"
+              />
+              <Input
+                value={settings.headerColor}
                 onChange={(e) => updateSettings("headerColor", e.target.value)}
                 className="flex-1 border-2 focus:border-purple-500 font-mono"
                 placeholder="#000000"
