@@ -143,7 +143,10 @@ export default function SettingsAdmin({
           <div className="space-y-2">
             <Label
               htmlFor="accentColor"
-             
+              className="text-sm font-semibold text-gray-700"
+            >
+              Accent Color
+            </Label>
             <div className="flex gap-2">
               <Input
                 id="accentColor"
