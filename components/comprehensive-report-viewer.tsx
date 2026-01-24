@@ -467,7 +467,11 @@ label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:t
  
           
               <div className="flex justify-center py-2">
-          >
+          e="italic text-gray-500 text-xs">
+                    No signature available
+                  </p>
+                )}
+              </div>
               <p className="text-xs break-words text-gray-600">
                 {patientInfo.checkedBy}
               </p>
