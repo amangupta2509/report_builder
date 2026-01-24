@@ -467,7 +467,13 @@ label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:t
  
           
               <div className="flex justify-center py-2">
-        ame="text-xs font-semibold text-gray-700">
+          >
+              <p className="text-xs break-words text-gray-600">
+                {patientInfo.checkedBy}
+              </p>
+            </div>
+            <div className="text-center space-y-3">
+              <p className="text-xs font-semibold text-gray-700">
                 Scientific Content - Checked & Verified By
               </p>
               <div className="flex justify-center py-2">
