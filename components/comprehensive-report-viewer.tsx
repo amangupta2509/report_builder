@@ -447,7 +447,9 @@ export default function ComprehensiveReportViewer({
                 <div className="flex-1">
                   <p className="text-base font-mono font-bold text-orange-600 break-all tracking-wide print:text-sm print:text-black print:font-extrabold">
                     {patientInfo.sampleCode}
-       </div>
+                  </p>
+                </div>
+              </div>
 
               {/* Sample/Data Date Row */}
               <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
