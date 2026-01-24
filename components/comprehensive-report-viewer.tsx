@@ -465,7 +465,11 @@ export default function ComprehensiveReportViewer({
               </div>
 label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
  
-          
+          <div className="grid grid-cols-2 gap-6 mb-5">
+            <div className="text-center space-y-3">
+              <p className="text-xs font-semibold text-gray-700">
+                Genomic Data Analytics - Checked & Verified By
+              </p>
               <div className="flex justify-center py-2">
                 {patientInfo.signature1 ? (
                   <img
