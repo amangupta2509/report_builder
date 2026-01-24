@@ -468,7 +468,11 @@ label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:t
           
               <div className="flex justify-center py-2">
         ame="text-xs font-semibold text-gray-700">
-         img
+                Scientific Content - Checked & Verified By
+              </p>
+              <div className="flex justify-center py-2">
+                {patientInfo.signature2 ? (
+                  <img
                     src={patientInfo.signature2 || "/placeholder.svg"}
                     alt="Secondary Signature"
                     className="max-h-12 w-auto object-contain"
