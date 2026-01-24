@@ -447,9 +447,7 @@ export default function ComprehensiveReportViewer({
                 <div className="flex-1">
                   <p className="text-base font-mono font-bold text-orange-600 break-all tracking-wide print:text-sm print:text-black print:font-extrabold">
                     {patientInfo.sampleCode}
-                  </p>
-                </div>
-              </div>
+       </div>
 
               {/* Sample/Data Date Row */}
               <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
@@ -465,88 +463,8 @@ export default function ComprehensiveReportViewer({
                   </p>
                 </div>
               </div>
-
-              {/* Report Date Row */}
-              <div className="flex items-center py-4 px-6 hover:bg-white/50 transition-all duration-200 print:py-3 print:px-4">
-                <div className="w-2/5">
-                  <label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
-                    Report Date
-                  </label>
-                </div>
-                <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>
-                <div className="flex-1">
-                  <p className="text-base font-semibold text-gray-900 print:text-sm print:font-bold">
-                    {patientInfo.reportDate}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Authentication Section */}
-        <div className="mt-6 mb-6">
-          <Separator className="mb-4" />
-          <h3 className="text-center font-bold mb-4 text-gray-600 text-sm">
-            Report Authentication & Analytics
-          </h3>
-          <div className="grid grid-cols-2 gap-6 mb-5">
-            <div className="text-center space-y-3">
-              <p className="text-xs font-semibold text-gray-700">
-                Genomic Data Analytics - Checked & Verified By
-              </p>
-              <div className="flex justify-center py-2">
-                {patientInfo.signature1 ? (
-                  <img
-                    src={patientInfo.signature1 || "/placeholder.svg"}
-                    alt="Primary Signature"
-                    className="max-h-12 w-auto object-contain"
-                  />
-                ) : (
-                  <p className="italic text-gray-500 text-xs">
-                    No signature available
-                  </p>
-                )}
-              </div>
-              <p className="text-xs break-words text-gray-600">
-                {patientInfo.checkedBy}
-              </p>
-            </div>
-            <div className="text-center space-y-3">
-              <p className="text-xs font-semibold text-gray-700">
-                Scientific Content - Checked & Verified By
-              </p>
-              <div className="flex justify-center py-2">
-                {patientInfo.signature2 ? (
-                  <img
-                    src={patientInfo.signature2 || "/placeholder.svg"}
-                    alt="Secondary Signature"
-                    className="max-h-12 w-auto object-contain"
-                  />
-                ) : (
-                  <p className="italic text-gray-500 text-xs">
-                    No signature available
-                  </p>
-                )}
-              </div>
-              <p className="text-xs break-words text-gray-600">
-                {patientInfo.scientificContent}
-              </p>
-            </div>
-          </div>
-          <DataCard title="Disclaimer" className="text-center">
-            <p className="text-justify whitespace-pre-wrap break-words text-xs leading-relaxed">
-              {patientInfo.disclaimer}
-            </p>
-          </DataCard>
-        </div>
-
-        <Separator className="my-4" />
-        {/* Preface Section */}
-        <div className="text-center mb-3">
-          <h2 className="text-base font-bold mb-2 bg-blue-600 text-white py-2 px-2 rounded">
-            PREFACE
-          </h2>
+label className
+              <p classc
         </div>
 
         <div className="m-3 w-1/2">
