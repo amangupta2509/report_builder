@@ -465,6 +465,10 @@ export default function ComprehensiveReportViewer({
               </div>
 label className
               <p classc
+        <div className="text-center mb-3">
+          <h2 className="text-base font-bold mb-2 bg-blue-600 text-white py-2 px-2 rounded">
+            PREFACE
+          </h2>
         </div>
 
         <div className="m-3 w-1/2">
