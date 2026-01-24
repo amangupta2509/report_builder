@@ -465,9 +465,22 @@ export default function ComprehensiveReportViewer({
               </div>
 label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Report Date
-             
+                  </label>
+                </div>
+                <div className="w-px h-8 bg-gray-300 print:bg-gray-600 mx-4"></div>
+                <div className="flex-1">
+                  <p className="text-base font-semibold text-gray-900 print:text-sm print:font-bold">
+                    {patientInfo.reportDate}
+                  </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Authentication Section */}
+        <div className="mt-6 mb-6">
+          <Separator className="mb-4" />
           <h3 className="text-center font-bold mb-4 text-gray-600 text-sm">
             Report Authentication & Analytics
           </h3>
