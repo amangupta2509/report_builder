@@ -464,7 +464,11 @@ export default function ComprehensiveReportViewer({
                 </div>
               </div>
 label className
-              <p classc
+              <p classclaimer" className="text-center">
+            <p className="text-justify whitespace-pre-wrap break-words text-xs leading-relaxed">
+              {patientInfo.disclaimer}
+            </p>
+          </DataCard>
         </div>
 
         <Separator className="my-4" />
