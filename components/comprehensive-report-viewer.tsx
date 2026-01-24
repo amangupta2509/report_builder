@@ -463,7 +463,13 @@ export default function ComprehensiveReportViewer({
                   </p>
                 </div>
               </div>
-label className
+label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
+ 
+          
+              <div className="flex justify-center py-2">
+        ame="text-xs
+                )}
+              </div>
               <p className="text-xs break-words text-gray-600">
                 {patientInfo.scientificContent}
               </p>
