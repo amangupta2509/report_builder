@@ -467,7 +467,14 @@ label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:t
  
           
               <div className="flex justify-center py-2">
-          e="italic text-gray-500 text-xs">
+                {patientInfo.signature1 ? (
+                  <img
+                    src={patientInfo.signature1 || "/placeholder.svg"}
+                    alt="Primary Signature"
+                    className="max-h-12 w-auto object-contain"
+                  />
+                ) : (
+                  <p className="italic text-gray-500 text-xs">
                     No signature available
                   </p>
                 )}
