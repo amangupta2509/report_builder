@@ -465,7 +465,11 @@ export default function ComprehensiveReportViewer({
               </div>
 label className="text-sm font-bold text-gray-700 uppercase tracking-wide print:text-xs print:font-extrabold">
                     Report Date
-             tion & Analytics
+             
+                </div>
+              </div>
+          <h3 className="text-center font-bold mb-4 text-gray-600 text-sm">
+            Report Authentication & Analytics
           </h3>
           <div className="grid grid-cols-2 gap-6 mb-5">
             <div className="text-center space-y-3">
