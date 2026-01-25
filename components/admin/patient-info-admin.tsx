@@ -66,7 +66,13 @@ d to upload signature");
     <Card className="shadow-lg border-0 bg-white">
 >
 
-utton>
+      <CardContent className="space-y-6 p-8">
+        {/* Action Buttons */}
+        <div className="flex justify-end gap-2 mb-6">
+          <Button onClick={onSave} size="sm">
+            <Save className="h-4 w-4 mr-2" />
+            Save Changes
+          </Button>
         </div>
 
         {/* Basic Information */}
