@@ -62,7 +62,18 @@ d to upload signature");
 
   const removeSignature = (
  
+  return (
+    <Card className="shadow-lg border-0 bg-white">
+>
 
+utton>
+        </div>
+
+        {/* Basic Information */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-gray-800 pb-2">
+            Personal Information
+          </h3>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <Label
