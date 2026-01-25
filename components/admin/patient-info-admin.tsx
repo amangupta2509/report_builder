@@ -56,7 +56,12 @@ export default function PatientInfoAdmin({
 
       if (!res.ok) throw new Error("Upload failed");
       const { url } = await res.json();
-d to upload signature");
+
+      // Save backend URL instead of blob URL
+      updatePatientInfo(key, url);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to upload signature");
     }
   };
 
