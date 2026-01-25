@@ -57,7 +57,17 @@ export default function PatientInfoAdmin({
       if (!res.ok) throw new Error("Upload failed");
       const { url } = await res.json();
 d to upload signature");
-
+    }
+ter full patient name"
+                className="border-2"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label
+                htmlFor="gender"
+                className="text-sm font-semibold text-gray-700 required"
+              >
                 Gender *
               </Label>
               <Select
