@@ -56,7 +56,19 @@ export default function PatientInfoAdmin({
 
       if (!res.ok) throw new Error("Upload failed");
       const { url } = await res.json();
-e</SelectItem>
+d to upload signature");
+
+                Gender *
+              </Label>
+              <Select
+                value={patientInfo.gender}
+                onValueChange={(value) => updatePatientInfo("gender", value)}
+              >
+                <SelectTrigger className="border-2">
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="MALE">Male</SelectItem>
                   <SelectItem value="FEMALE">Female</SelectItem>
                   <SelectItem value="OTHER">Other</SelectItem>
                 </SelectContent>
