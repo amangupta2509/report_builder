@@ -61,7 +61,19 @@ d to upload signature");
   };
 
   const removeSignature = (
-o.name}
+ 
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <Label
+                htmlFor="name"
+                className="text-sm font-semibold text-gray-700 required"
+              >
+                Patient Name *
+              </Label>
+              <Input
+                id="name"
+                value={patientInfo.name}
                 onChange={(e) => updatePatientInfo("name", e.target.value)}
                 placeholder="Enter full patient name"
                 className="border-2"
