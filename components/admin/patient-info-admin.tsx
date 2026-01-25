@@ -61,7 +61,13 @@ d to upload signature");
   };
 
   const removeSignature = (
- 
+    key: "signature1" | "signature2",
+    ref: React.RefObject<HTMLInputElement>
+  ) => {
+    updatePatientInfo(key, null);
+    if (ref.current) ref.current.value = "";
+  };
+
   return (
     <Card className="shadow-lg border-0 bg-white">
       <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg px-3 py-4 sm:px-4 sm:py-5 md:px-6 md:py-6">
