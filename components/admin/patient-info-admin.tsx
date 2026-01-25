@@ -58,7 +58,12 @@ export default function PatientInfoAdmin({
       const { url } = await res.json();
 d to upload signature");
     }
-ter full patient name"
+  };
+
+  const removeSignature = (
+o.name}
+                onChange={(e) => updatePatientInfo("name", e.target.value)}
+                placeholder="Enter full patient name"
                 className="border-2"
                 required
               />
