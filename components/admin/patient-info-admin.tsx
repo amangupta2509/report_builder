@@ -56,94 +56,10 @@ export default function PatientInfoAdmin({
 
       if (!res.ok) throw new Error("Upload failed");
       const { url } = await res.json();
-
-      // Save backend URL instead of blob URL
-      updatePatientInfo(key, url);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to upload signature");
-    }
-  };
-
-  const removeSignature = (
-    key: "signature1" | "signature2",
-    ref: React.RefObject<HTMLInputElement>
-  ) => {
-    updatePatientInfo(key, null);
-    if (ref.current) ref.current.value = "";
-  };
-
-  return (
-    <Card className="shadow-lg border-0 bg-white">
-      <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg px-3 py-4 sm:px-4 sm:py-5 md:px-6 md:py-6">
-        <CardTitle className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold uppercase text-center sm:text-left">
-          Patient Information
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="space-y-6 p-8">
-        {/* Action Buttons */}
-        <div className="flex justify-end gap-2 mb-6">
-          <Button onClick={onSave} size="sm">
-            <Save className="h-4 w-4 mr-2" />
-            Save Changes
-          </Button>
-        </div>
-
-        {/* Basic Information */}
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-gray-800 pb-2">
-            Personal Information
-          </h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <Label
-                htmlFor="name"
-                className="text-sm font-semibold text-gray-700 required"
-              >
-                Patient Name *
-              </Label>
-              <Input
-                id="name"
-                value={patientInfo.name}
-                onChange={(e) => updatePatientInfo("name", e.target.value)}
-                placeholder="Enter full patient name"
-                className="border-2"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="gender"
-                className="text-sm font-semibold text-gray-700 required"
-              >
-                Gender *
-              </Label>
-              <Select
-                value={patientInfo.gender}
-                onValueChange={(value) => updatePatientInfo("gender", value)}
-              >
-                <SelectTrigger className="border-2">
-                  <SelectValue placeholder="Select gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="MALE">Male</SelectItem>
+e</SelectItem>
                   <SelectItem value="FEMALE">Female</SelectItem>
                   <SelectItem value="OTHER">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="birthDate"
-                className="text-sm font-semibold text-gray-700 required"
-              >
-                Birth Date *
-              </Label>
-              <Input
-                id="birthDate"
-                type="date"
-                value={patientInfo.birthDate}
+      .birthDate}
                 onChange={(e) => updatePatientInfo("birthDate", e.target.value)}
                 className="border-2"
                 required
