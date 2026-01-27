@@ -18,7 +18,12 @@ export default function ReportPreview({
   // ✅ Ref to the DOM node
   const reportRef = useRef<HTMLDivElement>(null);
 
-  // 
+  // ✅ Use contentRef instead of content for v3+
+  const handlePrint = useReactToPrint({
+    contentRef: reportRef,
+    documentTitle: `Report_${selectedPatient.info?.sampleCode || "Patient"}`,
+  });
+
   return (
     <div className="space-y-4">
       <div className="flex justify-end gap-2 no-print">
