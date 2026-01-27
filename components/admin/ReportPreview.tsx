@@ -2,7 +2,10 @@
 
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-i
+import { Button } from "@/components/ui/button";
+import ComprehensiveReportViewer from "@/components/comprehensive-report-viewer";
+import type { Report, Patient } from "@/types/report-types";
+
 interface ReportPreviewProps {
   selectedReport: Report;
   selectedPatient: Patient;
