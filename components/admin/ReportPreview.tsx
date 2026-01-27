@@ -31,7 +31,10 @@ export default function ReportPreview({
       </div>
 
       {/* Ref should be on a DOM node */}
-       ...selectedReport,
+      <div ref={reportRef}>
+        <ComprehensiveReportViewer
+          reportData={{
+            ...selectedReport,
             patientInfo: selectedPatient.info,
           }}
         />
