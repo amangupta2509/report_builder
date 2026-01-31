@@ -9,7 +9,16 @@ im
       impacts: [
         ...familyGeneticImpactSection.impacts,
         {
+          gene: "",
+          normalAlleles: "",
+          yourResult: "",
         
+
+  const updateFamilyGeneticImpact = (
+    index: number,
+    field: keyof FamilyGeneticImpact,
+    value: string
+  ) => {
     const updatedImpacts = [...familyGeneticImpactSection.impacts];
     updatedImpacts[index] = { ...updatedImpacts[index], [field]: value };
     setFamilyGeneticImpactSection({
