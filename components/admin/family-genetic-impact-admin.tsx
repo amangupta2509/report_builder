@@ -9,7 +9,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Save, RotateCcw, Plus, Trash2, Dna } from "lucide-react";
 import type {
-ce FamilyGeneticImpactAdminProps {
+  FamilyGeneticImpact,
+  FamilyGeneticImpactSection,
+} from "@/types/report-types";
+
+interface FamilyGeneticImpactAdminProps {
   familyGeneticImpactSection: FamilyGeneticImpactSection;
   setFamilyGeneticImpactSection: (section: FamilyGeneticImpactSection) => void;
   onSave: () => void;
