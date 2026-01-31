@@ -1,34 +1,7 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Save, RotateCcw, Plus, Trash2, Dna } from "lucide-react";
-import type {
-  FamilyGeneticImpact,
-  FamilyGeneticImpactSection,
-} from "@/types/report-types";
-
-interface FamilyGeneticImpactAdminProps {
-  familyGeneticImpactSection: FamilyGeneticImpactSection;
-  setFamilyGeneticImpactSection: (section: FamilyGeneticImpactSection) => void;
-  onSave: () => void;
-  onReset: () => void;
-}
-
-export default function FamilyGeneticImpactAdmin({
-  familyGeneticImpactSection,
-  setFamilyGeneticImpactSection,
-  onSave,
-  onReset,
+im
+  CardT
 }: FamilyGeneticImpactAdminProps) {
   const addFamilyGeneticImpact = () => {
     setFamilyGeneticImpactSection({
@@ -36,34 +9,8 @@ export default function FamilyGeneticImpactAdmin({
       impacts: [
         ...familyGeneticImpactSection.impacts,
         {
-          gene: "",
-          normalAlleles: "",
-          yourResult: "",
-          healthImpact: "",
-        },
-      ],
-    });
-  };
-
-  const updateFamilyGeneticImpact = (
-    index: number,
-    field: keyof FamilyGeneticImpact,
-    value: string
-  ) => {
-    const updatedImpacts = [...familyGeneticImpactSection.impacts];
-    updatedImpacts[index] = { ...updatedImpacts[index], [field]: value };
-    setFamilyGeneticImpactSection({
-      ...familyGeneticImpactSection,
-      impacts: updatedImpacts,
-    });
-  };
-
-  const removeFamilyGeneticImpact = (index: number) => {
-    setFamilyGeneticImpactSection({
-      ...familyGeneticImpactSection,
-      impacts: familyGeneticImpactSection.impacts.filter((_, i) => i !== index),
-    });
-  };
+        
+    
 
   const setDescription = (value: string) => {
     setFamilyGeneticImpactSection({
