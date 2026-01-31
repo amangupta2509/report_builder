@@ -10,7 +10,20 @@ im
         ...familyGeneticImpactSection.impacts,
         {
         
-    
+    const updatedImpacts = [...familyGeneticImpactSection.impacts];
+    updatedImpacts[index] = { ...updatedImpacts[index], [field]: value };
+    setFamilyGeneticImpactSection({
+      ...familyGeneticImpactSection,
+      impacts: updatedImpacts,
+    });
+  };
+
+  const removeFamilyGeneticImpact = (index: number) => {
+    setFamilyGeneticImpactSection({
+      ...familyGeneticImpactSection,
+      impacts: familyGeneticImpactSection.impacts.filter((_, i) => i !== index),
+    });
+  };
 
   const setDescription = (value: string) => {
     setFamilyGeneticImpactSection({
