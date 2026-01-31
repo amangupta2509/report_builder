@@ -6,7 +6,14 @@ im
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-onReset: () => void;
+import { Button } from "@/components/ui/button";
+import { Save, RotateCcw, Plus, Trash2, Dna } from "lucide-react";
+import type {
+ce FamilyGeneticImpactAdminProps {
+  familyGeneticImpactSection: FamilyGeneticImpactSection;
+  setFamilyGeneticImpactSection: (section: FamilyGeneticImpactSection) => void;
+  onSave: () => void;
+  onReset: () => void;
 }
 
 export default function FamilyGeneticImpactAdmin({
