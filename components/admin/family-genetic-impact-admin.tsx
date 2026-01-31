@@ -12,7 +12,11 @@ im
           gene: "",
           normalAlleles: "",
           yourResult: "",
-        
+          healthImpact: "",
+        },
+      ],
+    });
+  };
 
   const updateFamilyGeneticImpact = (
     index: number,
