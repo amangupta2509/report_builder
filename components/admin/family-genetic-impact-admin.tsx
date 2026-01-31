@@ -1,7 +1,16 @@
 "use client";
 
 im
-  CardT
+  CardTitle,
+} from "@/components/ui/card";
+imporoid;
+}
+
+export default function FamilyGeneticImpactAdmin({
+  familyGeneticImpactSection,
+  setFamilyGeneticImpactSection,
+  onSave,
+  onReset,
 }: FamilyGeneticImpactAdminProps) {
   const addFamilyGeneticImpact = () => {
     setFamilyGeneticImpactSection({
