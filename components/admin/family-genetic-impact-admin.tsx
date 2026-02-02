@@ -65,7 +65,12 @@ export default function FamilyGeneticImpactAdmin({
     });
   };
 
-
+  const setDescription = (value: string) => {
+    setFamilyGeneticImpactSection({
+      ...familyGeneticImpactSection,
+      description: value,
+    });
+  };
 
   return (
     <div className="w-full max-w-8xl mx-auto ">
