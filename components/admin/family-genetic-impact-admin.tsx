@@ -73,7 +73,10 @@ export default function FamilyGeneticImpactAdmin({
        
 
         <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center mt-3 gap-4 mb-4 p-4 ">
-          
+          <Button onClick={addFamilyGeneticImpact}>
+            <Plus className="h-4 w-4 mr-2" />
+            Add Genetic Impact
+          </Button>
           <div className="flex gap-3 w-full sm:w-auto">
             <Button onClick={onSave}>
               <Save className="h-4 w-4 mr-2" />
