@@ -72,7 +72,12 @@ export default function FamilyGeneticImpactAdmin({
       <Card className="shadow-xl border-0 bg-gradient-to-br from-slate-50 to-blue-50/20 overflow-hidden">
        
 
-    
+        <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center mt-3 gap-4 mb-4 p-4 ">
+          
+          <div className="flex gap-3 w-full sm:w-auto">
+            
+          </div>
+        </div>
 
         <CardContent className="mt-6">
           <div className="space-y-2">
