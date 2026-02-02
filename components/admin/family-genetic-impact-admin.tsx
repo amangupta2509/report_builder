@@ -70,7 +70,11 @@ export default function FamilyGeneticImpactAdmin({
   return (
     <div className="w-full max-w-8xl mx-auto ">
       <Card className="shadow-xl border-0 bg-gradient-to-br from-slate-50 to-blue-50/20 overflow-hidden">
-       
+        <CardHeader className="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-500 text-white rounded-lg p-4 sm:p-5">
+          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold uppercase flex items-center justify-center sm:justify-start text-center sm:text-left">
+            Family Genetic Impact Management
+          </CardTitle>
+        </CardHeader>
 
         <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center mt-3 gap-4 mb-4 p-4 ">
           <Button onClick={addFamilyGeneticImpact}>
