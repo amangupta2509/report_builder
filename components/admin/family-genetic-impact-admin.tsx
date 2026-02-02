@@ -72,6 +72,8 @@ export default function FamilyGeneticImpactAdmin({
       <Card className="shadow-xl border-0 bg-gradient-to-br from-slate-50 to-blue-50/20 overflow-hidden">
        
 
+    
+
         <CardContent className="mt-6">
           <div className="space-y-2">
             <Label className="text-sm font-semibold text-gray-700">
