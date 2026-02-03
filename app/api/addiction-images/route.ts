@@ -146,7 +146,14 @@ export async function POST(request: NextRequest) {
     // Create directory path
     const publicPath = path.join(process.cwd(), "public");
     const uploadDir = path.join(publicPath, folder);
-    const filePath = path.join(uploadDir, fileName);ublic URL
+    const filePath = path.join(uploadDir, fileName);
+
+    // Ensure directory exists
+ bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    await writeFile(filePath, buffer);
+
+    // Generate the public URL
     const publicUrl = `/${folder}/${fileName}`;
 
     return NextResponse.json({
