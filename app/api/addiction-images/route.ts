@@ -149,7 +149,11 @@ export async function POST(request: NextRequest) {
     const filePath = path.join(uploadDir, fileName);
 
     // Ensure directory exists
- bytes = await file.arrayBuffer();
+    try {
+      await mkdir(uploadDir, { recursive: true });
+  
+    // Convert file to buffer and save
+    const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     await writeFile(filePath, buffer);
 
