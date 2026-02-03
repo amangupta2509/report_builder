@@ -144,7 +144,14 @@ export async function POST(request: NextRequest) {
     const fileName = `${cleanLabel}${fileExtension}`;
 
     // Create directory path
-    const publicessfully",
+    const publicPath = path.join(process.cwd(), "public");
+    const uploadDir = path.join(publicPath, folder);
+    const filePath = path.join(uploadDir, fileName);ublic URL
+    const publicUrl = `/${folder}/${fileName}`;
+
+    return NextResponse.json({
+      success: true,
+      message: "File uploaded successfully",
       label: cleanLabel,
       url: publicUrl,
       filename: fileName,
