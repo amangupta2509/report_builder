@@ -43,7 +43,17 @@ export async function POST(req: NextRequest) {
     const folder = formData.get("folder") as string;
     const label = formData.get("label") as string;
 
-    i }
+    if (!file || !folder || !label) {
+      return NextResponse.json(
+        { success: false, error: "Missing file, label, or folder" },
+        { status: 400 }
+    lder}/${safeName}`,
+    });
+  } catch (err) {
+    console.error("Upload failed:", err);
+    return NextResponse.json(
+      { success: false, error: "Upload failed" },
+      { status: 500 }
     );
   }
 }
