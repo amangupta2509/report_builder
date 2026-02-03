@@ -43,32 +43,7 @@ export async function POST(req: NextRequest) {
     const folder = formData.get("folder") as string;
     const label = formData.get("label") as string;
 
-    if (!file || !folder || !label) {
-      return NextResponse.json(
-        { success: false, error: "Missing file, label, or folder" },
-        { status: 400 }
-      );
-    }
-
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-
-    const ext = file.name.split(".").pop() || "png";
-    const safeName = `${label.replace(/\s+/g, "_").toLowerCase()}.${ext}`;
-    const filePath = path.join(getFolderPath(folder), safeName);
-
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await fs.writeFile(filePath, buffer);
-
-    return NextResponse.json({
-      success: true,
-      url: `/${folder}/${safeName}`,
-    });
-  } catch (err) {
-    console.error("Upload failed:", err);
-    return NextResponse.json(
-      { success: false, error: "Upload failed" },
-      { status: 500 }
+    i }
     );
   }
 }
