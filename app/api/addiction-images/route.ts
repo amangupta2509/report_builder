@@ -141,13 +141,19 @@ export async function POST(request: NextRequest) {
 
     const fileExtension = getFileExtension(file.type);
     const cleanLabel = label.toLowerCase().replace(/[^a-z0-9_-]/g, "_");
-    const fileN
+    const fileName = `${cleanLabel}${fileExtension}`;
+,
+    });
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    return NextResponse.json(
+      {
         success: false,
         error: "Failed to upload file",
       },
       { status: 500 }
     );
-  
+  }
 }
 
 // DELETE handler - Optional: Delete addiction images
