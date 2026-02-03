@@ -47,7 +47,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { success: false, error: "Missing file, label, or folder" },
         { status: 400 }
-    lder}/${safeName}`,
+      );
+    }
+
+    co
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
+    await fs.writeFile(filePath, buffer);
+
+    return NextResponse.json({
+      success: true,
+      url: `/${folder}/${safeName}`,
     });
   } catch (err) {
     console.error("Upload failed:", err);
