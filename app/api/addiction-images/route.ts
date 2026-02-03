@@ -139,7 +139,12 @@ export async function POST(request: NextRequest) {
       return extensions[mimeType] || ".jpg";
     };
 
-    conson DELETE(request: NextRequest) {
+    const fileExtension = getFileExtension(file.type);
+    Comment
+}
+
+// DELETE handler - Optional: Delete addiction images
+export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const fileName = searchParams.get("file");
