@@ -151,7 +151,10 @@ export async function POST(request: NextRequest) {
     // Ensure directory exists
     try {
       await mkdir(uploadDir, { recursive: true });
-  
+    } catch (error) {
+      console.error("Error creating directory:", error);
+    }
+
     // Convert file to buffer and save
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
