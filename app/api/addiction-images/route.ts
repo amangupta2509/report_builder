@@ -142,7 +142,12 @@ export async function POST(request: NextRequest) {
     const fileExtension = getFileExtension(file.type);
     const cleanLabel = label.toLowerCase().replace(/[^a-z0-9_-]/g, "_");
     const fileName = `${cleanLabel}${fileExtension}`;
-,
+
+    // Create directory path
+    const publicessfully",
+      label: cleanLabel,
+      url: publicUrl,
+      filename: fileName,
     });
   } catch (error) {
     console.error("Error uploading file:", error);
