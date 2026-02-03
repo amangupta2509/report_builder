@@ -50,7 +50,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    co
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const 
     await fs.mkdir(path.dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, buffer);
 
