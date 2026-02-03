@@ -53,7 +53,10 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const 
+    const ext = file.name.split(".").pop() || "png";
+    const safeName = `${label.replace(/\s+/g, "_").toLowerCase()}.${ext}`;
+    const filePath = path.join(getFolderPath(folder), safeName);
+
     await fs.mkdir(path.dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, buffer);
 
