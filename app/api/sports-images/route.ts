@@ -9,7 +9,8 @@ import { existsSync } from "fs";
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Failed to save file" },
-   );
+      { status: 500 }
+    );
   }
 }
 
