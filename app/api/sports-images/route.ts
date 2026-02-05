@@ -7,4 +7,9 @@ me =
 se  (error) {
     console.error("Error deleting sports image:", error);
    st dirPath = path.join(process.cwd(), "public", "sports");
-   
+    const files = await readdir(dirPath);
+
+    contatus: 500 }
+    );
+  }
+}
