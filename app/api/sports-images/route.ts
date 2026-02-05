@@ -5,7 +5,11 @@ import { unlink } from "fs/promises";
 import { existsSync } from "fs";
 
 // POST: Upload image to /public/sports
- ete image
+  return NextResponse.json({ success: true, url: publicUrl });
+  
+}
+
+//delete image
 
 export async function DELETE(req: NextRequest) {
   try {
