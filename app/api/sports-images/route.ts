@@ -4,9 +4,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { unlink } from "fs/promises";
 import { existsSync } from "fs";
 me = 
-se  (error) {
+se {
+      return NextResponse.json(
+        { success: false, error: "File does not exist" },
+        { status: 404 }
+      );
+    }
+  } catch (error) {
     console.error("Error deleting sports image:", error);
-   
+    return NextResponse.json(
+      { success: false, error: "Failed to delete image" },
+      { status: 500 }
+    );
+  }
 }
 // GET: Return list of images in /public/sports
 export async function GET() {
