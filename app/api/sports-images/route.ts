@@ -6,7 +6,11 @@ import { existsSync } from "fs";
 
 // POST: Upload image to /public/sports
 ex
-.replace(/\s+/g, "_")
+   { status: 400 }
+    );
+  }
+oLowerCase()
+    .replace(/\s+/g, "_")
     .replace(/[^a-z0-9_]/gi, "");
   const fileName = `${safeLabel}.${ext}`;
   const filePath = path.join(process.cwd(), "public", "sports", fileName);
