@@ -5,7 +5,11 @@ import { unlink } from "fs/promises";
 import { existsSync } from "fs";
 
 // POST: Upload image to /public/sports
-ex
+export async function POST(req: NextRequest) {
+  const formData = await req.formData();
+  const file = formData.get("file") as File;
+  const label = formData.get("label") as string;
+
   if (!file || !label) {
     return NextResponse.json(
       { success: false, error: "Missing file or label" },
