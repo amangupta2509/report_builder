@@ -6,7 +6,10 @@ import { existsSync } from "fs";
 
 // POST: Upload image to /public/sports
 ex
-   { status: 400 }
+  if (!file || !label) {
+    return NextResponse.json(
+      { success: false, error: "Missing file or label" },
+      { status: 400 }
     );
   }
 
