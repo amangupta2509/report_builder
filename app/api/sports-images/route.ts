@@ -4,7 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { unlink } from "fs/promises";
 import { existsSync } from "fs";
 me = 
-se {
+
+    const filePath = path.join(process.cwd(), "public", "sports", fileName);
+
+    if (existsSync(filePath)) {
+      await unlink(filePath);
+      return NextResponse.json({ success: true, deleted: fileName });
+    } else {
       return NextResponse.json(
         { success: false, error: "File does not exist" },
         { status: 404 }
