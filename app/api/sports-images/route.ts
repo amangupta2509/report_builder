@@ -5,7 +5,11 @@ import { unlink } from "fs/promises";
 import { existsSync } from "fs";
 
 // POST: Upload image to /public/sports
-const buffer = Buffer.from(bytes);
+ex
+
+  try {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
     await writeFile(filePath, buffer);
 
     const publicUrl = `/sports/${fileName}`;
