@@ -6,7 +6,12 @@ import { existsSync } from "fs";
 me = 
 se  (error) {
     console.error("Error deleting sports image:", error);
-   st dirPath = path.join(process.cwd(), "public", "sports");
+   
+}
+// GET: Return list of images in /public/sports
+export async function GET() {
+  try {
+    const dirPath = path.join(process.cwd(), "public", "sports");
     const files = await readdir(dirPath);
 
     const images = files.map((file) => ({
