@@ -9,7 +9,10 @@ ex
    { status: 400 }
     );
   }
-oLowerCase()
+
+  const ext = file.name.split(".").pop() || "png";
+  const safeLabel = label
+    .toLowerCase()
     .replace(/\s+/g, "_")
     .replace(/[^a-z0-9_]/gi, "");
   const fileName = `${safeLabel}.${ext}`;
