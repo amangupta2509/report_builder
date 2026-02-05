@@ -9,7 +9,10 @@ se  (error) {
    st dirPath = path.join(process.cwd(), "public", "sports");
     const files = await readdir(dirPath);
 
-    contatus: 500 }
+    cone.error("Failed to read sports directory:", error);
+    return NextResponse.json(
+      { success: false, error: "Could not read sports folder" },
+      { status: 500 }
     );
   }
 }
