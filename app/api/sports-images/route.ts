@@ -3,7 +3,14 @@ import path from "path";
 import { NextRequest, NextResponse } from "next/server";
 import { unlink } from "fs/promises";
 import { existsSync } from "fs";
-me = 
+me = searchParams.get("file");
+
+    if (!fileName) {
+      return NextResponse.json(
+        { success: false, error: "Missing file parameter" },
+        { status: 400 }
+      );
+    }
 
     const filePath = path.join(process.cwd(), "public", "sports", fileName);
 
