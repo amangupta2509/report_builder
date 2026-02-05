@@ -9,7 +9,10 @@ se  (error) {
    st dirPath = path.join(process.cwd(), "public", "sports");
     const files = await readdir(dirPath);
 
-    con
+    const images = files.map((file) => ({
+      label: path.parse(file).name.toLowerCase(), // "dumbbell"
+      url: `/sports/${file}`,
+    }));
 
     return NextResponse.json({ success: true, images });
   } catch (error) {
