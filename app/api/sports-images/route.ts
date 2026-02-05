@@ -6,7 +6,11 @@ import { existsSync } from "fs";
 
 // POST: Upload image to /public/sports
   return NextResponse.json({ success: true, url: publicUrl });
-  
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to save file" },
+   );
+  }
 }
 
 //delete image
