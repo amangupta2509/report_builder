@@ -6,11 +6,7 @@ import { existsSync } from "fs";
 me = 
 se  (error) {
     console.error("Error deleting sports image:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to delete image" },
-      { status: 500 }
-    );
-  }
+   
 }
 // GET: Return list of images in /public/sports
 export async function GET() {
