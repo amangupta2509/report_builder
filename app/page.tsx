@@ -93,7 +93,15 @@ export default function HomePage() {
                 </h4>
                 <p className="text-sm text-purple-600">
             me="h-8 w-8 text-pink-600" />
-              <dssName="font-semibold text-teal-800">Sleep & Rest</h4>
+              <div>
+                <h4 className="font-semibold text-pink-800">
+             
+            </div>
+
+            <div className="flex items-center gap-3 p-4 bg-teal-50 rounded-lg">
+              <Brain className="h-8 w-8 text-teal-600" />
+              <div>
+                <h4 className="font-semibold text-teal-800">Sleep & Rest</h4>
                 <p className="text-sm text-teal-600">Sleep patterns, quality</p>
               </div>
             </div>
