@@ -93,7 +93,16 @@ export default function HomePage() {
                 </h4>
                 <p className="text-sm text-purple-600">
                   Gene analysis and impacts
+                </p>
+              </div>
+            </div>
 
+            <div className="flex items-center gap-3 p-4 bg-indigo-50 rounded-lg">
+              <Brain className="h-8 w-8 text-indigo-600" />
+              <div>
+                </h4>
+                <p className="text-sm text-indigo-600">
+                  
             </div>
 
             <div className="flex items-center gap-3 p-4 bg-pink-50 rounded-lg">
