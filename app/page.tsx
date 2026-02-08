@@ -91,38 +91,7 @@ export default function HomePage() {
                 <h4 className="font-semibold text-purple-800">
                   Metabolic Core
                 </h4>
-                <p className="text-sm text-purple-600">
-                  Gene analysis and impacts
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-4 bg-indigo-50 rounded-lg">
-              <Brain className="h-8 w-8 text-indigo-600" />
-              <div>
-                <h4 className="font-semibold text-indigo-800">
-                  Digestive Health
-                </h4>
-                <p className="text-sm text-indigo-600">
-                  Gut health, intolerances
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-4 bg-pink-50 rounded-lg">
-              <Dna className="h-8 w-8 text-pink-600" />
-              <div>
-                <h4 className="font-semibold text-pink-800">
-                  Genes & Addiction
-                </h4>
-                <p className="text-sm text-pink-600">Tendencies, advice</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-4 bg-teal-50 rounded-lg">
-              <Brain className="h-8 w-8 text-teal-600" />
-              <div>
-                <h4 className="font-semibold text-teal-800">Sleep & Rest</h4>
+              <dssName="font-semibold text-teal-800">Sleep & Rest</h4>
                 <p className="text-sm text-teal-600">Sleep patterns, quality</p>
               </div>
             </div>
