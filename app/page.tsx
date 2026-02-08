@@ -100,6 +100,8 @@ export default function HomePage() {
             <div className="flex items-center gap-3 p-4 bg-indigo-50 rounded-lg">
               <Brain className="h-8 w-8 text-indigo-600" />
               <div>
+                <h4 className="font-semibold text-indigo-800">
+                  Digestive Health
                 </h4>
                 <p className="text-sm text-indigo-600">
                   Gut health, intolerances
