@@ -91,6 +91,8 @@ export default function HomePage() {
                 <h4 className="font-semibold text-purple-800">
                   Metabolic Core
                 </h4>
+                <p className="text-sm text-purple-600">
+            me="h-8 w-8 text-pink-600" />
               <dssName="font-semibold text-teal-800">Sleep & Rest</h4>
                 <p className="text-sm text-teal-600">Sleep patterns, quality</p>
               </div>
