@@ -92,7 +92,12 @@ export default function HomePage() {
                   Metabolic Core
                 </h4>
                 <p className="text-sm text-purple-600">
-            me="h-8 w-8 text-pink-600" />
+                  Gene analysis and impacts
+
+            </div>
+
+            <div className="flex items-center gap-3 p-4 bg-pink-50 rounded-lg">
+              <Dna className="h-8 w-8 text-pink-600" />
               <div>
                 <h4 className="font-semibold text-pink-800">
                   Genes & Addiction
