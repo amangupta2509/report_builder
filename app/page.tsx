@@ -95,7 +95,10 @@ export default function HomePage() {
             me="h-8 w-8 text-pink-600" />
               <div>
                 <h4 className="font-semibold text-pink-800">
-             
+                  Genes & Addiction
+                </h4>
+                <p className="text-sm text-pink-600">Tendencies, advice</p>
+              </div>
             </div>
 
             <div className="flex items-center gap-3 p-4 bg-teal-50 rounded-lg">
