@@ -4,7 +4,12 @@
 /nt Info
   name              String
   gender            String
-cContent String
+  birthDate         String
+  sampleCode        String   @unique
+  sampleDate        String
+  reportDate        String
+  checkedBy         String
+  scientificContent String
   disclaimer        String   @db.Text
   signature1        String?
   signature2        String?
