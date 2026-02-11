@@ -4,7 +4,15 @@ import crypto from "crypto";
 const ENCRYPTION_KEY =
   process.env.ENCRYPTION_KEY || crypto.randomBytes(32).toString("hex");
 const ALGORITHM = "aes-256-gcm";
-to.createCipheriv(ALGORITHM, key, iv);
+const IV_LENGTH = 16;
+const SALT_LENGTH = 64;
+const T
+export function encrypt(text: string): string {
+  const key = Buffer.from(ENCRYPTION_KEY, "hex");
+  const iv = crypto.randomBytes(IV_LENGTH);
+  const salt = crypto.randomBytes(SALT_LENGTH);
+
+  const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
 
   let encrypted = cipher.update(text, "utf8", "hex");
   encrypted += cipher.final("hex");
