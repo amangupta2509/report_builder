@@ -19,7 +19,11 @@ model Patient {
   // Patient Info
   name              String
   gender            String
- 
+  birthDate         String
+  sampleCode        String   @unique
+  sampleDate        String
+  reportDate        String
+  checkedBy         String
   scientificContent String
   disclaimer        String   @db.Text
   signature1        String?
