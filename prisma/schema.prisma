@@ -16,6 +16,14 @@ model Patient {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Patient Info
+  name              String
+  gender            String
+ 
+  scientificContent String
+  disclaimer        String   @db.Text
+  signature1        String?
+  signature2        String?
 
   // Relations
   reports Report[]
