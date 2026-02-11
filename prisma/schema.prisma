@@ -17,6 +17,12 @@ model Patient {
   updatedAt DateTime @updatedAt
 
 
+  // Relations
+  reports Report[]
+  shareTokens   ShareToken[]
+
+  @@map("patients")
+}
 
 // Report model
 model Report {
