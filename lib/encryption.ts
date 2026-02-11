@@ -1,4 +1,15 @@
-her.getAuthTag();
+import crypto from "crypto";
+
+// Use environment variable for encryption key
+const ENCRYPTION_KEY =
+  process.env.ENCRYPTION_KEY || crypto.randomBytes(32).toString("hex");
+const ALGORITHM = "aes-256-gcm";
+to.createCipheriv(ALGORITHM, key, iv);
+
+  let encrypted = cipher.update(text, "utf8", "hex");
+  encrypted += cipher.final("hex");
+
+  const tag = cipher.getAuthTag();
 
   // Combine salt + iv + tag + encrypted
   const result = Buffer.concat([salt, iv, tag, Buffer.from(encrypted, "hex")]);
