@@ -13,7 +13,33 @@ datasource db {
 // Main Patient model
 model Patient {
   id        String   @id @default(uuid())
-tDietAnalysis {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+
+
+// Dynamic Diet Field (Child)
+model DynamicDietField {
+  id       String @id @default(uuid())
+  
+  definitionId String
+  definition   DynamicDietFieldDefinition @relation(fields: [definitionId], references: [id], onDelete: Cascade)
+
+  fieldId                String
+  label                  String
+  category               String
+  min                    Float
+  max                    Float
+  highRecommendation     String @db.Text
+  normalRecommendation   String @db.Text
+  lowRecommendation      String @db.Text
+
+  @@map("dynamic_diet_fields")
+}
+
+// Patient Diet Analysis Result
+model PatientDietAnalysis {
   id       String @id @default(uuid())
   reportId String
   report   Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
