@@ -53,7 +53,21 @@ export default function LoginPage() {
           variant: "destructive",
           duration: 4000,
         });
-tch (error) {
+        return;
+      }
+
+      toast({
+        title: "Login Successful",
+        description: `Welcome back, ${data.user.name}!`,
+        variant: "success",
+        duration: 2000,
+      });
+
+      // Redirect to intended page or home
+      const redirect = searchParams.get("redirect") || "/admin";
+      router.push(redirect);
+      router.refresh();
+    } catch (error) {
       toast({
          <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                   <Lock className="w-4 h-4" />
