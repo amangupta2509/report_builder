@@ -38,7 +38,21 @@ export async function GET(req: NextRequest) {
 // POST: Upload new image
 export async function POST(req: NextRequest) {
   try {
-rue,
+    const formData = await req.formData();
+    const file = formData.get("file") as File;
+    const folder = formData.get("folder") as string;
+    const label = formData.get("label") as string;
+
+    if (!file || !folder || !label) {
+ t = file.name.split(".").pop() || "png";
+    const safeName = `${label.replace(/\s+/g, "_").toLowerCase()}.${ext}`;
+    const filePath = path.join(getFolderPath(folder), safeName);
+
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
+    await fs.writeFile(filePath, buffer);
+
+    return NextResponse.json({
+      success: true,
       url: `/${folder}/${safeName}`,
     });
   } catch (err) {
