@@ -116,7 +116,23 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                   <Lock className="w-4 h-4" />
-             onClick={() => setShowPassword(!showPassword)}
+                  Password
+                </label>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="h-12 pl-4 pr-12 text-base border-2 focus:border-blue-500 transition-all"
+                    required
+                    disabled={loading}
+                    minLength={8}
+                    autoComplete="current-password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
 
           </p>
         </div>
