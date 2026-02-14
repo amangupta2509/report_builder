@@ -160,7 +160,13 @@ export default function LoginPage() {
                     <Lock className="mr-2 h-5 w-5" />
                     Sign In
                   </>
-       an>
+           
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">
+            Need access?{" "}
+            <span className="font-semibold text-blue-600">
+              Contact your administrator
+            </span>
           </p>
         </div>
       </div>
