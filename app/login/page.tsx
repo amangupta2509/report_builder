@@ -149,7 +149,18 @@ export default function LoginPage() {
                 type="submit"
                 className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
                 disabled={loading}
-an>
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Signing in...
+                  </>
+                ) : (
+                  <>
+                    <Lock className="mr-2 h-5 w-5" />
+                    Sign In
+                  </>
+       an>
           </p>
         </div>
       </div>
