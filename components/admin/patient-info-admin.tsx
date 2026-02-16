@@ -133,7 +133,12 @@ export default function PatientInfoAdmin({
                 </SelectContent>
               </Select>
             </div>
-            th Date *
+            <div className="space-y-2">
+              <Label
+                htmlFor="birthDate"
+                className="text-sm font-semibold text-gray-700 required"
+              >
+                Birth Date *
               </Label>
               <Input
                 id="birthDate"
