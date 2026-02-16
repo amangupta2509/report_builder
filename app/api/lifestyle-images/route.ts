@@ -46,7 +46,10 @@ export async function POST(req: NextRequest) {
     if (!file || !folder || !label) {
       return NextResponse.json(
         { success: false, error: "Missing file, label, or folder" },
-   
+        { status: 400 }
+      );
+    }
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
