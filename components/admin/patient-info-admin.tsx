@@ -131,7 +131,14 @@ export default function PatientInfoAdmin({
                   <SelectItem value="FEMALE">Female</SelectItem>
                   <SelectItem value="OTHER">Other</SelectItem>
                 </SelectContent>
-        ={patientInfo.birthDate}
+              </Select>
+            </div>
+            th Date *
+              </Label>
+              <Input
+                id="birthDate"
+                type="date"
+                value={patientInfo.birthDate}
                 onChange={(e) => updatePatientInfo("birthDate", e.target.value)}
                 className="border-2"
                 required
