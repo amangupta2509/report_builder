@@ -766,7 +766,10 @@ export default function SportsFitnessAdmin({
                       } catch (err) {
                         console.error("Deletion error", err);
                         toast({
-                  });
+                       description: "Error occurred while deleting image",
+                          variant: "destructive",
+                          duration: 1500,
+                        });
                       }
                     }}
                   >
