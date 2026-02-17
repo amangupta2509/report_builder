@@ -770,7 +770,10 @@ export default function SportsFitnessAdmin({
               
           )}
         </DialogCon => setDeleteConfirm({ type: null, target: "" })}
-      >tle className="text-base sm:text-lg md:text-xl">
+      >
+        <AlertDialogContent className="w-[90%] rounded-md max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-4 sm:p-6">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-base sm:text-lg md:text-xl">
               Confirm Deletion
             </AlertDialogTitle>
             <AlertDialogDescription className="text-sm sm:text-base leading-relaxed">
