@@ -767,7 +767,10 @@ export default function SportsFitnessAdmin({
                         console.error("Deletion error", err);
                         toast({
                   });
-              
+                utton>
+                </li>
+              ))}
+            </ul>
           )}
         </DialogContent>
       </Dialog>
