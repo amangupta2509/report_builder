@@ -766,31 +766,11 @@ export default function SportsFitnessAdmin({
                       } catch (err) {
                         console.error("Deletion error", err);
                         toast({
-                          title: "Delete Error",
-                          description: "Error occurred while deleting image",
-                          variant: "destructive",
-                          duration: 1500,
-                        });
-                      }
-                    }}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </li>
-              ))}
-            </ul>
+                  });
+              
           )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog
-        open={deleteConfirm.type !== null}
-        onOpenChange={() => setDeleteConfirm({ type: null, target: "" })}
-      >
-        <AlertDialogContent className="w-[90%] rounded-md max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-4 sm:p-6">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-base sm:text-lg md:text-xl">
+        </DialogCon => setDeleteConfirm({ type: null, target: "" })}
+      >tle className="text-base sm:text-lg md:text-xl">
               Confirm Deletion
             </AlertDialogTitle>
             <AlertDialogDescription className="text-sm sm:text-base leading-relaxed">
@@ -817,17 +797,7 @@ export default function SportsFitnessAdmin({
 
           <AlertDialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3 mt-4">
             <AlertDialogCancel className="w-full sm:w-auto">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={confirmDelete}
-              className="bg-red-600 hover:bg-red-700 w-full sm:w-auto"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+              C
     </div>
   );
 }
