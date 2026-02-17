@@ -818,7 +818,10 @@ export default function SportsFitnessAdmin({
           <AlertDialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3 mt-4">
             <AlertDialogCancel className="w-full sm:w-auto">
               Cancel
-           lassNialogAction>
+           lassName="bg-red-600 hover:bg-red-700 w-full sm:w-auto"
+            >
+              Delete
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
