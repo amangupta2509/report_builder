@@ -767,7 +767,11 @@ export default function SportsFitnessAdmin({
                         console.error("Deletion error", err);
                         toast({
                   });
-                utton>
+                      }
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                 </li>
               ))}
             </ul>
