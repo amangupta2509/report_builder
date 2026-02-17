@@ -769,7 +769,11 @@ export default function SportsFitnessAdmin({
                   });
               
           )}
-        </DialogCon => setDeleteConfirm({ type: null, target: "" })}
+        </DialogContent>
+      </Dialog>
+
+      {/* DeleConfirm.type !== null}
+        onOpenChange={() => setDeleteConfirm({ type: null, target: "" })}
       >
         <AlertDialogContent className="w-[90%] rounded-md max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-4 sm:p-6">
           <AlertDialogHeader>
