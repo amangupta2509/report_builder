@@ -817,7 +817,11 @@ export default function SportsFitnessAdmin({
 
           <AlertDialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3 mt-4">
             <AlertDialogCancel className="w-full sm:w-auto">
-              C
+              Cancel
+           lassNialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
