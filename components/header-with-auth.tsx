@@ -1,16 +1,7 @@
 // components/header-with-auth.tsx
 "use client";
 
-import { useAuth } from "@/components/auth-provider";
-import { LogOut, User, Shield } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export function HeaderWithAuth() {
