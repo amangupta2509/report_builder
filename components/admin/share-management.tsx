@@ -13,24 +13,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Share2,
-  Copy,
-  Eye,
-  Calendar,
-  Lock,
-  Trash2,
-  ExternalLink,
-  CheckCircle2,
-  XCircle,
-} from "lucide-react";
+
+
 
 interface ShareManagementProps {
   reportId: string;
