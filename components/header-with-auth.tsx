@@ -1,7 +1,7 @@
 // components/header-with-auth.tsx
 "use client";
 
-
+-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
