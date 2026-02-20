@@ -4,6 +4,12 @@ import crypto from "crypto";
 const ENCRYPTION_KEY =
   process.env.ENCRYPTION_KEY || crypto.randomBytes(32).toString("hex");
 
+interface EncryptedData {
+  encrypted: string;
+  iv: string;
+  tag: string;
+  salt: string;
+}
 
 /**
  * Encrypt data using AES-256-GCM
