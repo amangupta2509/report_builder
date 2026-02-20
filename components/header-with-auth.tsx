@@ -1,7 +1,8 @@
 // components/header-with-auth.tsx
 "use client";
 
--react";
+import { useAuth } from "@/components/auth-provider";
+import { LogOut, User, Shield } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
