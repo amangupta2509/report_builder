@@ -14,7 +14,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-
+import {
+  Share2,
+  Copy,
+  Eye,
+  Calendar,
+  Lock,
+  Trash2,
+  ExternalLink,
+  CheckCircle2,
+  XCircle,
+} from "lucide-react";
 
 interface ShareManagementProps {
   reportId: string;
