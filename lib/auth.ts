@@ -49,40 +49,7 @@ export async function createRefreshToken(user: User): Promise<string> {
     type: "refresh",
   })
     .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime("7d")
-    .sign(JWT_SECRET);
-}
 
-/**
- * Verify JWT token
- */
-export async function verifyToken(token: string): Promise<SessionPayload | null> {
-  try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
-    return payload as SessionPayload;
-  } catch (error) {
-    return null;
-  }
-}
-
-/**
- * Create session with HTTP-only cookies
- */
-export async function createSession(user: User) {
-  const accessToken = await createAccessToken(user);
-  const refreshToken = await createRefreshToken(user);
-
-  const cookieStore = await cookies();
-  
-  // Set access token
-  cookieStore.set("accessToken", accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: SESSION_DURATION,
-    path: "/",
-  });
 
   // Set refresh token
   cookieStore.set("refreshToken", refreshToken, {
