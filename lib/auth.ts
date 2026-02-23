@@ -49,7 +49,20 @@ export async function createRefreshToken(user: User): Promise<string> {
     type: "refresh",
   })
     .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("7d")
+    .sign(JWT_SECRET);
+}
 
+/**
+ } = await jwtVerify(token, JWT_SECRET);
+    return payload as SessionPayload;
+  } catch (error) {
+    return null;
+  }
+}
+
+/**
  * Create session with HTTP-only cookies
  */
 export async function createSession(user: User) {
