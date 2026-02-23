@@ -50,6 +50,14 @@ export async function createRefreshToken(user: User): Promise<string> {
   })
     .setProtectedHeader({ alg: "HS256" })
 
+  // Set access token
+  cookieStore.set("accessToken", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: SESSION_DURATION,
+    path: "/",
+  });
 
   // Set refresh token
   cookieStore.set("refreshToken", refreshToken, {
