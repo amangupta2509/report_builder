@@ -50,6 +50,14 @@ export async function createRefreshToken(user: User): Promise<string> {
   })
     .setProtectedHeader({ alg: "HS256" })
 
+ * Create session with HTTP-only cookies
+ */
+export async function createSession(user: User) {
+  const accessToken = await createAccessToken(user);
+  const refreshToken = await createRefreshToken(user);
+
+  const cookieStore = await cookies();
+  
   // Set access token
   cookieStore.set("accessToken", accessToken, {
     httpOnly: true,
