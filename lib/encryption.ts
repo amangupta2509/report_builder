@@ -6,20 +6,10 @@ const ENCRYPTION_KEY =
 const ALGORITHM = "aes-256-gcm";
 const IV_LENGTH = 16;
 const SALT_LENGTH = 64;
-const TAG_LENGTH = 16;
-const TAG_POSITION = SALT_LENGTH + IV_LENGTH;
-const ENCRYPTED_POSITION = TAG_POSITION + TAG_LENGTH;
 
-interface EncryptedData {
-  encrypted: string;
-  iv: string;
-  tag: string;
-  salt: string;
-}
 
-/**
- * Encrypt data using AES-256-GCM
- */
+
+
 export function encrypt(text: string): string {
   const key = Buffer.from(ENCRYPTION_KEY, "hex");
   const iv = crypto.randomBytes(IV_LENGTH);
