@@ -150,7 +150,27 @@ async function migrateJsonToDB() {
                 report.summaries?.exerciseGenomicsSummary || "",
               // Metabolic summary
               metabolicStrengths: report.metabolicSummary?.strengths || [],
-onst field of report.dynamicDietFieldDefinitions) {
+              metabolicWeaknesses: report.metabolicSummary?.weaknesses || [],
+              // Diet categories
+              dietFieldCategories: report.dietFieldCategories || [],
+            },
+          });
+
+          // Migrate related data with progress indicators
+          await migrateReportData(createdReport.id, report);
+
+a.$disconnect();
+  }
+}
+
+async function migrateReportData(reportId, report) {
+  try {
+    // Migrate Dynamic Diet Fields
+    if (
+      report.dynamicDietFieldDefinitions &&
+      Array.isArray(report.dynamicDietFieldDefinitions)
+    ) {
+      for (const field of report.dynamicDietFieldDefinitions) {
         await prisma.dynamicDietField.create({
           data: {
             reportId: reportId,
