@@ -162,6 +162,16 @@ async function migrateJsonToDB() {
           console.log(`  ✅ Report ${j + 1} migrated successfully`);
         }
 
+        migratedCount++;
+        console.log(`✅ Patient ${i + 1} migrated successfully\n`);
+      } catch (patientError) {
+        console.error(
+          `❌ Error migrating patient ${i + 1}:`,
+          
+        }
+        continue;
+      }
+    }
 
     console.log(`\n🎉 Migration completed successfully!`);
     console.log(
