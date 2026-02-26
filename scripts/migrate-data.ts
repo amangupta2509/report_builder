@@ -140,69 +140,7 @@ async function migrateJsonToDB() {
               sleepDescription: report.sleepAndRest?.description || null,
               allergyQuote: report.allergiesAndSensitivity?.quote || "",
               allergyDescription:
-                report.allergiesAndSensitivity?.description || "",
-              allergyGeneralAdvice:
-                report.allergiesAndSensitivity?.generalAdvice || "",
-              // Summaries
-              nutrigenomicsSummary:
-                report.summaries?.nutrigenomicsSummary || "",
-              exerciseGenomicsSummary:
-                report.summaries?.exerciseGenomicsSummary || "",
-              // Metabolic summary
-              metabolicStrengths: report.metabolicSummary?.strengths || [],
-              metabolicWeaknesses: report.metabolicSummary?.weaknesses || [],
-              // Diet categories
-              dietFieldCategories: report.dietFieldCategories || [],
-            },
-          });
-
-          // Migrate related data with progress indicators
-          await migrateReportData(createdReport.id, report);
-
-          console.log(`  ✅ Report ${j + 1} migrated successfully`);
-        }
-
-        migratedCount++;
-        console.log(`✅ Patient ${i + 1} migrated successfully\n`);
-      } catch (patientError) {
-        console.error(
-          `❌ Error migrating patient ${i + 1}:`,
-          patientError.message
-        );
-        if (patientError.code === "P2002") {
-          console.log(
-            "  💡 This appears to be a duplicate sample code. Skipping...\n"
-          );
-        }
-        continue;
-      }
-    }
-
-    console.log(`\n🎉 Migration completed successfully!`);
-    console.log(
-      `📈 Results: ${migratedCount}/${jsonData.length} patients migrated to the database.`
-    );
-  } catch (error) {
-    console.error("❌ Migration failed:", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-}
-
-async function migrateReportData(reportId, report) {
-  try {
-    // Migrate Dynamic Diet Fields
-    if (
-      report.dynamicDietFieldDefinitions &&
-      Array.isArray(report.dynamicDietFieldDefinitions)
-    ) {
-      for (const field of report.dynamicDietFieldDefinitions) {
-        await prisma.dynamicDietField.create({
-          data: {
-            reportId: reportId,
-            uuid: field._uuid || `uuid_${Date.now()}_${Math.random()}`,
-            fieldId: field.id || "",
-            label: field.label || "",
+eld.label || "",
             category: field.category || "",
             min: typeof field.min === "number" ? field.min : 0,
             max: typeof field.max === "number" ? field.max : 100,
