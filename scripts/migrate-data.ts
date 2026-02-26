@@ -159,7 +159,18 @@ async function migrateJsonToDB() {
           // Migrate related data with progress indicators
           await migrateReportData(createdReport.id, report);
 
-a.$disconnect();
+          console.log(`  ✅ Report ${j + 1} migrated successfully`);
+        }
+
+
+    console.log(`\n🎉 Migration completed successfully!`);
+    console.log(
+      `📈 Results: ${migratedCount}/${jsonData.length} patients migrated to the database.`
+    );
+  } catch (error) {
+    console.error("❌ Migration failed:", error);
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
