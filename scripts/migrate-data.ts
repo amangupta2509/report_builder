@@ -167,7 +167,12 @@ async function migrateJsonToDB() {
       } catch (patientError) {
         console.error(
           `❌ Error migrating patient ${i + 1}:`,
-          
+          patientError.message
+        );
+        if (patientError.code === "P2002") {
+          console.log(
+            "  💡 This appears to be a duplicate sample code. Skipping...\n"
+          );
         }
         continue;
       }
