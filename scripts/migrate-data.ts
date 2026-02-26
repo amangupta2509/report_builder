@@ -140,7 +140,23 @@ async function migrateJsonToDB() {
               sleepDescription: report.sleepAndRest?.description || null,
               allergyQuote: report.allergiesAndSensitivity?.quote || "",
               allergyDescription:
-eld.label || "",
+                report.allergiesAndSensitivity?.description || "",
+              allergyGeneralAdvice:
+                report.allergiesAndSensitivity?.generalAdvice || "",
+              // Summaries
+              nutrigenomicsSummary:
+                report.summaries?.nutrigenomicsSummary || "",
+              exerciseGenomicsSummary:
+                report.summaries?.exerciseGenomicsSummary || "",
+              // Metabolic summary
+              metabolicStrengths: report.metabolicSummary?.strengths || [],
+onst field of report.dynamicDietFieldDefinitions) {
+        await prisma.dynamicDietField.create({
+          data: {
+            reportId: reportId,
+            uuid: field._uuid || `uuid_${Date.now()}_${Math.random()}`,
+            fieldId: field.id || "",
+            label: field.label || "",
             category: field.category || "",
             min: typeof field.min === "number" ? field.min : 0,
             max: typeof field.max === "number" ? field.max : 100,
