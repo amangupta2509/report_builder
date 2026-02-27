@@ -1,8 +1,20 @@
 import crypto from "crypto";
 
-// Use environment variable for encryption key
-const ENCRYPTION_KEY =
-  process.env.ENCRYPTION_KEY || crypto.randomBytes(32).toString("hex");
+// Validate encryption key at startup
+if (!process.env.ENCRYPTION_KEY) {
+  throw new Error(
+    "CRITICAL: ENCRYPTION_KEY environment variable is not set. Please set a 64-character hex string in your .env file.",
+  );
+}
+
+// Validate key format (should be 64 character hex string = 32 bytes)
+if (!/^[a-f0-9]{64}$/i.test(process.env.ENCRYPTION_KEY)) {
+  throw new Error(
+    "CRITICAL: ENCRYPTION_KEY must be a 64-character hexadecimal string (32 bytes)",
+  );
+}
+
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
 const ALGORITHM = "aes-256-gcm";
 const IV_LENGTH = 16;
 const SALT_LENGTH = 64;
@@ -78,7 +90,7 @@ export async function hashPassword(password: string): Promise<string> {
  */
 export async function verifyPassword(
   password: string,
-  hash: string
+  hash: string,
 ): Promise<boolean> {
   const [salt, key] = hash.split(":");
 
@@ -102,7 +114,7 @@ export function generateSecureToken(): string {
  */
 export function createSharePayload(
   reportId: string,
-  patientId: string
+  patientId: string,
 ): string {
   const payload = JSON.stringify({
     reportId,
@@ -118,7 +130,7 @@ export function createSharePayload(
  * Parse share token payload
  */
 export function parseSharePayload(
-  token: string
+  token: string,
 ): { reportId: string; patientId: string } | null {
   try {
     const decrypted = decrypt(token);
