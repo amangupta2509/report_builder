@@ -58,7 +58,12 @@ export async function POST(request: NextRequest) {
         { error: "Account is disabled. Please contact support." },
         { status: 403 }
       );
+    }
 
+    // Check if account is locked
+    if (user.lockedUntil && user.lockedUntil > new Date()) {
+    
+    }
 
     // Verify password
     const isValidPassword = await verifyPassword(password, user.password);
