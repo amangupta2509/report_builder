@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     if (!reportId || !patientId) {
       return NextResponse.json(
         { error: "Missing reportId or patientId" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     if (!report || report.patientId !== patientId) {
       return NextResponse.json(
         { error: "Report not found or does not belong to patient" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -94,10 +94,10 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error("Error creating share token:", error);
+    console.error("Share token creation error");
     return NextResponse.json(
-      { error: "Failed to create share link", details: error.message },
-      { status: 500 }
+      { error: "Failed to create share link" },
+      { status: 500 },
     );
   } finally {
     await prisma.$disconnect();
@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
     if (!reportId && !patientId) {
       return NextResponse.json(
         { error: "Missing reportId or patientId parameter" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -170,10 +170,10 @@ export async function GET(request: NextRequest) {
       shareTokens: formatted,
     });
   } catch (error: any) {
-    console.error("Error fetching share tokens:", error);
+    console.error("Share token fetch error");
     return NextResponse.json(
-      { error: "Failed to fetch share tokens", details: error.message },
-      { status: 500 }
+      { error: "Failed to fetch share tokens" },
+      { status: 500 },
     );
   } finally {
     await prisma.$disconnect();
@@ -191,7 +191,7 @@ export async function DELETE(request: NextRequest) {
     if (!tokenId) {
       return NextResponse.json(
         { error: "Missing tokenId parameter" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -209,7 +209,7 @@ export async function DELETE(request: NextRequest) {
     console.error("Error revoking share token:", error);
     return NextResponse.json(
       { error: "Failed to revoke share token", details: error.message },
-      { status: 500 }
+      { status: 500 },
     );
   } finally {
     await prisma.$disconnect();
