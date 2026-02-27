@@ -9,6 +9,7 @@ export async function POST() {
   try {
     const session = await getSession();
 
+
     await destroySession();
 
     return NextResponse.json({ success: true });
