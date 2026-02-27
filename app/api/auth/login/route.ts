@@ -58,25 +58,7 @@ export async function POST(request: NextRequest) {
         { error: "Account is disabled. Please contact support." },
         { status: 403 }
       );
-    }
 
-    // Check if account is locked
-    if (user.lockedUntil && user.lockedUntil > new Date()) {
-      const remainingTime = Math.ceil(
-        (user.lockedUntil.getTime() - Date.now()) / 1000 / 60
-      );
-      await logAuditEvent(
-        "login_failed",
-        { email, reason: "account_locked" },
-        request
-      );
-      return NextResponse.json(
-        {
-          error: `Account is locked due to multiple failed login attempts. Try again in ${remainingTime} minutes.`,
-        },
-        { status: 429 }
-      );
-    }
 
     // Verify password
     const isValidPassword = await verifyPassword(password, user.password);
