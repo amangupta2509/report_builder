@@ -2,35 +2,86 @@ import { promises as fs } from "fs";
 import path from "path";
 import { NextRequest, NextResponse } from "next/server";
 
-function getFolderPath(folder: string) {
-  return path.join(process.cwd(), "public", folder);
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "image/svg+xml",
+];
+
+// Whitelist of allowed folders to prevent path traversal
+const ALLOWED_FOLDERS = [
+  "lifestyle",
+  "life",
+  "sports",
+  "digestive",
+  "sleep",
+  "addiction",
+  "allergies",
+  "sensitivity",
+  "lifestyle-conditions",
+];
+
+function getFolderPath(folder: string): string | null {
+  // Sanitize folder path
+  const sanitized = folder
+    .replace(/\.\./g, "")
+    .replace(/\\/g, "")
+    .toLowerCase();
+
+  // Check whitelist
+  if (!ALLOWED_FOLDERS.includes(sanitized)) {
+    return null;
+  }
+
+  const folderPath = path.join(process.cwd(), "public", sanitized);
+
+  // Ensure the resolved path is within public directory
+  const resolvedPath = path.resolve(folderPath);
+  const publicPath = path.resolve(path.join(process.cwd(), "public"));
+
+  if (!resolvedPath.startsWith(publicPath)) {
+    return null;
+  }
+
+  return folderPath;
 }
 
-// GET: List images in a folder (e.g., /api/image-library?folder=lifestyle)
+// GET: List images in a folder
 export async function GET(req: NextRequest) {
   const folder = req.nextUrl.searchParams.get("folder");
   if (!folder) {
     return NextResponse.json(
       { success: false, error: "Missing folder" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   const folderPath = getFolderPath(folder);
+  if (!folderPath) {
+    return NextResponse.json(
+      { success: false, error: "Invalid folder" },
+      { status: 400 },
+    );
+  }
 
   try {
     const files = await fs.readdir(folderPath);
-    const images = files.map((file) => ({
-      label: file.split(".")[0],
-      url: `/${folder}/${file}`,
-    }));
+    const images = files
+      .filter((file) => /\.(jpg|jpeg|png|gif|svg|webp)$/i.test(file))
+      .map((file) => ({
+        label: file.split(".")[0],
+        url: `/${folder}/${file}`,
+      }));
 
     return NextResponse.json({ success: true, images });
   } catch (err) {
-    console.error("Failed to read image folder:", err);
+    console.error("Read folder error");
     return NextResponse.json(
       { success: false, error: "Could not read images" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -46,18 +97,58 @@ export async function POST(req: NextRequest) {
     if (!file || !folder || !label) {
       return NextResponse.json(
         { success: false, error: "Missing file, label, or folder" },
-        { status: 400 }
+        { status: 400 },
+      );
+    }
+
+    // Validate file type
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid file type. Only image files allowed.",
+        },
+        { status: 400 },
+      );
+    }
+
+    const folderPath = getFolderPath(folder);
+    if (!folderPath) {
+      return NextResponse.json(
+        { success: false, error: "Invalid folder" },
+        { status: 400 },
       );
     }
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
+    // Validate file size
+    if (buffer.length > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `File size exceeds maximum of ${
+            MAX_FILE_SIZE / 1024 / 1024
+          }MB`,
+        },
+        { status: 413 },
+      );
+    }
+
     const ext = file.name.split(".").pop() || "png";
     const safeName = `${label.replace(/\s+/g, "_").toLowerCase()}.${ext}`;
-    const filePath = path.join(getFolderPath(folder), safeName);
+    const filePath = path.join(folderPath, safeName);
 
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
+    // Ensure the resolved path is within the allowed folder
+    if (!path.resolve(filePath).startsWith(path.resolve(folderPath))) {
+      return NextResponse.json(
+        { success: false, error: "Invalid file path" },
+        { status: 400 },
+      );
+    }
+
+    await fs.mkdir(folderPath, { recursive: true });
     await fs.writeFile(filePath, buffer);
 
     return NextResponse.json({
@@ -65,10 +156,10 @@ export async function POST(req: NextRequest) {
       url: `/${folder}/${safeName}`,
     });
   } catch (err) {
-    console.error("Upload failed:", err);
+    console.error("Upload error");
     return NextResponse.json(
       { success: false, error: "Upload failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -80,19 +171,38 @@ export async function DELETE(req: NextRequest) {
     if (!file || !folder) {
       return NextResponse.json(
         { success: false, error: "Missing file or folder" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const filePath = path.join(getFolderPath(folder), file);
+    const folderPath = getFolderPath(folder);
+    if (!folderPath) {
+      return NextResponse.json(
+        { success: false, error: "Invalid folder" },
+        { status: 400 },
+      );
+    }
+
+    // Sanitize filename
+    const sanitizedFile = file.replace(/\.\./g, "").replace(/\\/g, "");
+    const filePath = path.join(folderPath, sanitizedFile);
+
+    // Ensure the resolved path is within the allowed folder
+    if (!path.resolve(filePath).startsWith(path.resolve(folderPath))) {
+      return NextResponse.json(
+        { success: false, error: "Invalid file path" },
+        { status: 400 },
+      );
+    }
+
     await fs.unlink(filePath);
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("Delete failed:", err);
+    console.error("Delete error");
     return NextResponse.json(
       { success: false, error: "Delete failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
