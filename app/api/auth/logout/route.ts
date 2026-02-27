@@ -9,6 +9,15 @@ export async function POST() {
   try {
     const session = await getSession();
 
+    if (session) {
+      await prisma.auditLog.create({
+        data: {
+          userId: session.userId,
+          action: "logout",
+          details: { email: session.email },
+        },
+      });
+    }
 
     await destroySession();
 
