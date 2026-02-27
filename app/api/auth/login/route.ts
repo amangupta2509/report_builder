@@ -67,7 +67,9 @@ export async function POST(request: NextRequest) {
       );
       await logAuditEvent(
         "login_failed",
-
+        { email, reason: "account_locked" },
+        request
+      );
       return NextResponse.json(
         {
           error: `Account is locked due to multiple failed login attempts. Try again in ${remainingTime} minutes.`,
