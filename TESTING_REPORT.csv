@@ -1,0 +1,77 @@
+API/Component,Test File,Test Category,Test Name,Requirements,Test Count,Status,Coverage Area
+Encryption Utility,__tests__/lib/encryption.test.ts,Encryption,Encrypt/Decrypt,AES-256-GCM encryption with IV generation and decryption verification,4,✅ Pass,Cryptography
+Encryption Utility,__tests__/lib/encryption.test.ts,Encryption,Password Hashing,PBKDF2 hashing with 100000 iterations and salt verification,3,✅ Pass,Cryptography
+Encryption Utility,__tests__/lib/encryption.test.ts,Encryption,JWT Token Generation,Token creation and signing with JWT secret,3,✅ Pass,Authentication
+File Upload API,__tests__/integration/file-upload-security.integration.test.ts,File Upload,MIME Type Validation,Allow only image types (jpeg/png/gif/webp/svg) and reject executables,3,✅ Pass,Security
+File Upload API,__tests__/integration/file-upload-security.integration.test.ts,File Upload,File Extension Validation,Whitelist-based extension checking with case-insensitivity,4,✅ Pass,Security
+File Upload API,__tests__/integration/file-upload-security.integration.test.ts,File Upload,File Size Limits,Enforce 10MB for images and 5MB for signatures,4,✅ Pass,Security
+File Upload API,__tests__/integration/file-upload-security.integration.test.ts,File Upload,Path Traversal Prevention,Block ../ and verify whitelisted folders only,5,✅ Pass,Security
+File Upload API,__tests__/integration/file-upload-security.integration.test.ts,File Upload,Filename Sanitization,Remove special characters and enforce 255 char limit,4,✅ Pass,Security
+Auth API - Login,__tests__/api/auth-login.integration.test.ts,Authentication,Login Validation,Email and password validation with error handling,2,✅ Pass,Authentication
+Auth API - Login,__tests__/api/auth-login.integration.test.ts,Authentication,Successful Authentication,Generate JWT token on valid credentials,2,✅ Pass,Authentication
+Auth API - Login,__tests__/api/auth-login.integration.test.ts,Authentication,Failed Login,Return 401 on invalid credentials,2,✅ Pass,Authentication
+Auth API - Login,__tests__/api/auth-login.integration.test.ts,Authentication,Audit Logging,Log all login attempts with timestamps,2,✅ Pass,Audit
+Auth API - Login,__tests__/api/auth-login.integration.test.ts,Authentication,Account Lockout,Lock account after 5 failed attempts,2,✅ Pass,Security
+Middleware,__tests__/integration/middleware.integration.test.ts,Authorization,Public Routes,Allow unauthenticated access to /login and /api/auth/login,1,✅ Pass,Access Control
+Middleware,__tests__/integration/middleware.integration.test.ts,Authorization,Protected Routes,Block unauthenticated access to /report and /admin,2,✅ Pass,Access Control
+Middleware,__tests__/integration/middleware.integration.test.ts,Authorization,Shared Routes,Allow unauthenticated access to /shared/[token],1,✅ Pass,Access Control
+Middleware,__tests__/integration/middleware.integration.test.ts,Authorization,Admin Authorization,Only admins access /admin endpoints,2,✅ Pass,Access Control
+Middleware,__tests__/integration/middleware.integration.test.ts,Authorization,Viewer Authorization,Viewers access limited endpoints only,2,✅ Pass,Access Control
+Middleware,__tests__/integration/middleware.integration.test.ts,Middleware,Static Assets,Allow public access to /_next /public .jpg .png .css .js,2,✅ Pass,Access Control
+Middleware,__tests__/integration/middleware.integration.test.ts,Middleware,Token Validation,Verify JWT format (3 parts) and expiration,2,✅ Pass,Authentication
+Middleware,__tests__/integration/middleware.integration.test.ts,Middleware,Cookie Handling,HTTP-only secure sameSite=lax with 8-hour timeout,4,✅ Pass,Security
+Middleware,__tests__/integration/middleware.integration.test.ts,Middleware,Request Headers,Inject x-user-id x-user-email x-user-role headers,2,✅ Pass,Middleware
+API Error Handling,__tests__/integration/api-error-handling.integration.test.ts,Error Handling,Error Message Sanitization,Remove paths env vars connection errors,4,✅ Pass,Security
+API Error Handling,__tests__/integration/api-error-handling.integration.test.ts,Error Handling,HTTP Status Codes,"400 Bad Request, 401 Unauthorized, 403 Forbidden, etc.",7,✅ Pass,API Design
+API Error Handling,__tests__/integration/api-error-handling.integration.test.ts,Error Handling,Response Structure,Consistent {success data error code timestamp} format,3,✅ Pass,API Design
+API Error Handling,__tests__/integration/api-error-handling.integration.test.ts,Error Handling,Response Size Limits,Enforce 10MB max and pagination support,3,✅ Pass,Performance
+API Error Handling,__tests__/integration/api-error-handling.integration.test.ts,Headers,Content-Type Verification,JSON PDF Excel with proper MIME types,3,✅ Pass,API Design
+API Error Handling,__tests__/integration/api-error-handling.integration.test.ts,Headers,Rate Limit Headers,"x-ratelimit-limit x-ratelimit-remaining x-ratelimit-reset",3,✅ Pass,Rate Limiting
+API Error Handling,__tests__/integration/api-error-handling.integration.test.ts,Headers,CORS Headers,Proper allow-origin allow-methods allow-headers,2,✅ Pass,Security
+Database,__tests__/integration/database.integration.test.ts,Database,Connection Validation,Database URL format verification,2,✅ Pass,Infrastructure
+Database,__tests__/integration/database.integration.test.ts,Database,Model Validation,Required fields email uniqueness role enum,3,✅ Pass,Data Integrity
+Database,__tests__/integration/database.integration.test.ts,Database,Transactions,Multi-operation atomicity and rollback,2,✅ Pass,Data Integrity
+Database,__tests__/integration/database.integration.test.ts,Database,Data Validation,Email format password hash length,2,✅ Pass,Validation
+Database,__tests__/integration/database.integration.test.ts,Database,Audit Logging,Log user creation failed logins password changes,3,✅ Pass,Audit
+Database,__tests__/integration/database.integration.test.ts,Database,Query Performance,Pagination field selection relationship loading,3,✅ Pass,Performance
+Database,__tests__/integration/database.integration.test.ts,Database,Data Integrity,Referential integrity orphaned records cascade delete,3,✅ Pass,Data Integrity
+Report API,__tests__/integration/report-api.integration.test.ts,Report Sharing,Ownership Verification,Verify user owns report before sharing,1,✅ Pass,Authorization
+Report API,__tests__/integration/report-api.integration.test.ts,Report Sharing,Share Token Generation,Generate secure unique 7-day expiring tokens,2,✅ Pass,Security
+Report API,__tests__/integration/report-api.integration.test.ts,Report Sharing,Recipient Limits,Max 50 recipients per share with email validation,3,✅ Pass,Validation
+Report API,__tests__/integration/report-api.integration.test.ts,Report PDF,PDF Validation,Validate reportId format pageSize parameters,2,✅ Pass,Validation
+Report API,__tests__/integration/report-api.integration.test.ts,Report PDF,PDF Size Limits,Enforce 50MB max file size,1,✅ Pass,Performance
+Report API,__tests__/integration/report-api.integration.test.ts,Report PDF,PDF Path Security,Prevent path traversal and validate content,2,✅ Pass,Security
+Report API,__tests__/integration/report-api.integration.test.ts,Patient Data,Access Control,Verify user can access own patient data,2,✅ Pass,Authorization
+Report API,__tests__/integration/report-api.integration.test.ts,Patient Data,Data Sanitization,Hide passwordHash encryptionKey internalNotes,1,✅ Pass,Security
+Report API,__tests__/integration/report-api.integration.test.ts,Patient Data,Pagination,"Limit 100 items per page with page validation",2,✅ Pass,Performance
+Report API,__tests__/integration/report-api.integration.test.ts,Upload,Image Validation,MIME type file size folder verification,3,✅ Pass,Security
+Report API,__tests__/integration/report-api.integration.test.ts,Upload,Filename Security,Generate secure filenames with timestamp and random,1,✅ Pass,Security
+Report API,__tests__/integration/report-api.integration.test.ts,Upload,Folder Verification,Whitelist allowed upload folders,1,✅ Pass,Security
+Report API,__tests__/integration/report-api.integration.test.ts,Upload,Malware Detection,Scan for PE/ELF/AR archive magic numbers,1,✅ Pass,Security
+Report API,__tests__/integration/report-api.integration.test.ts,Rate Limiting,Endpoint Limits,"Login 5/15min Upload 10/hour Share 20/hour",3,✅ Pass,Rate Limiting
+Component Tests,__tests__/components/security.component.test.tsx,Forms,Login Form Security,Mask passwords validate emails clear sensitive data,3,✅ Pass,Security
+Component Tests,__tests__/components/security.component.test.tsx,XSS,React Escaping,Auto-escape HTML and script tags in text,2,✅ Pass,Security
+Component Tests,__tests__/components/security.component.test.tsx,XSS,Image URL Validation,Validate image sources prevent javascript: URLs,1,✅ Pass,Security
+Component Tests,__tests__/components/security.component.test.tsx,XSS,Event Handlers,Prevent string-based event handlers,1,✅ Pass,Security
+Component Tests,__tests__/components/security.component.test.tsx,CSRF,CSRF Tokens,Include and validate CSRF tokens in forms,2,✅ Pass,Security
+Component Tests,__tests__/components/security.component.test.tsx,Sensitive Data,Data Logging,Do not log passwords/hashes/tokens,2,✅ Pass,Security
+Component Tests,__tests__/components/security.component.test.tsx,Sensitive Data,DOM Exposure,No auth tokens exposed in HTML,1,✅ Pass,Security
+Component Tests,__tests__/components/security.component.test.tsx,Sensitive Data,Env Variables,Use NEXT_PUBLIC_ prefix only for non-secrets,1,✅ Pass,Security
+Component Tests,__tests__/components/security.component.test.tsx,Input,Input Sanitization,Trim whitespace handle special characters,2,✅ Pass,Validation
+Component Tests,__tests__/components/security.component.test.tsx,Access,Admin Panel,Show admin content only to admins,1,✅ Pass,Authorization
+Component Tests,__tests__/components/security.component.test.tsx,Access,Privilege Escalation,Prevent role spoofing in components,1,✅ Pass,Authorization
+Security Utils (Skipped),__tests__/lib/security.test.ts,Security Functions,Rate Limiting,Check per-client per-endpoint rate limits,6,⊘ Skip,Rate Limiting
+Security Utils (Skipped),__tests__/lib/security.test.ts,Security Functions,Email Validation,Validate email format RFC 5322,5,⊘ Skip,Validation
+Security Utils (Skipped),__tests__/lib/security.test.ts,Security Functions,Password Strength,Require uppercase numbers special chars min 8,5,⊘ Skip,Validation
+Security Utils (Skipped),__tests__/lib/security.test.ts,Security Functions,Input Sanitization,Remove XSS vectors trim whitespace,5,⊘ Skip,Security
+Security Utils (Skipped),__tests__/lib/security.test.ts,Security Functions,Error Messages,Sanitize path/env/system info from errors,5,⊘ Skip,Security
+Input Validation (Skipped),__tests__/integration/input-validation.integration.test.ts,Validation,Login Workflow,Email and password validation together,1,⊘ Skip,Validation
+Input Validation (Skipped),__tests__/integration/input-validation.integration.test.ts,Validation,Email Requirements,Valid format required for login,3,⊘ Skip,Validation
+Input Validation (Skipped),__tests__/integration/input-validation.integration.test.ts,Validation,Password Requirements,Min 8 chars uppercase numbers special chars,4,⊘ Skip,Validation
+Input Validation (Skipped),__tests__/integration/input-validation.integration.test.ts,Validation,XSS Prevention,Sanitize all user input prevent script injection,5,⊘ Skip,Security
+Input Validation (Skipped),__tests__/integration/input-validation.integration.test.ts,Validation,Edge Cases,Empty strings null special characters,2,⊘ Skip,Validation
+Rate Limiting API (Skipped),__tests__/api/rate-limiting.integration.test.ts,API Rate Limits,Shared Access,Allow 10 requests per minute per IP,1,⊘ Skip,Rate Limiting
+Rate Limiting API (Skipped),__tests__/api/rate-limiting.integration.test.ts,API Rate Limits,Rate Limit Reset,Reset counter after time window,1,⊘ Skip,Rate Limiting
+Rate Limiting API (Skipped),__tests__/api/rate-limiting.integration.test.ts,API Rate Limits,Client Differentiation,Different limits per client IP/user,1,⊘ Skip,Rate Limiting
+Rate Limiting API (Skipped),__tests__/api/rate-limiting.integration.test.ts,API Rate Limits,Multiple Endpoints,Track limits independently per endpoint,1,⊘ Skip,Rate Limiting
+Rate Limiting API (Skipped),__tests__/api/rate-limiting.integration.test.ts,API Rate Limits,Exceeded Limits,Return 429 when limit exceeded,1,⊘ Skip,Rate Limiting
