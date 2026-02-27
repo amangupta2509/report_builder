@@ -2,9 +2,13 @@
 import { cookies } from "next/headers";
 import { jwtVerify, SignJWT } from "jose";
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || "your-secret-key-change-this-in-production-min-32-chars"
-);
+if (!process.env.JWT_SECRET) {
+  throw new Error(
+    "CRITICAL: JWT_SECRET environment variable is not set. Please set a strong secret in your .env file with at least 32 characters.",
+  );
+}
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 const SESSION_DURATION = 8 * 60 * 60; // 8 hours in seconds
 const REFRESH_TOKEN_DURATION = 7 * 24 * 60 * 60; // 7 days
@@ -57,7 +61,9 @@ export async function createRefreshToken(user: User): Promise<string> {
 /**
  * Verify JWT token
  */
-export async function verifyToken(token: string): Promise<SessionPayload | null> {
+export async function verifyToken(
+  token: string,
+): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(token, JWT_SECRET);
     return payload as SessionPayload;
@@ -74,7 +80,7 @@ export async function createSession(user: User) {
   const refreshToken = await createRefreshToken(user);
 
   const cookieStore = await cookies();
-  
+
   // Set access token
   cookieStore.set("accessToken", accessToken, {
     httpOnly: true,
@@ -126,7 +132,7 @@ export async function destroySession() {
  */
 export async function requireAuth() {
   const session = await getSession();
-  
+
   if (!session) {
     throw new Error("Unauthorized");
   }
@@ -139,7 +145,7 @@ export async function requireAuth() {
  */
 export async function requireAdmin() {
   const session = await requireAuth();
-  
+
   if (session.role !== "admin") {
     throw new Error("Forbidden: Admin access required");
   }
