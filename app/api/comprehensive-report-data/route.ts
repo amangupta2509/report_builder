@@ -4,7 +4,12 @@ import { type NextRequest, NextResponse } from "next/server"
 let reportData: any = null
 
 export async function GET() {
+  if (!reportData) {
+    return NextResponse.json({ message: "No data found" }, { status: 404 })
+  }
 
+  return NextResponse.json(reportData)
+}
 
 export async function POST(request: NextRequest) {
   try {
