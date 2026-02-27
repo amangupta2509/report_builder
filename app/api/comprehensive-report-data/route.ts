@@ -3,7 +3,8 @@ import { type NextRequest, NextResponse } from "next/server"
 // In-memory storage for demo purposes
 let reportData: any = null
 
-e
+export async function GET() {
+
 
 export async function POST(request: NextRequest) {
   try {
