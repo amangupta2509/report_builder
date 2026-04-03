@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import ComprehensiveReportViewer from "@/components/comprehensive-report-viewer";
@@ -185,7 +185,7 @@ const getEmptyPatientInfo = (): PatientInfo => ({
   signature2: null,
 });
 
-const AdminPage = () => {
+const AdminPageContent = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
 
   const searchParams = useSearchParams();
@@ -307,7 +307,7 @@ const AdminPage = () => {
 
   const addNewPatient = (sampleCode: string) => {
     const isDuplicate = patients.some(
-      (patient) => patient.info.sampleCode === sampleCode
+      (patient) => patient.info.sampleCode === sampleCode,
     );
 
     if (isDuplicate) {
@@ -365,8 +365,8 @@ const AdminPage = () => {
       return;
     }
 
-    const existingReportNames = selectedPatient.reports.map((r) =>
-      r.name?.toLowerCase()
+    const existingReportNames = selectedPatient.reports.map(
+      (r) => r.name?.toLowerCase(),
     );
     if (existingReportNames.includes(reportName.toLowerCase())) {
       toast({
@@ -428,7 +428,7 @@ const AdminPage = () => {
         const updated = [...prev];
         const patient = { ...updated[selectedPatientIndex] };
         const newReports = patient.reports.filter(
-          (r) => r.id !== reportToDelete.id
+          (r) => r.id !== reportToDelete.id,
         );
 
         updated[selectedPatientIndex] = { ...patient, reports: newReports };
@@ -438,7 +438,7 @@ const AdminPage = () => {
       setSelectedReportIndex(
         selectedReportIndex < selectedPatient.reports.length - 1
           ? selectedReportIndex
-          : selectedReportIndex - 1
+          : selectedReportIndex - 1,
       );
 
       toast({
@@ -652,7 +652,7 @@ const AdminPage = () => {
   // Report Settings Update Functions
   const updateReportSettings = <K extends keyof ReportSettings>(
     field: K,
-    value: ReportSettings[K]
+    value: ReportSettings[K],
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -679,7 +679,7 @@ const AdminPage = () => {
   const updateHealthSummaryDescription = (
     patientIndex: number,
     reportIndex: number,
-    value: string
+    value: string,
   ) => {
     setPatients((prev) => {
       const updatedPatients = [...prev];
@@ -710,7 +710,7 @@ const AdminPage = () => {
     reportIndex: number,
     entryIndex: number,
     field: keyof HealthSummaryEntry,
-    value: string
+    value: string,
   ) => {
     setPatients((prev) => {
       const updatedPatients = [...prev];
@@ -778,7 +778,7 @@ const AdminPage = () => {
   const removeHealthSummaryEntry = (
     patientIndex: number,
     reportIndex: number,
-    entryIndex: number
+    entryIndex: number,
   ) => {
     setPatients((prev) => {
       const updatedPatients = [...prev];
@@ -787,7 +787,7 @@ const AdminPage = () => {
 
       if (report.healthSummary) {
         const updatedData = report.healthSummary.data.filter(
-          (_, idx) => idx !== entryIndex
+          (_, idx) => idx !== entryIndex,
         );
         report.healthSummary = {
           ...report.healthSummary,
@@ -807,7 +807,7 @@ const AdminPage = () => {
 
   // Dynamic Diet Field Functions
   const updateDynamicDietFieldDefinitions = (
-    definitions: DynamicDietFieldDefinition[]
+    definitions: DynamicDietFieldDefinition[],
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -827,7 +827,7 @@ const AdminPage = () => {
 
   const updatePatientDietAnalysisResult = (
     fieldId: string,
-    data: Partial<PatientDietAnalysisResult>
+    data: Partial<PatientDietAnalysisResult>,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -835,7 +835,7 @@ const AdminPage = () => {
       const reports = [...patient.reports];
       const currentReport = { ...reports[selectedReportIndex] };
       const existingIndex = currentReport.patientDietAnalysisResults.findIndex(
-        (r) => r.fieldId === fieldId
+        (r) => r.fieldId === fieldId,
       );
 
       const newResults = [...currentReport.patientDietAnalysisResults];
@@ -875,7 +875,7 @@ const AdminPage = () => {
   const updateNutritionData = (
     section: string,
     field: string,
-    data: Partial<NutrientData> | string | Record<string, NutrientData>
+    data: Partial<NutrientData> | string | Record<string, NutrientData>,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -949,7 +949,7 @@ const AdminPage = () => {
       | Partial<{ level: string; description: string }>
       | { label: string; url: string }
       | string
-      | null
+      | null,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1052,7 +1052,7 @@ const AdminPage = () => {
   const updateFieldStatus = (
     categoryId: string,
     fieldName: string,
-    updated: Partial<HealthConditionStatus>
+    updated: Partial<HealthConditionStatus>,
   ) => {
     setPatients((prev) => {
       const updatedPatients = [...prev];
@@ -1136,7 +1136,7 @@ const AdminPage = () => {
   // Digestive Health Update Functions
   const updateDigestiveHealth = (
     key: string,
-    data: Partial<DigestiveHealthEntry>
+    data: Partial<DigestiveHealthEntry>,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1222,7 +1222,7 @@ const AdminPage = () => {
 
   const updateDigestiveQuoteAndDescription = (
     quote: string,
-    description: string
+    description: string,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1247,7 +1247,7 @@ const AdminPage = () => {
   // Genes and Addiction Update Functions
   const updateGenesAndAddiction = (
     field: keyof GenesAndAddiction["data"],
-    data: Partial<GenesAndAddiction>
+    data: Partial<GenesAndAddiction>,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1277,7 +1277,7 @@ const AdminPage = () => {
   // Sleep and Rest Update Functions
   const updateSleepAndRest = (
     field: keyof SleepAndRest["data"],
-    data: Partial<SleepData>
+    data: Partial<SleepData>,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1305,7 +1305,7 @@ const AdminPage = () => {
 
   // Allergies and Sensitivity Update Functions
   const updateAllergiesAndSensitivity = (
-    data: Partial<AllergiesAndSensitivity>
+    data: Partial<AllergiesAndSensitivity>,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1327,7 +1327,7 @@ const AdminPage = () => {
   // Preventive Health Update Functions
   const updatePreventiveHealth = (
     section: keyof PreventiveHealth,
-    data: any
+    data: any,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1395,7 +1395,7 @@ const AdminPage = () => {
   const updateFamilyGeneticImpact = (
     index: number,
     field: keyof FamilyGeneticImpact,
-    value: string
+    value: string,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1482,7 +1482,7 @@ const AdminPage = () => {
   const updateGeneTestResult = (
     index: number,
     field: keyof GeneTestResult,
-    value: string
+    value: string,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -1530,7 +1530,7 @@ const AdminPage = () => {
       reports[selectedReportIndex] = {
         ...reports[selectedReportIndex],
         geneTestResults: reports[selectedReportIndex].geneTestResults.filter(
-          (_, i) => i !== index
+          (_, i) => i !== index,
         ),
       };
 
@@ -1558,7 +1558,7 @@ const AdminPage = () => {
 
   const updateGenomicCategoryGroup = (
     index: number,
-    newGroup: GenomicCategoryGroup
+    newGroup: GenomicCategoryGroup,
   ) => {
     setPatients((prev) => {
       const updated = [...prev];
@@ -2041,7 +2041,7 @@ const AdminPage = () => {
                   updateHealthSummaryDescription(
                     selectedPatientIndex,
                     selectedReportIndex,
-                    value
+                    value,
                   )
                 }
                 onUpdate={(entryIndex, field, value) =>
@@ -2050,20 +2050,20 @@ const AdminPage = () => {
                     selectedReportIndex,
                     entryIndex,
                     field,
-                    value
+                    value,
                   )
                 }
                 onAdd={() =>
                   addHealthSummaryEntry(
                     selectedPatientIndex,
-                    selectedReportIndex
+                    selectedReportIndex,
                   )
                 }
                 onRemove={(entryIndex) =>
                   removeHealthSummaryEntry(
                     selectedPatientIndex,
                     selectedReportIndex,
-                    entryIndex
+                    entryIndex,
                   )
                 }
                 onSave={saveReportData}
@@ -2256,7 +2256,7 @@ const AdminPage = () => {
                 }}
                 updateQuoteAndDescription={(
                   quote: string,
-                  description: string
+                  description: string,
                 ) => {
                   setPatients((prev) => {
                     const updated = [...prev];
@@ -2313,7 +2313,7 @@ const AdminPage = () => {
                       typeof valueOrUpdater === "function"
                         ? (
                             valueOrUpdater as (
-                              prev: MetabolicCore
+                              prev: MetabolicCore,
                             ) => MetabolicCore
                           )(prevMetabolicCore)
                         : valueOrUpdater;
@@ -2560,4 +2560,16 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default function AdminPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center text-sm text-gray-500">
+          Loading admin dashboard...
+        </div>
+      }
+    >
+      <AdminPageContent />
+    </Suspense>
+  );
+}

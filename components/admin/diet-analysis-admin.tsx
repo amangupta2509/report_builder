@@ -19,14 +19,28 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button"; // Import Button
 import { Save, RotateCcw } from "lucide-react"; // Import icons
-import type { DietAnalysis, MacronutrientData } from "@/types/report-types";
+
+type MacronutrientData = {
+  score: number;
+  level: string;
+  recommendation: string;
+};
+
+type DietAnalysisSection = Record<string, MacronutrientData>;
+
+interface DietAnalysis {
+  macronutrients: DietAnalysisSection;
+  mealPattern: DietAnalysisSection;
+  foodSensitivities: DietAnalysisSection;
+  tasteSensitivities: DietAnalysisSection;
+}
 
 interface DietAnalysisAdminProps {
   dietAnalysis: DietAnalysis;
   updateDietAnalysis: (
     section: keyof DietAnalysis,
     field: string,
-    data: Partial<MacronutrientData>
+    data: Partial<MacronutrientData>,
   ) => void;
   onSave: () => void; // Added onSave
   onReset: () => void; // Added onReset
@@ -42,7 +56,7 @@ export default function DietAnalysisAdmin({
     section: keyof DietAnalysis,
     field: string,
     data: MacronutrientData,
-    title: string
+    title: string,
   ) => (
     <Card key={field} className="border-2 border-blue-100 bg-blue-50/30">
       <CardHeader className="pb-3">
@@ -132,19 +146,19 @@ export default function DietAnalysisAdmin({
               "macronutrients",
               "carbohydrateSensitivity",
               dietAnalysis.macronutrients.carbohydrateSensitivity,
-              "Carbohydrate Sensitivity"
+              "Carbohydrate Sensitivity",
             )}
             {renderMacronutrientField(
               "macronutrients",
               "fatSensitivity",
               dietAnalysis.macronutrients.fatSensitivity,
-              "Fat Sensitivity"
+              "Fat Sensitivity",
             )}
             {renderMacronutrientField(
               "macronutrients",
               "proteinRequirement",
               dietAnalysis.macronutrients.proteinRequirement,
-              "Protein Requirement"
+              "Protein Requirement",
             )}
           </div>
         </div>
@@ -159,19 +173,19 @@ export default function DietAnalysisAdmin({
               "mealPattern",
               "mealFrequency",
               dietAnalysis.mealPattern.mealFrequency,
-              "Meal Frequency"
+              "Meal Frequency",
             )}
             {renderMacronutrientField(
               "mealPattern",
               "mealReplacement",
               dietAnalysis.mealPattern.mealReplacement,
-              "Meal Replacement"
+              "Meal Replacement",
             )}
             {renderMacronutrientField(
               "mealPattern",
               "weightMaintenance",
               dietAnalysis.mealPattern.weightMaintenance,
-              "Weight Maintenance"
+              "Weight Maintenance",
             )}
           </div>
         </div>
@@ -186,31 +200,31 @@ export default function DietAnalysisAdmin({
               "foodSensitivities",
               "alcoholSensitivity",
               dietAnalysis.foodSensitivities.alcoholSensitivity,
-              "Alcohol Sensitivity"
+              "Alcohol Sensitivity",
             )}
             {renderMacronutrientField(
               "foodSensitivities",
               "caffeineSensitivity",
               dietAnalysis.foodSensitivities.caffeineSensitivity,
-              "Caffeine Sensitivity"
+              "Caffeine Sensitivity",
             )}
             {renderMacronutrientField(
               "foodSensitivities",
               "glutenSensitivity",
               dietAnalysis.foodSensitivities.glutenSensitivity,
-              "Gluten Sensitivity"
+              "Gluten Sensitivity",
             )}
             {renderMacronutrientField(
               "foodSensitivities",
               "lactoseSensitivity",
               dietAnalysis.foodSensitivities.lactoseSensitivity,
-              "Lactose Sensitivity"
+              "Lactose Sensitivity",
             )}
             {renderMacronutrientField(
               "foodSensitivities",
               "saltSensitivity",
               dietAnalysis.foodSensitivities.saltSensitivity,
-              "Salt Sensitivity"
+              "Salt Sensitivity",
             )}
           </div>
         </div>
@@ -225,19 +239,19 @@ export default function DietAnalysisAdmin({
               "tasteSensitivities",
               "spiceTolerance",
               dietAnalysis.tasteSensitivities.spiceTolerance,
-              "Spice Tolerance"
+              "Spice Tolerance",
             )}
             {renderMacronutrientField(
               "tasteSensitivities",
               "sweetTaste",
               dietAnalysis.tasteSensitivities.sweetTaste,
-              "Sweet Taste"
+              "Sweet Taste",
             )}
             {renderMacronutrientField(
               "tasteSensitivities",
               "tasteSensitivity",
               dietAnalysis.tasteSensitivities.tasteSensitivity,
-              "Taste Sensitivity"
+              "Taste Sensitivity",
             )}
           </div>
         </div>

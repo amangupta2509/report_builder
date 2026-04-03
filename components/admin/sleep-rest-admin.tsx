@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Save, Plus, Upload, Trash2, X } from "lucide-react";
 import Image from "next/image";
-import { SleepAndRest } from "@/types/report-types";
+import { SleepAndRest, SleepData } from "@/types/report-types";
 import {
   Select,
   SelectContent,
@@ -29,11 +29,7 @@ interface Props {
   onReset: () => void;
 }
 
-interface SleepEntry {
-  title: string;
-  intervention: string;
-  image: string;
-}
+type SleepEntry = SleepData;
 
 export default function SleepRestAdmin({
   data,
@@ -44,14 +40,14 @@ export default function SleepRestAdmin({
   const [quote, setQuote] = useState(data.quote || "");
   const [description, setDescription] = useState(data.description || "");
   const [entries, setEntries] = useState<Record<string, SleepEntry>>(
-    data.data || {}
+    data.data || {},
   );
   const [newEntryTitle, setNewEntryTitle] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [images, setImages] = useState<Record<string, string>>({});
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedImageField, setSelectedImageField] = useState<string | null>(
-    null
+    null,
   );
   const [imageLabel, setImageLabel] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -101,7 +97,7 @@ export default function SleepRestAdmin({
   const handleFieldChange = (
     key: string,
     field: keyof SleepEntry,
-    value: string
+    value: string,
   ) => {
     const updated = {
       ...entries,
@@ -498,7 +494,7 @@ export default function SleepRestAdmin({
                             handleFieldChange(
                               selectedImageField,
                               "image",
-                              label
+                              label,
                             );
                             setShowImageModal(false);
                           }
@@ -525,7 +521,7 @@ export default function SleepRestAdmin({
                           if (!fileName) return;
 
                           const confirmed = confirm(
-                            `Delete image "${fileName}"?`
+                            `Delete image "${fileName}"?`,
                           );
                           if (!confirmed) return;
 
@@ -534,7 +530,7 @@ export default function SleepRestAdmin({
                               `/api/sleep-image?file=${fileName}`,
                               {
                                 method: "DELETE",
-                              }
+                              },
                             );
 
                             const json = await res.json();
