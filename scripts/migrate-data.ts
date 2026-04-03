@@ -32,7 +32,7 @@ async function migrateJsonToDB() {
     // If no file found, create sample data for testing
     if (!jsonPath) {
       console.log(
-        "⚠️  No existing data file found. Creating sample data for testing..."
+        "⚠️  No existing data file found. Creating sample data for testing...",
       );
       jsonData = createSampleData();
     } else {
@@ -40,7 +40,9 @@ async function migrateJsonToDB() {
         const fileContent = fs.readFileSync(jsonPath, "utf8");
         jsonData = JSON.parse(fileContent);
       } catch (parseError) {
-        console.error("❌ Error parsing JSON file:", parseError.message);
+        const message =
+          parseError instanceof Error ? parseError.message : String(parseError);
+        console.error("❌ Error parsing JSON file:", message);
         console.log("Creating sample data instead...");
         jsonData = createSampleData();
       }
@@ -60,7 +62,7 @@ async function migrateJsonToDB() {
       console.log(
         `👤 Migrating patient ${i + 1}/${jsonData.length}: ${
           patient.info?.name || patient.info?.sampleCode || "Unknown"
-        }`
+        }`,
       );
 
       try {
@@ -165,13 +167,14 @@ async function migrateJsonToDB() {
         migratedCount++;
         console.log(`✅ Patient ${i + 1} migrated successfully\n`);
       } catch (patientError) {
+        const error = patientError as { message?: string; code?: string };
         console.error(
           `❌ Error migrating patient ${i + 1}:`,
-          patientError.message
+          error.message || String(patientError),
         );
-        if (patientError.code === "P2002") {
+        if (error.code === "P2002") {
           console.log(
-            "  💡 This appears to be a duplicate sample code. Skipping...\n"
+            "  💡 This appears to be a duplicate sample code. Skipping...\n",
           );
         }
         continue;
@@ -180,16 +183,17 @@ async function migrateJsonToDB() {
 
     console.log(`\n🎉 Migration completed successfully!`);
     console.log(
-      `📈 Results: ${migratedCount}/${jsonData.length} patients migrated to the database.`
+      `📈 Results: ${migratedCount}/${jsonData.length} patients migrated to the database.`,
     );
   } catch (error) {
-    console.error("❌ Migration failed:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("❌ Migration failed:", message);
   } finally {
     await prisma.$disconnect();
   }
 }
 
-async function migrateReportData(reportId, report) {
+async function migrateReportData(reportId: string, report: any) {
   try {
     // Migrate Dynamic Diet Fields
     if (
@@ -244,7 +248,7 @@ async function migrateReportData(reportId, report) {
       typeof report.nutritionData.data === "object"
     ) {
       for (const [section, fields] of Object.entries(
-        report.nutritionData.data
+        report.nutritionData.data,
       )) {
         if (fields && typeof fields === "object") {
           for (const [field, data] of Object.entries(fields)) {
@@ -301,9 +305,10 @@ async function migrateReportData(reportId, report) {
       }
     }
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.log(
       `    ⚠️ Warning: Some report data could not be migrated:`,
-      error.message
+      message,
     );
   }
 }
