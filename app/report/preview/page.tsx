@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ComprehensiveReportViewer from "@/components/comprehensive-report-viewer";
 import type { ComprehensiveReportData } from "@/types/report-types";
 
-export default function ReportPreviewPage() {
+function ReportPreviewPageContent() {
   const searchParams = useSearchParams();
   const [reportData, setReportData] = useState<ComprehensiveReportData | null>(
-    null
+    null,
   );
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +34,7 @@ export default function ReportPreviewPage() {
         const patients = await res.json();
 
         const patient = patients.find(
-          (p: any) => p.info?.sampleCode === patientCode
+          (p: any) => p.info?.sampleCode === patientCode,
         );
         if (!patient) {
           setError(`No patient found with sampleCode "${patientCode}".`);
@@ -44,7 +44,7 @@ export default function ReportPreviewPage() {
         const report = patient.reports?.[reportIndex];
         if (!report) {
           setError(
-            `No report found at index ${reportIndex} for patient "${patientCode}".`
+            `No report found at index ${reportIndex} for patient "${patientCode}".`,
           );
           return;
         }
@@ -80,5 +80,17 @@ export default function ReportPreviewPage() {
     <div className="min-h-screen bg-gray-100 print:bg-white">
       <ComprehensiveReportViewer reportData={reportData} />
     </div>
+  );
+}
+
+export default function ReportPreviewPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="text-center text-gray-500 py-10">Loading report...</div>
+      }
+    >
+      <ReportPreviewPageContent />
+    </Suspense>
   );
 }

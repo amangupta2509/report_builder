@@ -235,6 +235,7 @@ export interface AddictionEntry {
   title: string;
   icon: string;
   sensitivityIcon: string;
+  sensitivity?: string;
 }
 
 export interface GenesAndAddiction {
