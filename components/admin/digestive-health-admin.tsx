@@ -103,10 +103,10 @@ export default function DigestiveHealthAdmin({
   }, []);
 
   const handleQuoteChange = (quote: string) =>
-    updateQuoteAndDescription(quote, digestiveHealth.description);
+    updateQuoteAndDescription(quote, digestiveHealth.description ?? "");
 
   const handleDescriptionChange = (desc: string) =>
-    updateQuoteAndDescription(digestiveHealth.quote, desc);
+    updateQuoteAndDescription(digestiveHealth.quote ?? "", desc);
 
   const handleAddNewField = () => {
     const key = newFieldName.trim();
@@ -265,7 +265,7 @@ export default function DigestiveHealthAdmin({
                             if (!fileName) return;
 
                             const confirmed = confirm(
-                              `Are you sure you want to delete "${fileName}"?`
+                              `Are you sure you want to delete "${fileName}"?`,
                             );
                             if (!confirmed) return;
 
@@ -450,7 +450,7 @@ export default function DigestiveHealthAdmin({
                                 <span>{imgKey.toUpperCase()}</span>
                               </div>
                             </SelectItem>
-                          )
+                          ),
                         )}
                       </SelectContent>
                     </Select>
@@ -598,7 +598,7 @@ export default function DigestiveHealthAdmin({
                                         <span>{imgKey.toUpperCase()}</span>
                                       </div>
                                     </SelectItem>
-                                  )
+                                  ),
                                 )}
                               </SelectContent>
                             </Select>
@@ -736,7 +736,7 @@ export default function DigestiveHealthAdmin({
                                     <span>{imgKey.toUpperCase()}</span>
                                   </div>
                                 </SelectItem>
-                              )
+                              ),
                             )}
                           </SelectContent>
                         </Select>

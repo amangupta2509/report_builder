@@ -3,10 +3,17 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET ||
-    "your-secret-key-change-this-in-production-min-32-chars"
-);
+function getJwtSecret() {
+  const secret = process.env.JWT_SECRET;
+
+  if (!secret) {
+    throw new Error(
+      "CRITICAL: JWT_SECRET environment variable is not set. Please set a strong secret in your .env file with at least 32 characters.",
+    );
+  }
+
+  return new TextEncoder().encode(secret);
+}
 
 // Public routes that don't require authentication
 const publicRoutes = ["/login", "/api/auth/login", "/api/auth/setup"];
@@ -33,7 +40,7 @@ const adminRoutes = [
 
 async function verifyToken(token: string) {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
+    const { payload } = await jwtVerify(token, getJwtSecret());
     return payload;
   } catch (error) {
     return null;
@@ -50,7 +57,7 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith("/static") ||
     pathname.includes("/favicon") ||
     pathname.match(
-      /\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|woff|woff2|ttf|eot)$/
+      /\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|woff|woff2|ttf|eot)$/,
     ) ||
     // Allow all image folders from public directory
     pathname.startsWith("/sleep/") ||
@@ -91,7 +98,7 @@ export async function middleware(request: NextRequest) {
     // Return 401 for API routes
     return NextResponse.json(
       { error: "Authentication required" },
-      { status: 401 }
+      { status: 401 },
     );
   }
 
@@ -103,7 +110,7 @@ export async function middleware(request: NextRequest) {
     const response = pathname.startsWith("/api")
       ? NextResponse.json(
           { error: "Invalid or expired session" },
-          { status: 401 }
+          { status: 401 },
         )
       : NextResponse.redirect(new URL("/login?session=expired", request.url));
 
@@ -119,20 +126,24 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith("/api")) {
       return NextResponse.json(
         { error: "Forbidden: Admin access required" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // Add user info to request headers for API routes
-  const response = NextResponse.next();
-  response.headers.set("x-user-id", session.userId as string);
-  response.headers.set("x-user-email", session.email as string);
-  response.headers.set("x-user-role", session.role as string);
+  // Forward user info to downstream server handlers via request headers.
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-user-id", session.userId as string);
+  requestHeaders.set("x-user-email", session.email as string);
+  requestHeaders.set("x-user-role", session.role as string);
 
-  return response;
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {

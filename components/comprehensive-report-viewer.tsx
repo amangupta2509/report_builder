@@ -26,6 +26,16 @@ import {
   Pie,
 } from "recharts";
 
+type MetabolicAreaDisplayData = {
+  genes?: Array<{
+    name: string;
+    genotype: string;
+    impact: string;
+    advice?: string;
+  }>;
+  advice?: string;
+};
+
 interface HealthConditionStatus {
   status: "strength" | "improvement";
   description?: string;
@@ -181,32 +191,35 @@ export default function ComprehensiveReportViewer({
     score: number;
   };
 
-  const groupedDietFields = patientDietAnalysisResults.reduce((acc, result) => {
-    const allFields = dynamicDietFieldDefinitions.flatMap(
-      (def) => def.fields || []
-    );
-    const fieldDef = allFields.find((field) => field.id === result.fieldId);
+  const groupedDietFields = patientDietAnalysisResults.reduce(
+    (acc, result) => {
+      const allFields = dynamicDietFieldDefinitions.flatMap(
+        (def) => def.fields || [],
+      );
+      const fieldDef = allFields.find((field) => field.id === result.fieldId);
 
-    if (fieldDef) {
-      if (!acc[fieldDef.category]) acc[fieldDef.category] = [];
-      acc[fieldDef.category].push({
-        ...result,
-        label: fieldDef.label,
-        score: result.score ?? 0,
+      if (fieldDef) {
+        if (!acc[fieldDef.category]) acc[fieldDef.category] = [];
+        acc[fieldDef.category].push({
+          ...result,
+          label: fieldDef.label,
+          score: result.score ?? 0,
 
-        recommendations: {
-          LOW: fieldDef.lowRecommendation,
-          NORMAL: fieldDef.normalRecommendation,
-          HIGH: fieldDef.highRecommendation,
-        },
+          recommendations: {
+            LOW: fieldDef.lowRecommendation,
+            NORMAL: fieldDef.normalRecommendation,
+            HIGH: fieldDef.highRecommendation,
+          },
 
-        lowRecommendation: fieldDef.lowRecommendation,
-        normalRecommendation: fieldDef.normalRecommendation,
-        highRecommendation: fieldDef.highRecommendation,
-      });
-    }
-    return acc;
-  }, {} as Record<string, any[]>);
+          lowRecommendation: fieldDef.lowRecommendation,
+          normalRecommendation: fieldDef.normalRecommendation,
+          highRecommendation: fieldDef.highRecommendation,
+        });
+      }
+      return acc;
+    },
+    {} as Record<string, any[]>,
+  );
 
   return (
     <>
@@ -752,14 +765,14 @@ export default function ComprehensiveReportViewer({
           entry.title.toLowerCase() === "strengths"
             ? "bg-green-500"
             : entry.title.toLowerCase() === "weaknesses"
-            ? "bg-orange-500"
-            : entry.title.toLowerCase().includes("diet")
-            ? "bg-blue-500"
-            : entry.title.toLowerCase().includes("exercise")
-            ? "bg-gray-400"
-            : entry.title.toLowerCase().includes("preventive")
-            ? "bg-yellow-500 text-black"
-            : "bg-blue-500"
+              ? "bg-orange-500"
+              : entry.title.toLowerCase().includes("diet")
+                ? "bg-blue-500"
+                : entry.title.toLowerCase().includes("exercise")
+                  ? "bg-gray-400"
+                  : entry.title.toLowerCase().includes("preventive")
+                    ? "bg-yellow-500 text-black"
+                    : "bg-blue-500"
         }`}
                   >
                     {entry.title}
@@ -857,11 +870,11 @@ export default function ComprehensiveReportViewer({
                         score <= 3
                           ? "bg-green-600 print:bg-green-700"
                           : score <= 6
-                          ? "bg-yellow-500 print:bg-yellow-600"
-                          : "bg-red-600 print:bg-red-600";
+                            ? "bg-yellow-500 print:bg-yellow-600"
+                            : "bg-red-600 print:bg-red-600";
 
                       const renderAdviceCell = (
-                        level: "LOW" | "NORMAL" | "HIGH"
+                        level: "LOW" | "NORMAL" | "HIGH",
                       ) => (
                         <td className="p-3 border border-gray-300 align-top w-[17%] print:p-2 print:text-[7px]">
                           <div
@@ -955,7 +968,7 @@ export default function ComprehensiveReportViewer({
                           {renderAdviceCell("HIGH")}
                         </tr>
                       );
-                    })
+                    }),
                 )}
               </tbody>
             </table>
@@ -1042,7 +1055,7 @@ export default function ComprehensiveReportViewer({
                       label = label.replace(
                         /^Vitamin\s?([a-z])(\d+)?$/i,
                         (_, letter, number) =>
-                          `Vitamin ${letter.toUpperCase()}${number || ""}`
+                          `Vitamin ${letter.toUpperCase()}${number || ""}`,
                       );
 
                       return label;
@@ -1056,8 +1069,8 @@ export default function ComprehensiveReportViewer({
                         score <= 3
                           ? "bg-green-600"
                           : score <= 6
-                          ? "bg-yellow-500"
-                          : "bg-orange-500";
+                            ? "bg-yellow-500"
+                            : "bg-orange-500";
 
                       return (
                         <tr
@@ -1094,7 +1107,7 @@ export default function ComprehensiveReportViewer({
                         </tr>
                       );
                     });
-                  }
+                  },
                 )}
               </tbody>
             </table>
@@ -1160,7 +1173,7 @@ export default function ComprehensiveReportViewer({
                     ([key]) =>
                       key !== "quote" &&
                       key !== "description" &&
-                      key !== "customImages"
+                      key !== "customImages",
                   )
                   .map(([categoryKey, fields]) => {
                     if (
@@ -1175,7 +1188,7 @@ export default function ComprehensiveReportViewer({
                       fields as Record<
                         string,
                         { level: string; description: string; label?: string }
-                      >
+                      >,
                     );
 
                     return fieldEntries.map(([fieldKey, fieldData], index) => {
@@ -1296,7 +1309,7 @@ export default function ComprehensiveReportViewer({
                         return null;
 
                       const fields = Object.entries(
-                        categoryData as Record<string, HealthConditionStatus>
+                        categoryData as Record<string, HealthConditionStatus>,
                       ).reverse(); // 🔄 reverse conditions inside category
 
                       return fields.map(([condition, { status }], index) => (
@@ -1372,7 +1385,7 @@ export default function ComprehensiveReportViewer({
 
                   <div className="grid grid-cols-1 gap-3">
                     {Object.entries(
-                      conditions as Record<string, HealthConditionStatus>
+                      conditions as Record<string, HealthConditionStatus>,
                     ).map(([fieldKey, data]) => (
                       <div
                         key={fieldKey}
@@ -1426,11 +1439,11 @@ export default function ComprehensiveReportViewer({
                                               {line.trim()}
                                             </li>
                                           ))
-                                      : null
+                                      : null,
                                   )}
                                 </ul>
                               </div>
-                            ) : null
+                            ) : null,
                           )}
                         </div>
                       </div>
@@ -1489,7 +1502,11 @@ export default function ComprehensiveReportViewer({
                 {Object.entries(metabolicCore)
                   .filter(([key]) => key !== "quote" && key !== "description")
                   .map(([areaKey, areaData]) => {
-                    const genes = areaData.genes || [];
+                    const metabolicArea =
+                      typeof areaData === "object" && areaData !== null
+                        ? (areaData as MetabolicAreaDisplayData)
+                        : null;
+                    const genes = metabolicArea?.genes || [];
                     const totalRows = Math.max(genes.length, 1);
                     return genes.length > 0 ? (
                       genes.map((gene, index) => (
@@ -1523,15 +1540,15 @@ export default function ComprehensiveReportViewer({
                                   gene.impact?.toLowerCase().includes("high")
                                     ? "bg-red-500"
                                     : gene.impact?.toLowerCase().includes("low")
-                                    ? "bg-slate-400"
-                                    : gene.impact
-                                        ?.toLowerCase()
-                                        .includes("moderate") ||
-                                      gene.impact
-                                        ?.toLowerCase()
-                                        .includes("average")
-                                    ? "bg-yellow-400"
-                                    : "bg-green-500"
+                                      ? "bg-slate-400"
+                                      : gene.impact
+                                            ?.toLowerCase()
+                                            .includes("moderate") ||
+                                          gene.impact
+                                            ?.toLowerCase()
+                                            .includes("average")
+                                        ? "bg-yellow-400"
+                                        : "bg-green-500"
                                 }`}
                               ></span>
                             </div>
@@ -1542,7 +1559,7 @@ export default function ComprehensiveReportViewer({
                               className="px-2 py-1 text-left align-middle border-l border-slate-200"
                             >
                               <div className=" text-center whitespace-pre-wrap text-xs">
-                                {areaData.advice || "No advice provided"}
+                                {metabolicArea?.advice || "No advice provided"}
                               </div>
                             </td>
                           ) : null}
@@ -1564,7 +1581,7 @@ export default function ComprehensiveReportViewer({
                         <td className="px-2 py-1 text-gray-400">-</td>
                         <td className="px-2 py-1 text-left">
                           <div className="whitespace-pre-wrap text-xs">
-                            {areaData.advice || "No advice provided"}
+                            {metabolicArea?.advice || "No advice provided"}
                           </div>
                         </td>
                       </tr>
@@ -1769,7 +1786,7 @@ export default function ComprehensiveReportViewer({
                         )}
                       </td>
                     </tr>
-                  )
+                  ),
                 )}
               </tbody>
             </table>
@@ -1959,7 +1976,7 @@ export default function ComprehensiveReportViewer({
                         )}
                       </td>
                     </tr>
-                  )
+                  ),
                 )}
             </tbody>
           </table>
@@ -2089,7 +2106,7 @@ export default function ComprehensiveReportViewer({
                       {supplement.needed ? "YES" : ""}
                     </td>
                   </tr>
-                )
+                ),
               )}
             </tbody>
           </table>
@@ -2197,7 +2214,7 @@ export default function ComprehensiveReportViewer({
                   (cat, catIndex) => {
                     // Sort by area while keeping other data intact
                     const sortedSubs = [...(cat.subcategories || [])].sort(
-                      (a, b) => (a.area || "").localeCompare(b.area || "")
+                      (a, b) => (a.area || "").localeCompare(b.area || ""),
                     );
 
                     const subLen = sortedSubs.length || 1;
@@ -2239,7 +2256,7 @@ export default function ComprehensiveReportViewer({
                         </td>
                       </tr>
                     );
-                  }
+                  },
                 )}
               </tbody>
             </table>
@@ -2314,7 +2331,7 @@ export default function ComprehensiveReportViewer({
               const levels = fields.map((f) => f.level);
               const highScores = fields.filter((f) => f.score >= 7);
               const mediumScores = fields.filter(
-                (f) => f.score >= 4 && f.score < 7
+                (f) => f.score >= 4 && f.score < 7,
               );
               const lowScores = fields.filter((f) => f.score < 4);
               const avgScore =
@@ -2328,7 +2345,7 @@ export default function ComprehensiveReportViewer({
                       if (field.selectedLevel === level) {
                         recAcc.push(`${field.label}: ${rec}`);
                       }
-                    }
+                    },
                   );
                 } else if (field.recommendation) {
                   recAcc.push(`${field.label}: ${field.recommendation}`);
@@ -2358,29 +2375,29 @@ export default function ComprehensiveReportViewer({
                 fields: any[];
                 recommendations: string[];
               }
-            >
+            >,
           );
 
           // Analyze nutrition data in detail
           const nutritionAnalysis = Object.entries(
-            reportData.nutritionData?.data || {}
+            reportData.nutritionData?.data || {},
           ).reduce(
             (acc, [section, data]) => {
               const entries = Object.entries(data);
               const highImpact = entries.filter(
                 ([_, item]) =>
                   item.healthImpact?.toLowerCase().includes("high") ||
-                  item.healthImpact?.toLowerCase().includes("increased")
+                  item.healthImpact?.toLowerCase().includes("increased"),
               );
               const lowImpact = entries.filter(
                 ([_, item]) =>
                   item.healthImpact?.toLowerCase().includes("low") ||
-                  item.healthImpact?.toLowerCase().includes("reduced")
+                  item.healthImpact?.toLowerCase().includes("reduced"),
               );
               const normalImpact = entries.filter(
                 ([_, item]) =>
                   item.healthImpact?.toLowerCase().includes("normal") ||
-                  item.healthImpact?.toLowerCase().includes("average")
+                  item.healthImpact?.toLowerCase().includes("average"),
               );
               const avgScore =
                 entries.reduce((sum, [_, item]) => sum + (item.score || 0), 0) /
@@ -2416,24 +2433,24 @@ export default function ComprehensiveReportViewer({
                 total: number;
                 items: any[];
               }
-            >
+            >,
           );
 
           // Analyze lifestyle conditions in detail
           const lifestyleAnalysis = Object.entries(
-            reportData.lifestyleConditions || {}
+            reportData.lifestyleConditions || {},
           )
             .filter(([key]) => !["quote", "description"].includes(key))
             .reduce(
               (acc, [category, conditions]) => {
                 const entries = Object.entries(
-                  conditions as Record<string, HealthConditionStatus>
+                  conditions as Record<string, HealthConditionStatus>,
                 );
                 const strengths = entries.filter(
-                  ([_, data]) => data.status === "strength"
+                  ([_, data]) => data.status === "strength",
                 );
                 const improvements = entries.filter(
-                  ([_, data]) => data.status === "improvement"
+                  ([_, data]) => data.status === "improvement",
                 );
 
                 const detailedConditions = entries.map(([condition, data]) => ({
@@ -2467,7 +2484,7 @@ export default function ComprehensiveReportViewer({
                   conditions: any[];
                   hasImages: boolean;
                 }
-              >
+              >,
             );
 
           // Analyze metabolic core in detail
@@ -2486,23 +2503,23 @@ export default function ComprehensiveReportViewer({
                 }
 
                 // Filter genes by impact level
-                const highImpact = genes.filter((g) =>
-                  g.impact?.toLowerCase().includes("high")
+                const highImpact = genes.filter(
+                  (g) => g.impact?.toLowerCase().includes("high"),
                 );
 
-                const lowImpact = genes.filter((g) =>
-                  g.impact?.toLowerCase().includes("low")
+                const lowImpact = genes.filter(
+                  (g) => g.impact?.toLowerCase().includes("low"),
                 );
 
                 const moderateImpact = genes.filter(
                   (g) =>
                     g.impact?.toLowerCase().includes("moderate") ||
-                    g.impact?.toLowerCase().includes("average")
+                    g.impact?.toLowerCase().includes("average"),
                 );
 
                 // Add normal impact filter
-                const normalImpact = genes.filter((g) =>
-                  g.impact?.toLowerCase().includes("normal")
+                const normalImpact = genes.filter(
+                  (g) => g.impact?.toLowerCase().includes("normal"),
                 );
 
                 const detailedGenes = genes.map((gene) => ({
@@ -2533,80 +2550,90 @@ export default function ComprehensiveReportViewer({
                   total: number;
                   genes: any[];
                 }
-              >
+              >,
             );
 
           // Analyze sports and fitness in detail
           const sportsAnalysis = Object.entries(sportsAndFitness)
             .filter(
-              ([key]) => !["quote", "description", "customImages"].includes(key)
+              ([key]) =>
+                !["quote", "description", "customImages"].includes(key),
             )
-            .reduce((acc, [section, groups]) => {
-              if (Array.isArray(groups)) {
-                const allFields = groups.reduce((fieldAcc, group) => {
-                  return fieldAcc.concat(Object.entries(group.fields || {}));
-                }, [] as any[]);
+            .reduce(
+              (acc, [section, groups]) => {
+                if (Array.isArray(groups)) {
+                  const allFields = groups.reduce((fieldAcc, group) => {
+                    return fieldAcc.concat(Object.entries(group.fields || {}));
+                  }, [] as any[]);
 
-                const detailedTraits = allFields.map(
-                  ([trait, data]: [string, any]) => {
-                    const selectedImageKey = data.level
-                      ?.split("-")
-                      .pop()
-                      ?.toLowerCase();
-                    const hasImage = !!(
-                      reportData.sportsAndFitness.customImages?.[
-                        selectedImageKey
-                      ] || defaultImageMap[selectedImageKey]
-                    );
+                  const detailedTraits = allFields.map(
+                    ([trait, data]: [string, any]) => {
+                      const selectedImageKey = data.level
+                        ?.split("-")
+                        .pop()
+                        ?.toLowerCase();
+                      const hasImage = !!(
+                        reportData.sportsAndFitness.customImages?.[
+                          selectedImageKey
+                        ] || defaultImageMap[selectedImageKey]
+                      );
 
-                    return {
-                      name: trait,
-                      level: data.level,
-                      description: data.description,
-                      label: data.label,
-                      imageKey: selectedImageKey,
-                      hasImage: hasImage,
-                    };
-                  }
-                );
+                      return {
+                        name: trait,
+                        level: data.level,
+                        description: data.description,
+                        label: data.label,
+                        imageKey: selectedImageKey,
+                        hasImage: hasImage,
+                      };
+                    },
+                  );
 
-                acc[section] = {
-                  totalTraits: allFields.length,
-                  traits: detailedTraits,
-                };
-              }
-              return acc;
-            }, {} as Record<string, { totalTraits: number; traits: any[] }>);
+                  acc[section] = {
+                    totalTraits: allFields.length,
+                    traits: detailedTraits,
+                  };
+                }
+                return acc;
+              },
+              {} as Record<string, { totalTraits: number; traits: any[] }>,
+            );
 
           // Analyze digestive health in detail
           const digestiveAnalysis = Object.entries(
-            digestiveHealth.data || {}
-          ).reduce((acc, [key, item]) => {
-            acc[key] = {
-              title: item.title,
-              sensitivity: item.sensitivity,
-              good: item.good,
-              bad: item.bad,
-              icon: item.icon,
-              hasIcon: !!item.icon,
-            };
-            return acc;
-          }, {} as Record<string, any>);
+            digestiveHealth.data || {},
+          ).reduce(
+            (acc, [key, item]) => {
+              acc[key] = {
+                title: item.title,
+                sensitivity: item.sensitivity,
+                good: item.good,
+                bad: item.bad,
+                icon: item.icon,
+                hasIcon: !!item.icon,
+              };
+              return acc;
+            },
+            {} as Record<string, any>,
+          );
 
           // Analyze genes & addiction in detail
           // Analyze genes & addiction in detail
           const addictionAnalysis = Object.entries(
-            genesAndAddiction.data || {}
-          ).reduce((acc, [key, entry]) => {
-            acc[key] = {
-              title: entry.title,
-              icon: entry.icon, // Add this line
-              sensitivityIcon: entry.sensitivityIcon, // Add this line
-              hasIcon: !!entry.icon,
-              hasSensitivityIcon: !!entry.sensitivityIcon,
-            };
-            return acc;
-          }, {} as Record<string, any>);
+            genesAndAddiction.data || {},
+          ).reduce(
+            (acc, [key, entry]) => {
+              acc[key] = {
+                title: entry.title,
+                icon: entry.icon, // Add this line
+                sensitivityIcon: entry.sensitivityIcon, // Add this line
+                hasIcon: !!entry.icon,
+                hasSensitivityIcon: !!entry.sensitivityIcon,
+              };
+              return acc;
+            },
+            {} as Record<string, any>,
+          );
 
           // Analyze sleep & rest in detail
           const sleepAnalysis = Object.entries(sleepAndRest.data || {}).reduce(
@@ -2619,54 +2646,57 @@ export default function ComprehensiveReportViewer({
               };
               return acc;
             },
-            {} as Record<string, any>
+            {} as Record<string, any>,
           );
 
           // Analyze allergies in detail
           const allergyAnalysis = Object.entries(
-            allergiesAndSensitivity.data || {}
-          ).reduce((acc, [key, entry]) => {
-            const allergyEntry = entry as { title?: string; image?: string };
-            acc[key] = {
-              title: allergyEntry.title,
-              image: allergyEntry.image,
-              hasImage: !!allergyEntry.image,
-            };
-            return acc;
-          }, {} as Record<string, any>);
+            allergiesAndSensitivity.data || {},
+          ).reduce(
+            (acc, [key, entry]) => {
+              const allergyEntry = entry as { title?: string; image?: string };
+              acc[key] = {
+                title: allergyEntry.title,
+                image: allergyEntry.image,
+                hasImage: !!allergyEntry.image,
+              };
+              return acc;
+            },
+            {} as Record<string, any>,
+          );
 
           // Calculate overall scores and metrics
           const totalDietScore =
             Object.values(dietAnalysis).reduce(
               (sum, cat) => sum + cat.avgScore,
-              0
+              0,
             ) / Object.keys(dietAnalysis).length || 0;
           const totalNutritionScore =
             Object.values(nutritionAnalysis).reduce(
               (sum, cat) => sum + cat.avgScore,
-              0
+              0,
             ) / Object.keys(nutritionAnalysis).length || 0;
           const totalLifestyleStrengths = Object.values(
-            lifestyleAnalysis
+            lifestyleAnalysis,
           ).reduce((sum, cat) => sum + cat.strengths, 0);
           const totalLifestyleImprovements = Object.values(
-            lifestyleAnalysis
+            lifestyleAnalysis,
           ).reduce((sum, cat) => sum + cat.improvements, 0);
           const totalMetabolicHigh = Object.values(metabolicAnalysis).reduce(
             (sum, area) => sum + area.highImpact,
-            0
+            0,
           );
           const totalMetabolicLow = Object.values(metabolicAnalysis).reduce(
             (sum, area) => sum + area.lowImpact,
-            0
+            0,
           );
           const totalMetabolicModerate = Object.values(
-            metabolicAnalysis
+            metabolicAnalysis,
           ).reduce((sum, area) => sum + area.moderateImpact, 0);
 
           const totalMetabolicNormal = Object.values(metabolicAnalysis).reduce(
             (total, area) => total + (area.normalImpact || 0),
-            0
+            0,
           );
 
           return (
@@ -2694,11 +2724,8 @@ export default function ComprehensiveReportViewer({
                               (fields) =>
                                 fields.map((data) => ({
                                   field: data.label,
-                                  score: Number(
-                                    data.score ??
-                                      (data.high ? 8 : data.medium ? 6 : 4)
-                                  ),
-                                }))
+                                  score: Number(data.score ?? 0),
+                                })),
                             )}
                             margin={{ top: 10, right: 8, left: 30, bottom: 60 }}
                           >
@@ -2772,7 +2799,7 @@ export default function ComprehensiveReportViewer({
                           <p className="text-green-600 font-bold">
                             {Object.values(dietAnalysis).reduce(
                               (sum, cat) => sum + cat.highScores,
-                              0
+                              0,
                             )}
                           </p>
                           <p className="text-xs">High Performers (7-10)</p>
@@ -2781,7 +2808,7 @@ export default function ComprehensiveReportViewer({
                           <p className="text-yellow-600 font-bold">
                             {Object.values(dietAnalysis).reduce(
                               (sum, cat) => sum + cat.mediumScores,
-                              0
+                              0,
                             )}
                           </p>
                           <p className="text-xs">Moderate (4-6)</p>
@@ -2790,7 +2817,7 @@ export default function ComprehensiveReportViewer({
                           <p className="text-red-600 font-bold">
                             {Object.values(dietAnalysis).reduce(
                               (sum, cat) => sum + cat.lowScores,
-                              0
+                              0,
                             )}
                           </p>
                           <p className="text-xs">Need Attention (0-3)</p>
@@ -2812,7 +2839,7 @@ export default function ComprehensiveReportViewer({
                               highScores: data.highScores,
                               mediumScores: data.mediumScores,
                               lowScores: data.lowScores,
-                            })
+                            }),
                           )}
                           margin={{ top: 10, right: 8, left: 35, bottom: 60 }}
                         >
@@ -2881,8 +2908,8 @@ export default function ComprehensiveReportViewer({
                                   data.avgScore >= 6
                                     ? "text-green-600"
                                     : data.avgScore >= 4
-                                    ? "text-yellow-600"
-                                    : "text-red-600"
+                                      ? "text-yellow-600"
+                                      : "text-red-600"
                                 }`}
                               >
                                 {data.avgScore.toFixed(1)}/10
@@ -3021,21 +3048,18 @@ export default function ComprehensiveReportViewer({
                           <ResponsiveContainer width="100%" height="100%">
                             <LineChart
                               data={Object.entries(
-                                reportData.nutritionData?.data || {}
+                                reportData.nutritionData?.data || {},
                               ).flatMap(([sectionName, sectionData]) =>
                                 Object.entries(sectionData).map(
                                   ([key, data]) => ({
                                     field: key
                                       .replace(/([A-Z])/g, " $1")
                                       .replace(/^./, (str) =>
-                                        str.toUpperCase()
+                                        str.toUpperCase(),
                                       ),
-                                    score: Number(
-                                      data.score ??
-                                        (data.high ? 8 : data.medium ? 6 : 4)
-                                    ),
-                                  })
-                                )
+                                    score: Number(data.score ?? 0),
+                                  }),
+                                ),
                               )}
                               margin={{
                                 top: 10,
@@ -3107,7 +3131,7 @@ export default function ComprehensiveReportViewer({
                           <p className="text-red-600 font-bold">
                             {Object.values(nutritionAnalysis).reduce(
                               (sum, cat) => sum + cat.highImpact,
-                              0
+                              0,
                             )}
                           </p>
                           <p className="text-xs">High Impact Factors</p>
@@ -3116,7 +3140,7 @@ export default function ComprehensiveReportViewer({
                           <p className="text-yellow-600 font-bold">
                             {Object.values(nutritionAnalysis).reduce(
                               (sum, cat) => sum + cat.normalImpact,
-                              0
+                              0,
                             )}
                           </p>
                           <p className="text-xs">Normal Impact</p>
@@ -3125,7 +3149,7 @@ export default function ComprehensiveReportViewer({
                           <p className="text-green-600 font-bold">
                             {Object.values(nutritionAnalysis).reduce(
                               (sum, cat) => sum + cat.lowImpact,
-                              0
+                              0,
                             )}
                           </p>
                           <p className="text-xs">Low Impact Factors</p>
@@ -3172,8 +3196,8 @@ export default function ComprehensiveReportViewer({
                                           item.score >= 7
                                             ? "bg-green-500"
                                             : item.score >= 4
-                                            ? "bg-yellow-500"
-                                            : "bg-red-500"
+                                              ? "bg-yellow-500"
+                                              : "bg-red-500"
                                         }`}
                                       ></div>
                                       <span className="font-medium">
@@ -3186,7 +3210,7 @@ export default function ComprehensiveReportViewer({
                               </div>
                             )}
                           </div>
-                        )
+                        ),
                       )}
                     </div>
                   </CardContent>
@@ -3242,7 +3266,7 @@ export default function ComprehensiveReportViewer({
                                   .trim(),
                                 strengths: data.strengths,
                                 improvements: data.improvements,
-                              })
+                              }),
                             )}
                             margin={{ top: 10, right: 8, left: 15, bottom: 40 }}
                           >
@@ -3415,7 +3439,7 @@ export default function ComprehensiveReportViewer({
                               </div>
                             )}
                           </div>
-                        )
+                        ),
                       )}
                     </div>
                   </CardContent>
@@ -3582,7 +3606,7 @@ export default function ComprehensiveReportViewer({
                                 normal: data.normalImpact, // NEW
                                 low: data.lowImpact,
                                 total: data.total,
-                              })
+                              }),
                             )}
                             margin={{
                               top: 10,
@@ -3828,17 +3852,17 @@ export default function ComprehensiveReportViewer({
                                             .includes("high")
                                             ? "bg-red-500"
                                             : gene.impact
-                                                ?.toLowerCase()
-                                                .includes("moderate") ||
-                                              gene.impact
-                                                ?.toLowerCase()
-                                                .includes("average")
-                                            ? "bg-yellow-500"
-                                            : gene.impact
-                                                ?.toLowerCase()
-                                                .includes("normal")
-                                            ? "bg-blue-500" // NEW
-                                            : "bg-green-500" // Low impact
+                                                  ?.toLowerCase()
+                                                  .includes("moderate") ||
+                                                gene.impact
+                                                  ?.toLowerCase()
+                                                  .includes("average")
+                                              ? "bg-yellow-500"
+                                              : gene.impact
+                                                    ?.toLowerCase()
+                                                    .includes("normal")
+                                                ? "bg-blue-500" // NEW
+                                                : "bg-green-500" // Low impact
                                         }`}
                                       ></span>
                                       {/* Gene name and genotype */}
@@ -3876,7 +3900,7 @@ export default function ComprehensiveReportViewer({
                         Total Traits Analyzed:{" "}
                         {Object.values(sportsAnalysis).reduce(
                           (sum, section) => sum + section.totalTraits,
-                          0
+                          0,
                         )}{" "}
                         across {Object.keys(sportsAnalysis).length} categories
                       </p>
@@ -3959,7 +3983,7 @@ export default function ComprehensiveReportViewer({
                           <p className="text-red-600 font-bold">
                             {
                               Object.values(digestiveAnalysis).filter(
-                                (item) => item.sensitivity === "High"
+                                (item) => item.sensitivity === "High",
                               ).length
                             }
                           </p>
@@ -3969,7 +3993,7 @@ export default function ComprehensiveReportViewer({
                           <p className="text-green-600 font-bold">
                             {
                               Object.values(digestiveAnalysis).filter(
-                                (item) => item.sensitivity === "Low"
+                                (item) => item.sensitivity === "Low",
                               ).length
                             }
                           </p>
@@ -3998,7 +4022,7 @@ export default function ComprehensiveReportViewer({
                             style={{
                               width: `${
                                 (Object.values(digestiveAnalysis).filter(
-                                  (item) => item.sensitivity === "High"
+                                  (item) => item.sensitivity === "High",
                                 ).length /
                                   Object.keys(digestiveAnalysis).length) *
                                   100 || 0
@@ -4006,10 +4030,10 @@ export default function ComprehensiveReportViewer({
                             }}
                           >
                             {Object.values(digestiveAnalysis).filter(
-                              (item) => item.sensitivity === "High"
+                              (item) => item.sensitivity === "High",
                             ).length > 0 &&
                               Object.values(digestiveAnalysis).filter(
-                                (item) => item.sensitivity === "High"
+                                (item) => item.sensitivity === "High",
                               ).length}
                           </div>
                           <div
@@ -4017,7 +4041,7 @@ export default function ComprehensiveReportViewer({
                             style={{
                               width: `${
                                 (Object.values(digestiveAnalysis).filter(
-                                  (item) => item.sensitivity === "Low"
+                                  (item) => item.sensitivity === "Low",
                                 ).length /
                                   Object.keys(digestiveAnalysis).length) *
                                   100 || 0
@@ -4025,19 +4049,19 @@ export default function ComprehensiveReportViewer({
                             }}
                           >
                             {Object.values(digestiveAnalysis).filter(
-                              (item) => item.sensitivity === "Low"
+                              (item) => item.sensitivity === "Low",
                             ).length > 0 &&
                               Object.values(digestiveAnalysis).filter(
-                                (item) => item.sensitivity === "Low"
+                                (item) => item.sensitivity === "Low",
                               ).length}
                           </div>
                         </div>
                         <p className="text-xs text-center mt-1 text-pink-600">
                           {Object.values(digestiveAnalysis).filter(
-                            (item) => item.sensitivity === "High"
+                            (item) => item.sensitivity === "High",
                           ).length >
                           Object.values(digestiveAnalysis).filter(
-                            (item) => item.sensitivity === "Low"
+                            (item) => item.sensitivity === "Low",
                           ).length
                             ? "You may need to be more careful with certain foods"
                             : "You have good genetic tolerance for most foods"}
@@ -4049,7 +4073,7 @@ export default function ComprehensiveReportViewer({
                         <div className="space-y-2">
                           {Object.entries(digestiveAnalysis)
                             .sort(([, a], [, b]) =>
-                              a.sensitivity === "High" ? -1 : 1
+                              a.sensitivity === "High" ? -1 : 1,
                             )
                             .map(([key, item]) => (
                               <div
@@ -4206,7 +4230,7 @@ export default function ComprehensiveReportViewer({
                                 Object.values(addictionAnalysis).filter(
                                   (item) =>
                                     item.sensitivityIcon?.includes("high") ||
-                                    item.title?.toLowerCase().includes("high")
+                                    item.title?.toLowerCase().includes("high"),
                                 ).length
                               }
                             </p>
@@ -4219,14 +4243,14 @@ export default function ComprehensiveReportViewer({
                                   (item) =>
                                     item.sensitivityIcon?.includes("medium") ||
                                     item.sensitivityIcon?.includes(
-                                      "moderate"
+                                      "moderate",
                                     ) ||
                                     item.title
                                       ?.toLowerCase()
                                       .includes("medium") ||
                                     item.title
                                       ?.toLowerCase()
-                                      .includes("moderate")
+                                      .includes("moderate"),
                                 ).length
                               }
                             </p>
@@ -4238,7 +4262,7 @@ export default function ComprehensiveReportViewer({
                                 Object.values(addictionAnalysis).filter(
                                   (item) =>
                                     item.sensitivityIcon?.includes("low") ||
-                                    item.title?.toLowerCase().includes("low")
+                                    item.title?.toLowerCase().includes("low"),
                                 ).length
                               }
                             </p>
@@ -4262,7 +4286,10 @@ export default function ComprehensiveReportViewer({
                           {Object.entries(addictionAnalysis)
                             .sort(([, a], [, b]) => {
                               // Sort by risk level (high risk first)
-                              const getRiskLevel = (item) => {
+                              const getRiskLevel = (item: {
+                                sensitivityIcon?: string;
+                                title?: string;
+                              }) => {
                                 if (
                                   item.sensitivityIcon?.includes("high") ||
                                   item.title?.toLowerCase().includes("high")
@@ -4293,13 +4320,13 @@ export default function ComprehensiveReportViewer({
                               const riskLevel = isHighRisk
                                 ? "Higher"
                                 : isMediumRisk
-                                ? "Moderate"
-                                : "Lower";
+                                  ? "Moderate"
+                                  : "Lower";
                               const riskColor = isHighRisk
                                 ? "red"
                                 : isMediumRisk
-                                ? "yellow"
-                                : "green";
+                                  ? "yellow"
+                                  : "green";
 
                               return (
                                 <div
@@ -4325,8 +4352,8 @@ export default function ComprehensiveReportViewer({
                                           riskColor === "red"
                                             ? "bg-red-500"
                                             : riskColor === "yellow"
-                                            ? "bg-yellow-500"
-                                            : "bg-green-500"
+                                              ? "bg-yellow-500"
+                                              : "bg-green-500"
                                         }`}
                                       ></div>
                                       <span
@@ -4334,8 +4361,8 @@ export default function ComprehensiveReportViewer({
                                           riskColor === "red"
                                             ? "text-red-600"
                                             : riskColor === "yellow"
-                                            ? "text-yellow-600"
-                                            : "text-green-600"
+                                              ? "text-yellow-600"
+                                              : "text-green-600"
                                         }`}
                                       >
                                         {riskLevel}
@@ -4383,13 +4410,13 @@ export default function ComprehensiveReportViewer({
                         const riskLevel = isHighRisk
                           ? "Higher Risk"
                           : isMediumRisk
-                          ? "Moderate Risk"
-                          : "Lower Risk";
+                            ? "Moderate Risk"
+                            : "Lower Risk";
                         const riskColor = isHighRisk
                           ? "red"
                           : isMediumRisk
-                          ? "yellow"
-                          : "green";
+                            ? "yellow"
+                            : "green";
 
                         return (
                           <div
@@ -4416,8 +4443,8 @@ export default function ComprehensiveReportViewer({
                                     riskColor === "red"
                                       ? "text-red-600"
                                       : riskColor === "yellow"
-                                      ? "text-yellow-600"
-                                      : "text-green-600"
+                                        ? "text-yellow-600"
+                                        : "text-green-600"
                                   }`}
                                 >
                                   {riskLevel}
@@ -4429,15 +4456,15 @@ export default function ComprehensiveReportViewer({
                                     riskColor === "red"
                                       ? "bg-red-500"
                                       : riskColor === "yellow"
-                                      ? "bg-yellow-500"
-                                      : "bg-green-500"
+                                        ? "bg-yellow-500"
+                                        : "bg-green-500"
                                   }`}
                                   style={{
                                     width: isHighRisk
                                       ? "80%"
                                       : isMediumRisk
-                                      ? "55%"
-                                      : "30%",
+                                        ? "55%"
+                                        : "30%",
                                   }}
                                 ></div>
                               </div>
@@ -4459,8 +4486,8 @@ export default function ComprehensiveReportViewer({
                                 {isHighRisk
                                   ? "Extra awareness recommended"
                                   : isMediumRisk
-                                  ? "Moderate caution advised"
-                                  : "Lower genetic predisposition"}
+                                    ? "Moderate caution advised"
+                                    : "Lower genetic predisposition"}
                               </p>
                             </div>
                           </div>
@@ -4586,7 +4613,7 @@ export default function ComprehensiveReportViewer({
                           </li>
                         )}
                         {Object.values(dietAnalysis).some(
-                          (cat) => cat.lowScores > cat.highScores
+                          (cat) => cat.lowScores > cat.highScores,
                         ) && (
                           <li>
                             Focus intensive effort on underperforming dietary
@@ -4595,13 +4622,13 @@ export default function ComprehensiveReportViewer({
                         )}
                         {Object.values(nutritionAnalysis).reduce(
                           (sum, cat) => sum + cat.highImpact,
-                          0
+                          0,
                         ) > 0 && (
                           <li>
                             Address{" "}
                             {Object.values(nutritionAnalysis).reduce(
                               (sum, cat) => sum + cat.highImpact,
-                              0
+                              0,
                             )}{" "}
                             high-impact nutritional genetic factors
                           </li>
@@ -4633,7 +4660,7 @@ export default function ComprehensiveReportViewer({
                           </li>
                         )}
                         {Object.values(dietAnalysis).some(
-                          (cat) => cat.highScores > cat.lowScores
+                          (cat) => cat.highScores > cat.lowScores,
                         ) && (
                           <li>
                             Further optimize high-performing dietary genetic
@@ -4642,13 +4669,13 @@ export default function ComprehensiveReportViewer({
                         )}
                         {Object.values(nutritionAnalysis).reduce(
                           (sum, cat) => sum + cat.lowImpact,
-                          0
+                          0,
                         ) > 0 && (
                           <li>
                             Leverage{" "}
                             {Object.values(nutritionAnalysis).reduce(
                               (sum, cat) => sum + cat.lowImpact,
-                              0
+                              0,
                             )}{" "}
                             low-impact nutritional factors as genetic advantages
                           </li>
@@ -4750,8 +4777,8 @@ export default function ComprehensiveReportViewer({
                             totalDietScore >= 6
                               ? "#10b981"
                               : totalDietScore >= 4
-                              ? "#f59e0b"
-                              : "#ef4444"
+                                ? "#f59e0b"
+                                : "#ef4444"
                           }
                           rx="4"
                         />
@@ -4782,8 +4809,8 @@ export default function ComprehensiveReportViewer({
                             totalDietScore >= 6
                               ? "#059669"
                               : totalDietScore >= 4
-                              ? "#d97706"
-                              : "#dc2626"
+                                ? "#d97706"
+                                : "#dc2626"
                           }
                           textAnchor="middle"
                         >
@@ -4800,8 +4827,8 @@ export default function ComprehensiveReportViewer({
                             totalNutritionScore >= 6
                               ? "#10b981"
                               : totalNutritionScore >= 4
-                              ? "#f59e0b"
-                              : "#ef4444"
+                                ? "#f59e0b"
+                                : "#ef4444"
                           }
                           rx="4"
                         />
@@ -4832,8 +4859,8 @@ export default function ComprehensiveReportViewer({
                             totalNutritionScore >= 6
                               ? "#059669"
                               : totalNutritionScore >= 4
-                              ? "#d97706"
-                              : "#dc2626"
+                                ? "#d97706"
+                                : "#dc2626"
                           }
                           textAnchor="middle"
                         >
@@ -4866,9 +4893,9 @@ export default function ComprehensiveReportViewer({
                             totalLifestyleStrengths > totalLifestyleImprovements
                               ? "#10b981"
                               : totalLifestyleStrengths ===
-                                totalLifestyleImprovements
-                              ? "#f59e0b"
-                              : "#ef4444"
+                                  totalLifestyleImprovements
+                                ? "#f59e0b"
+                                : "#ef4444"
                           }
                           rx="4"
                         />
@@ -4899,9 +4926,9 @@ export default function ComprehensiveReportViewer({
                             totalLifestyleStrengths > totalLifestyleImprovements
                               ? "#059669"
                               : totalLifestyleStrengths ===
-                                totalLifestyleImprovements
-                              ? "#d97706"
-                              : "#dc2626"
+                                  totalLifestyleImprovements
+                                ? "#d97706"
+                                : "#dc2626"
                           }
                           textAnchor="middle"
                         >
@@ -4923,8 +4950,8 @@ export default function ComprehensiveReportViewer({
                             (totalMetabolicHigh === 0
                               ? 10
                               : totalMetabolicHigh <= 2
-                              ? 6
-                              : 3) *
+                                ? 6
+                                : 3) *
                               12
                           }
                           width="100"
@@ -4932,15 +4959,15 @@ export default function ComprehensiveReportViewer({
                             (totalMetabolicHigh === 0
                               ? 10
                               : totalMetabolicHigh <= 2
-                              ? 6
-                              : 3) * 12
+                                ? 6
+                                : 3) * 12
                           }
                           fill={
                             totalMetabolicHigh === 0
                               ? "#10b981"
                               : totalMetabolicHigh <= 2
-                              ? "#f59e0b"
-                              : "#ef4444"
+                                ? "#f59e0b"
+                                : "#ef4444"
                           }
                           rx="4"
                         />
@@ -4971,16 +4998,16 @@ export default function ComprehensiveReportViewer({
                             totalMetabolicHigh === 0
                               ? "#059669"
                               : totalMetabolicHigh <= 2
-                              ? "#d97706"
-                              : "#dc2626"
+                                ? "#d97706"
+                                : "#dc2626"
                           }
                           textAnchor="middle"
                         >
                           {totalMetabolicHigh === 0
                             ? "Low"
                             : totalMetabolicHigh <= 2
-                            ? "Med"
-                            : "High"}
+                              ? "Med"
+                              : "High"}
                         </text>
 
                         {/* Reference lines */}
@@ -5052,7 +5079,7 @@ export default function ComprehensiveReportViewer({
                           Nutritional genetic factors:{" "}
                           {Object.values(nutritionAnalysis).reduce(
                             (sum, cat) => sum + cat.total,
-                            0
+                            0,
                           )}
                         </li>
                         <li>
@@ -5063,7 +5090,7 @@ export default function ComprehensiveReportViewer({
                           High-impact factors requiring attention:{" "}
                           {Object.values(nutritionAnalysis).reduce(
                             (sum, cat) => sum + cat.highImpact,
-                            0
+                            0,
                           )}
                         </li>
                       </ul>
@@ -5089,7 +5116,7 @@ export default function ComprehensiveReportViewer({
                             Fitness genetic traits analyzed:{" "}
                             {Object.values(sportsAnalysis).reduce(
                               (sum, section) => sum + section.totalTraits,
-                              0
+                              0,
                             )}
                           </li>
                         )}

@@ -47,7 +47,7 @@ export default function MetabolicCoreAdmin({
   onReset,
 }: MetabolicCoreAdminProps) {
   const metabolicAreas = Object.keys(metabolicCore).filter(
-    (key) => key !== "quote" && key !== "description"
+    (key) => key !== "quote" && key !== "description",
   );
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -68,12 +68,12 @@ export default function MetabolicCoreAdmin({
     const { quote, description, ...restAreas } = metabolicCore;
 
     // New object with quote & description first, new area next, rest after
-    const reorderedCore: MetabolicCore = {
+    const reorderedCore = {
       quote: quote || "",
       description: description || "",
       [trimmedName]: { impact: "", advice: "", genes: [] },
       ...restAreas,
-    };
+    } as MetabolicCore;
 
     setMetabolicCore(reorderedCore);
     setNewAreaName("");
@@ -101,7 +101,7 @@ export default function MetabolicCoreAdmin({
   const updateGene = (
     area: string,
     index: number,
-    updatedGene: MetabolicGeneEntry
+    updatedGene: MetabolicGeneEntry,
   ) => {
     const genes = [...metabolicCore[area].genes];
     genes[index] = updatedGene;
@@ -309,17 +309,17 @@ export default function MetabolicCoreAdmin({
                                                 .includes("increased")
                                                 ? "bg-red-500"
                                                 : gene.impact
-                                                    ?.toLowerCase()
-                                                    .includes("normal") ||
-                                                  gene.impact
-                                                    ?.toLowerCase()
-                                                    .includes("average")
-                                                ? "bg-green-500"
-                                                : gene.impact
-                                                    ?.toLowerCase()
-                                                    .includes("moderate")
-                                                ? "bg-yellow-500"
-                                                : "bg-slate-300"
+                                                      ?.toLowerCase()
+                                                      .includes("normal") ||
+                                                    gene.impact
+                                                      ?.toLowerCase()
+                                                      .includes("average")
+                                                  ? "bg-green-500"
+                                                  : gene.impact
+                                                        ?.toLowerCase()
+                                                        .includes("moderate")
+                                                    ? "bg-yellow-500"
+                                                    : "bg-slate-300"
                                             }`}
                                           ></div>
                                           <Select
@@ -369,7 +369,7 @@ export default function MetabolicCoreAdmin({
                                       Delete Gene
                                     </Button>
                                   </div>
-                                )
+                                ),
                               )}
                             </div>
 
@@ -437,17 +437,17 @@ export default function MetabolicCoreAdmin({
                                                 .includes("increased")
                                                 ? "bg-red-500"
                                                 : gene.impact
-                                                    ?.toLowerCase()
-                                                    .includes("normal") ||
-                                                  gene.impact
-                                                    ?.toLowerCase()
-                                                    .includes("average")
-                                                ? "bg-green-500"
-                                                : gene.impact
-                                                    ?.toLowerCase()
-                                                    .includes("moderate")
-                                                ? "bg-yellow-500"
-                                                : "bg-slate-300"
+                                                      ?.toLowerCase()
+                                                      .includes("normal") ||
+                                                    gene.impact
+                                                      ?.toLowerCase()
+                                                      .includes("average")
+                                                  ? "bg-green-500"
+                                                  : gene.impact
+                                                        ?.toLowerCase()
+                                                        .includes("moderate")
+                                                    ? "bg-yellow-500"
+                                                    : "bg-slate-300"
                                             }`}
                                           ></div>
                                           <Select
@@ -497,7 +497,7 @@ export default function MetabolicCoreAdmin({
                                         </Button>
                                       </div>
                                     </div>
-                                  )
+                                  ),
                                 )}
                               </div>
                             </div>

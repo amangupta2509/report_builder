@@ -47,14 +47,14 @@ export default function GenesAddictionAdmin({
   const [quote, setQuote] = useState(data.quote || "");
   const [description, setDescription] = useState(data.description || "");
   const [fields, setFields] = useState<Record<string, AddictionEntry>>(
-    data.data || {}
+    data.data || {},
   );
   const [selectedFieldKey, setSelectedFieldKey] = useState<string | null>(null);
   const [labelIconLabel, setLabelIconLabel] = useState("");
   const [labelIconFile, setLabelIconFile] = useState<File | null>(null);
   const [sensitivityIconLabel, setSensitivityIconLabel] = useState("");
   const [sensitivityIconFile, setSensitivityIconFile] = useState<File | null>(
-    null
+    null,
   );
   const [labelIcons, setLabelIcons] = useState<Record<string, string>>({});
   const [sensitivityIcons, setSensitivityIcons] = useState<
@@ -110,7 +110,7 @@ export default function GenesAddictionAdmin({
     formData.append("label", label.trim().toLowerCase());
     formData.append(
       "folder",
-      type === "icon" ? "addiction/icons" : "addiction/sensitivity"
+      type === "icon" ? "addiction/icons" : "addiction/sensitivity",
     );
 
     const res = await fetch("/api/addiction-images", {
@@ -143,7 +143,7 @@ export default function GenesAddictionAdmin({
   const handleFieldChange = (
     key: string,
     field: keyof AddictionEntry,
-    value: string
+    value: string,
   ) => {
     const updated = {
       ...fields,
@@ -176,6 +176,7 @@ export default function GenesAddictionAdmin({
       [newKey]: {
         title: newEntryTitle.trim(),
         icon: "",
+        sensitivityIcon: "",
         sensitivity: "Medium",
       },
     };
@@ -481,7 +482,7 @@ export default function GenesAddictionAdmin({
                                         </span>
                                       </div>
                                     </SelectItem>
-                                  )
+                                  ),
                                 )}
                               </SelectContent>
                             </Select>
@@ -517,7 +518,7 @@ export default function GenesAddictionAdmin({
                                         </span>
                                       </div>
                                     </SelectItem>
-                                  )
+                                  ),
                                 )}
                               </SelectContent>
                             </Select>
@@ -657,14 +658,14 @@ export default function GenesAddictionAdmin({
                                   className="h-6 w-6"
                                   onClick={async () => {
                                     const confirmed = confirm(
-                                      `Are you sure you want to delete "${label}"?`
+                                      `Are you sure you want to delete "${label}"?`,
                                     );
                                     if (!confirmed) return;
 
                                     try {
                                       const res = await fetch(
                                         `/api/addiction-images?file=${fileName}&folder=${folder}`,
-                                        { method: "DELETE" }
+                                        { method: "DELETE" },
                                       );
                                       const result = await res.json();
                                       if (result.success) {
@@ -677,7 +678,7 @@ export default function GenesAddictionAdmin({
                                     } catch (err) {
                                       console.error(
                                         "Failed to delete icon:",
-                                        err
+                                        err,
                                       );
                                       alert("Delete failed");
                                     }
@@ -727,14 +728,14 @@ export default function GenesAddictionAdmin({
                                     className="h-6 w-6"
                                     onClick={async () => {
                                       const confirmed = confirm(
-                                        `Are you sure you want to delete "${label}"?`
+                                        `Are you sure you want to delete "${label}"?`,
                                       );
                                       if (!confirmed) return;
 
                                       try {
                                         const res = await fetch(
                                           `/api/addiction-images?file=${fileName}&folder=${folder}`,
-                                          { method: "DELETE" }
+                                          { method: "DELETE" },
                                         );
                                         const result = await res.json();
                                         if (result.success) {
@@ -749,7 +750,7 @@ export default function GenesAddictionAdmin({
                                       } catch (err) {
                                         console.error(
                                           "Failed to delete icon:",
-                                          err
+                                          err,
                                         );
                                         alert("Delete failed");
                                       }
@@ -759,7 +760,7 @@ export default function GenesAddictionAdmin({
                                   </Button>
                                 </li>
                               );
-                            }
+                            },
                           )}
                         </ul>
                       </div>

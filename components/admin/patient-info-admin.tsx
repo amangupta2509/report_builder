@@ -40,7 +40,7 @@ export default function PatientInfoAdmin({
 
   const handleImageUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    key: "signature1" | "signature2"
+    key: "signature1" | "signature2",
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -67,9 +67,9 @@ export default function PatientInfoAdmin({
 
   const removeSignature = (
     key: "signature1" | "signature2",
-    ref: React.RefObject<HTMLInputElement>
+    ref: React.RefObject<HTMLInputElement | null>,
   ) => {
-    updatePatientInfo(key, null);
+    updatePatientInfo(key, "");
     if (ref.current) ref.current.value = "";
   };
 

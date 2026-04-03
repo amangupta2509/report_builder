@@ -4,23 +4,32 @@ import { NextRequest, NextResponse } from "next/server";
 
 const folderName = "sleep";
 const folderPath = path.join(process.cwd(), "public", folderName);
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+];
+const ALLOWED_EXTENSIONS = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
 
 // GET: List all sleep images
 export async function GET() {
   try {
     const files = await fs.readdir(folderPath);
 
-    const images = files.map((file) => ({
-      label: file.split(".")[0], // This will now be your custom label
-      url: `/${folderName}/${file}`,
-    }));
+    const images = files
+      .filter((file) => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
+      .map((file) => ({
+        label: file.split(".")[0], // This will now be your custom label
+        url: `/${folderName}/${file}`,
+      }));
 
     return NextResponse.json({ success: true, images });
   } catch (err) {
     console.error("Failed to read sleep image folder:", err);
     return NextResponse.json(
       { success: false, error: "Could not read images" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -35,7 +44,14 @@ export async function POST(req: NextRequest) {
     if (!file) {
       return NextResponse.json(
         { success: false, error: "Missing file" },
-        { status: 400 }
+        { status: 400 },
+      );
+    }
+
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      return NextResponse.json(
+        { success: false, error: "Invalid file type" },
+        { status: 400 },
       );
     }
 
@@ -43,12 +59,32 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(arrayBuffer);
 
     // Use custom label if provided, otherwise use original filename
-    const fileExtension = path.extname(file.name);
+    const fileExtension = path.extname(file.name).toLowerCase();
+    if (!ALLOWED_EXTENSIONS.includes(fileExtension)) {
+      return NextResponse.json(
+        { success: false, error: "Invalid file extension" },
+        { status: 400 },
+      );
+    }
+
+    const safeCustomLabel = customLabel
+      ? customLabel
+          .toLowerCase()
+          .replace(/[^a-z0-9_-]/g, "_")
+          .replace(/_+/g, "_")
+      : "";
     const fileName = customLabel
-      ? `${customLabel.replace(/\s+/g, "_")}${fileExtension}`
+      ? `${safeCustomLabel}${fileExtension}`
       : file.name.replace(/\s+/g, "_");
 
     const filePath = path.join(folderPath, fileName);
+
+    if (!path.resolve(filePath).startsWith(path.resolve(folderPath))) {
+      return NextResponse.json(
+        { success: false, error: "Invalid file path" },
+        { status: 400 },
+      );
+    }
 
     await fs.mkdir(path.dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, buffer);
@@ -62,7 +98,7 @@ export async function POST(req: NextRequest) {
     console.error("Upload failed:", err);
     return NextResponse.json(
       { success: false, error: "Upload failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -76,11 +112,19 @@ export async function DELETE(req: NextRequest) {
     if (!file) {
       return NextResponse.json(
         { success: false, error: "Missing file parameter" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const filePath = path.join(folderPath, file);
+    const safeFile = path.basename(file);
+    const filePath = path.join(folderPath, safeFile);
+
+    if (!path.resolve(filePath).startsWith(path.resolve(folderPath))) {
+      return NextResponse.json(
+        { success: false, error: "Invalid file path" },
+        { status: 400 },
+      );
+    }
     await fs.unlink(filePath);
 
     return NextResponse.json({ success: true, message: "Image deleted" });
@@ -88,7 +132,7 @@ export async function DELETE(req: NextRequest) {
     console.error("Deletion failed:", err);
     return NextResponse.json(
       { success: false, error: "Deletion failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

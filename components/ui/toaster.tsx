@@ -19,7 +19,9 @@ export function Toaster() {
         ({ id, title, description, action, variant = "default", ...props }) => (
           <Toast key={id} variant={variant} {...props} hideClose>
             <div className="flex items-start gap-3">
-              {variant !== "default" && variantIcons[variant]}
+              {variant && variant !== "default" && variant in variantIcons
+                ? variantIcons[variant as keyof typeof variantIcons]
+                : null}
               <div className="grid gap-1">
                 {title && <ToastTitle>{title}</ToastTitle>}
                 {description && (
@@ -29,7 +31,7 @@ export function Toaster() {
             </div>
             {action}
           </Toast>
-        )
+        ),
       )}
       <ToastViewport />
     </ToastProvider>

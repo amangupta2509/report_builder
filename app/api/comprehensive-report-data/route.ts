@@ -1,23 +1,19 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 
-// In-memory storage for demo purposes
-let reportData: any = null
-
-export async function GET() {
-  if (!reportData) {
-    return NextResponse.json({ message: "No data found" }, { status: 404 })
-  }
-
-  return NextResponse.json(reportData)
+function deprecatedResponse() {
+  return NextResponse.json(
+    {
+      error:
+        "This legacy endpoint has been retired. Use /api/patients-data for persisted report data.",
+    },
+    { status: 410 },
+  );
 }
 
-export async function POST(request: NextRequest) {
-  try {
-    const data = await request.json()
-    reportData = data
+export async function GET() {
+  return deprecatedResponse();
+}
 
-    return NextResponse.json({ message: "Data saved successfully" })
-  } catch (error) {
-    return NextResponse.json({ message: "Error saving data" }, { status: 500 })
-  }
+export async function POST() {
+  return deprecatedResponse();
 }

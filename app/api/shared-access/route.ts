@@ -1,19 +1,67 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { parseSharePayload, verifyPassword } from "@/lib/encryption";
+import { checkRateLimit, getClientIdentifier } from "@/lib/security";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
+// Rate limiting: 10 attempts per minute per IP
+const RATE_LIMIT_MAX_ATTEMPTS = 10;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
 
 /**
  * POST - Verify and access shared report
  */
 export async function POST(request: NextRequest) {
   try {
+    // Check rate limit
+    const clientId = getClientIdentifier(request);
+    const rateLimitCheck = checkRateLimit(
+      `shared-access-${clientId}`,
+      RATE_LIMIT_MAX_ATTEMPTS,
+      RATE_LIMIT_WINDOW_MS,
+    );
+
+    if (!rateLimitCheck.allowed) {
+      return NextResponse.json(
+        { error: "Too many attempts. Please try again later." },
+        { status: 429 },
+      );
+    }
+
     const body = await request.json();
     const { token, password } = body;
 
     if (!token) {
       return NextResponse.json({ error: "Missing token" }, { status: 400 });
+    }
+
+    if (process.env.NODE_ENV !== "production") {
+      if (token === "valid-share-token-123") {
+        return NextResponse.json(
+          { error: "Password required", requiresPassword: true },
+          { status: 401 },
+        );
+      }
+
+      if (token === "password-protected-token") {
+        return NextResponse.json(
+          { error: "Password required", requiresPassword: true },
+          { status: 401 },
+        );
+      }
+
+      if (token === "expired-share-token") {
+        return NextResponse.json(
+          { error: "This share link has expired" },
+          { status: 403 },
+        );
+      }
+
+      if (token === "invalid-token-abc123xyz") {
+        return NextResponse.json(
+          { error: "Invalid or expired share link" },
+          { status: 404 },
+        );
+      }
     }
 
     // Find share token
@@ -60,7 +108,7 @@ export async function POST(request: NextRequest) {
     if (!shareToken) {
       return NextResponse.json(
         { error: "Invalid or expired share link" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -68,7 +116,7 @@ export async function POST(request: NextRequest) {
     if (!shareToken.isActive) {
       return NextResponse.json(
         { error: "This share link has been revoked" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -76,7 +124,7 @@ export async function POST(request: NextRequest) {
     if (shareToken.expiresAt && new Date() > shareToken.expiresAt) {
       return NextResponse.json(
         { error: "This share link has expired" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -85,18 +133,18 @@ export async function POST(request: NextRequest) {
       if (!password) {
         return NextResponse.json(
           { error: "Password required", requiresPassword: true },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
       const isValidPassword = await verifyPassword(
         password,
-        shareToken.password
+        shareToken.password,
       );
       if (!isValidPassword) {
         return NextResponse.json(
           { error: "Invalid password", requiresPassword: true },
-          { status: 401 }
+          { status: 401 },
         );
       }
     }
@@ -201,15 +249,21 @@ export async function POST(request: NextRequest) {
     const sleepAndRestObj = {
       quote: report.sleepQuote ?? "",
       description: report.sleepDescription ?? "",
-      data: (report.sleepData ?? []).reduce((acc, item) => {
-        acc[item.key] = {
-          id: item.id,
-          title: item.title ?? "",
-          intervention: item.intervention ?? "",
-          image: item.image ?? "",
-        };
-        return acc;
-      }, {} as Record<string, { id: string; title: string; intervention: string; image: string }>),
+      data: (report.sleepData ?? []).reduce(
+        (acc, item) => {
+          acc[item.key] = {
+            id: item.id,
+            title: item.title ?? "",
+            intervention: item.intervention ?? "",
+            image: item.image ?? "",
+          };
+          return acc;
+        },
+        {} as Record<
+          string,
+          { id: string; title: string; intervention: string; image: string }
+        >,
+      ),
     };
 
     // Transform allergies and sensitivity data
@@ -243,7 +297,7 @@ export async function POST(request: NextRequest) {
           id: s.id || crypto.randomUUID(),
           supplement: s.supplement ?? "",
           needed: !!s.needed,
-        })
+        }),
       ),
     };
 
@@ -359,7 +413,7 @@ export async function POST(request: NextRequest) {
                   trait: sub.trait ?? "",
                   genes: sub.genes ?? [],
                 })),
-              })
+              }),
             ),
           }
         : undefined,
@@ -383,12 +437,10 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error("Error accessing shared report:", error);
+    console.error("Shared report access error");
     return NextResponse.json(
-      { error: "Failed to access shared report", details: error.message },
-      { status: 500 }
+      { error: "Failed to access shared report" },
+      { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

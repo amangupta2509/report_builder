@@ -1,7 +1,8 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 import type { FamilyGeneticImpact } from "@prisma/client";
 import { HealthConditionStatus } from "@/types/report-types";
+import { prisma } from "@/lib/prisma";
 
 type AllergiesAndSensitivity = {
   quote: string;
@@ -9,8 +10,6 @@ type AllergiesAndSensitivity = {
   generalAdvice: string;
   data: Record<string, { id?: string; title: string; image: string }>;
 };
-
-const prisma = new PrismaClient();
 
 // STEP 1 — Include nested models
 const reportInclude = Prisma.validator<Prisma.ReportInclude>()({
@@ -97,7 +96,7 @@ export async function GET() {
               id: s.id || crypto.randomUUID(),
               supplement: s.supplement ?? "",
               needed: !!s.needed,
-            })
+            }),
           ),
         };
 
@@ -146,15 +145,21 @@ export async function GET() {
         const sleepAndRestObj = {
           quote: r.sleepQuote ?? "",
           description: r.sleepDescription ?? "",
-          data: (r.sleepData ?? []).reduce((acc, item) => {
-            acc[item.key] = {
-              id: item.id,
-              title: item.title ?? "",
-              intervention: item.intervention ?? "",
-              image: item.image ?? "",
-            };
-            return acc;
-          }, {} as Record<string, { id: string; title: string; intervention: string; image: string }>),
+          data: (r.sleepData ?? []).reduce(
+            (acc, item) => {
+              acc[item.key] = {
+                id: item.id,
+                title: item.title ?? "",
+                intervention: item.intervention ?? "",
+                image: item.image ?? "",
+              };
+              return acc;
+            },
+            {} as Record<
+              string,
+              { id: string; title: string; intervention: string; image: string }
+            >,
+          ),
         };
 
         // --- Transform addictionData array into object ---
@@ -333,9 +338,9 @@ export async function GET() {
                         area: sub.area ?? "",
                         trait: sub.trait ?? "",
                         genes: sub.genes ?? [],
-                      })
+                      }),
                     ),
-                  })
+                  }),
                 ),
               }
             : undefined,
@@ -354,11 +359,8 @@ export async function GET() {
   } catch (error: any) {
     console.error("GET error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
-
 // ✅ POST — supports partial save/update
 export async function POST(request: Request) {
   try {
@@ -367,7 +369,7 @@ export async function POST(request: Request) {
     if (!Array.isArray(patients)) {
       return NextResponse.json(
         { error: "Patients data must be an array" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -377,7 +379,7 @@ export async function POST(request: Request) {
       if (!id || typeof id !== "string") {
         return NextResponse.json(
           { error: "Each patient must have an ID" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -467,12 +469,12 @@ export async function POST(request: Request) {
             model: any,
             data: any[],
             deleteWhere: object,
-            injectFields: object = {}
+            injectFields: object = {},
           ) => {
             if (!Array.isArray(data)) {
               console.warn(
                 "❌ handleNested: Provided data is not an array:",
-                data
+                data,
               );
               return;
             }
@@ -511,7 +513,7 @@ export async function POST(request: Request) {
                 reportId: report.id,
                 title: entry.title || "",
                 description: entry.description || "",
-              })
+              }),
             );
 
             await handleNested(
@@ -519,7 +521,7 @@ export async function POST(request: Request) {
               healthSummaryWithIds,
               {
                 reportId: report.id,
-              }
+              },
             );
           }
 
@@ -530,11 +532,11 @@ export async function POST(request: Request) {
           ) {
             console.log(
               "🔍 Processing dynamic diet fields for report:",
-              report.id
+              report.id,
             );
             console.log(
               "🔍 Incoming definitions:",
-              JSON.stringify(report.dynamicDietFieldDefinitions, null, 2)
+              JSON.stringify(report.dynamicDietFieldDefinitions, null, 2),
             );
 
             // First, delete ALL existing dynamic diet field definitions and their fields
@@ -594,7 +596,7 @@ export async function POST(request: Request) {
                       normalRecommendation: field.normalRecommendation || "",
                       lowRecommendation: field.lowRecommendation || "",
                     };
-                  }
+                  },
                 );
 
                 const fieldsResult = await prisma.dynamicDietField.createMany({
@@ -602,7 +604,7 @@ export async function POST(request: Request) {
                   skipDuplicates: false,
                 });
                 console.log(
-                  `✅ Created ${fieldsResult.count} fields for definition ${createdDefinition.id}`
+                  `✅ Created ${fieldsResult.count} fields for definition ${createdDefinition.id}`,
                 );
               }
             }
@@ -618,15 +620,15 @@ export async function POST(request: Request) {
             console.log(
               `  - Fields saved: ${verifyDefinitions.reduce(
                 (sum, def) => sum + def.fields.length,
-                0
-              )}`
+                0,
+              )}`,
             );
 
             verifyDefinitions.forEach((def, i) => {
               console.log(`  - Definition ${i}: ${def.fields.length} fields`);
               def.fields.forEach((field, j) => {
                 console.log(
-                  `    - Field ${j}: "${field.label}" (category: "${field.category}")`
+                  `    - Field ${j}: "${field.label}" (category: "${field.category}")`,
                 );
               });
             });
@@ -643,7 +645,7 @@ export async function POST(request: Request) {
             const dietAnalysisWithIds = report.patientDietAnalysisResults.map(
               (field: any) => {
                 const existing = existingAnalysis.find(
-                  (e) => e.fieldId === field.fieldId
+                  (e) => e.fieldId === field.fieldId,
                 );
 
                 return {
@@ -665,13 +667,13 @@ export async function POST(request: Request) {
                     field.recommendations?.HIGH ||
                     "",
                 };
-              }
+              },
             );
 
             await handleNested(
               prisma.patientDietAnalysis,
               dietAnalysisWithIds,
-              { reportId: report.id }
+              { reportId: report.id },
             );
           }
 
@@ -759,7 +761,7 @@ export async function POST(request: Request) {
                   return [];
                 }
                 return Object.entries(
-                  conditions as Record<string, HealthConditionStatus>
+                  conditions as Record<string, HealthConditionStatus>,
                 ).map(([conditionName, conditionData]) => ({
                   id: (conditionData as any).id || crypto.randomUUID(),
                   reportId: report.id,
@@ -777,13 +779,13 @@ export async function POST(request: Request) {
                   consumeLabel: conditionData.consumeLabel || "CONSUME",
                   monitorLabel: conditionData.monitorLabel || "MONITOR",
                 }));
-              }
+              },
             );
 
             await handleNested(
               prisma.lifestyleCondition,
               lifestyleConditionsArray,
-              { reportId: report.id }
+              { reportId: report.id },
             );
           } else if (Array.isArray(report.lifestyleConditions)) {
             // If already array, just save directly
@@ -792,13 +794,13 @@ export async function POST(request: Request) {
                 ...condition,
                 id: condition.id || crypto.randomUUID(),
                 reportId: report.id,
-              })
+              }),
             );
 
             await handleNested(
               prisma.lifestyleCondition,
               lifestyleConditionsWithIds,
-              { reportId: report.id }
+              { reportId: report.id },
             );
           }
 
@@ -808,7 +810,7 @@ export async function POST(request: Request) {
             !Array.isArray(report.lifestyleCategoryImages)
           ) {
             const imagesArray = Object.entries(
-              report.lifestyleCategoryImages as Record<string, string>
+              report.lifestyleCategoryImages as Record<string, string>,
             ).map(([categoryId, imageUrl]) => ({
               id: crypto.randomUUID(),
               reportId: report.id,
@@ -830,7 +832,7 @@ export async function POST(request: Request) {
             await handleNested(
               prisma.lifestyleCategoryImage,
               lifestyleCategoryImagesWithIds,
-              { reportId: report.id }
+              { reportId: report.id },
             );
           }
 
@@ -857,7 +859,7 @@ export async function POST(request: Request) {
                     });
                   });
                 }
-              }
+              },
             );
 
             await handleNested(prisma.metabolicCoreData, metabolicCoreArray, {
@@ -897,7 +899,7 @@ export async function POST(request: Request) {
                 sensitivity: entry.sensitivity || "",
                 good: entry.good || "",
                 bad: entry.bad || "",
-              })
+              }),
             );
 
             await handleNested(prisma.digestiveHealthData, digestiveArray, {
@@ -927,7 +929,7 @@ export async function POST(request: Request) {
                 title: entry.title || "",
                 icon: entry.icon || "",
                 sensitivityIcon: entry.sensitivityIcon || "",
-              })
+              }),
             );
 
             await handleNested(prisma.addictionData, addictionArray, {
@@ -957,7 +959,7 @@ export async function POST(request: Request) {
                 title: entry.title || "", // <-- Added
                 intervention: entry.intervention || "",
                 image: entry.image || "",
-              })
+              }),
             );
 
             // 3️⃣ Save with handleNested
@@ -999,7 +1001,7 @@ export async function POST(request: Request) {
                   title: val.title || "",
                   image: val.image || "",
                 };
-              }
+              },
             );
 
             // 3️⃣ Save in DB, replacing old ones
@@ -1015,7 +1017,7 @@ export async function POST(request: Request) {
                 ...gene,
                 id: gene.id || crypto.randomUUID(),
                 reportId: report.id,
-              })
+              }),
             );
 
             await handleNested(prisma.geneTestResult, geneTestResultsWithIds, {
@@ -1102,7 +1104,7 @@ export async function POST(request: Request) {
               supplementsNormalized,
               {
                 reportId: report.id,
-              }
+              },
             );
           }
 
@@ -1154,7 +1156,7 @@ export async function POST(request: Request) {
                       area: sub.area || "",
                       trait: sub.trait || "",
                       genes: sub.genes || [],
-                    })
+                    }),
                   );
 
                   await prisma.genomicSubcategory.createMany({
@@ -1200,7 +1202,7 @@ export async function POST(request: Request) {
                       typeof imp.normalAlleles === "string" &&
                       imp.normalAlleles.trim() !== "" &&
                       typeof imp.yourResult === "string" &&
-                      imp.yourResult.trim() !== ""
+                      imp.yourResult.trim() !== "",
                   )
                   .map((imp: Partial<FamilyGeneticImpact>) => ({
                     id: imp.id || crypto.randomUUID(),
@@ -1241,7 +1243,7 @@ export async function POST(request: Request) {
         stack: error?.stack || null,
         timestamp: new Date().toISOString(),
       },
-      { status: 500 }
+      { status: 500 },
     );
   } finally {
     await prisma.$disconnect();
@@ -1283,7 +1285,7 @@ export async function DELETE(req: Request) {
     // No valid parameter found
     return NextResponse.json(
       { error: "Missing reportId or patientId" },
-      { status: 400 }
+      { status: 400 },
     );
   } catch (error) {
     console.error("Error deleting:", error);

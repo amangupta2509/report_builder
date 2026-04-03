@@ -1,18 +1,20 @@
 import ComprehensiveReportViewer from "@/components/comprehensive-report-viewer";
 import type { ComprehensiveReportData } from "@/types/report-types";
 
+export const dynamic = "force-dynamic";
+
 async function getReportData(): Promise<ComprehensiveReportData | null> {
   try {
     const response = await fetch(
       `${
         process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
       }/api/patients-data`,
-      { cache: "no-store" }
+      { cache: "no-store" },
     );
 
     if (!response.ok) {
       console.error(
-        `Failed to fetch report data: ${response.status} ${response.statusText}`
+        `Failed to fetch report data: ${response.status} ${response.statusText}`,
       );
       return null;
     }

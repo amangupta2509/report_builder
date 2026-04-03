@@ -1,0 +1,71 @@
+node_modules
+.next
+coverage
+playwright-report
+test-results
+test-results.txt
+.git
+.gitignore
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store# Git
+.git
+.gitignore
+.gitattributes
+
+# Dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Testing
+__tests__
+e2e
+jest.config.js
+jest.setup.js
+playwright.config.ts
+playwright-report
+test-results
+
+# Build artifacts
+.next
+dist
+build
+out
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*.swn
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Documentation
+*.md
+ARCHITECTURE_*.md
+*_REPORT.md
+*_SUMMARY.md
+*_CHECKLIST.md
+*.csv
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.circleci
+
+# Other
+Makefile
+setup-security.*
+script.py
