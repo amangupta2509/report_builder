@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { createTestAccessToken } from "./test-auth";
 
 /**
  * Report Sharing & Access Control E2E Tests
@@ -8,10 +9,11 @@ import { test, expect } from "@playwright/test";
 test.describe("Report Sharing & Access Control", () => {
   test.beforeEach(async ({ page, context }) => {
     // Mock admin authentication
+    const accessToken = await createTestAccessToken("admin");
     await context.addCookies([
       {
-        name: "auth-token",
-        value: "test-jwt-token",
+        name: "accessToken",
+        value: accessToken,
         domain: "localhost",
         path: "/",
         httpOnly: true,

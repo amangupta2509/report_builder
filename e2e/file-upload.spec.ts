@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import * as fs from "fs";
 import * as path from "path";
+import { createTestAccessToken } from "./test-auth";
 
 /**
  * File Upload & Data Entry E2E Tests
@@ -10,10 +11,11 @@ import * as path from "path";
 test.describe("File Upload & Data Entry", () => {
   test.beforeEach(async ({ page, context }) => {
     // Mock authentication
+    const accessToken = await createTestAccessToken("admin");
     await context.addCookies([
       {
-        name: "auth-token",
-        value: "test-jwt-token",
+        name: "accessToken",
+        value: accessToken,
         domain: "localhost",
         path: "/",
         httpOnly: true,

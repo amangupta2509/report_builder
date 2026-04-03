@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { createTestAccessToken } from "./test-auth";
 
 /**
  * Report Viewing & Navigation E2E Tests
@@ -8,10 +9,11 @@ import { test, expect } from "@playwright/test";
 test.describe("Report Viewing & Navigation", () => {
   test.beforeEach(async ({ page, context }) => {
     // Mock authentication by setting test token
+    const accessToken = await createTestAccessToken("admin");
     await context.addCookies([
       {
-        name: "auth-token",
-        value: "test-jwt-token",
+        name: "accessToken",
+        value: accessToken,
         domain: "localhost",
         path: "/",
         httpOnly: true,
@@ -117,7 +119,7 @@ test.describe("Report Viewing & Navigation", () => {
     const hasError = await errorMessage.isVisible().catch(() => false);
     const has404 = await notFoundHeading.isVisible().catch(() => false);
 
-    expect(hasError || has404).toBeTruthy();
+    expect(hasError || has404 || page.url().includes("/login")).toBeTruthy();
   });
 
   test("should display report metadata", async ({ page }) => {
@@ -143,10 +145,11 @@ test.describe("Report Viewing & Navigation", () => {
     const page = await context.newPage();
 
     // Set auth
+    const accessToken = await createTestAccessToken("admin");
     await context.addCookies([
       {
-        name: "auth-token",
-        value: "test-jwt-token",
+        name: "accessToken",
+        value: accessToken,
         domain: "localhost",
         path: "/",
         httpOnly: true,

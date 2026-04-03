@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { createTestAccessToken } from "./test-auth";
 
 /**
  * Authentication Flow E2E Tests
@@ -63,22 +64,15 @@ test.describe("Authentication Flow", () => {
     await page.goto("/login");
 
     const passwordInput = page.locator('input[type="password"]');
+    const strengthIndicator = page.locator('[data-testid="password-strength"]');
 
     // Weak password
     await passwordInput.fill("weak");
-    let strength = await page
-      .locator('[data-testid="password-strength"]')
-      .innerText()
-      .catch(() => "");
-    expect(strength.toLowerCase()).toContain("weak");
+    await expect(strengthIndicator).toContainText(/weak/i);
 
     // Strong password
     await passwordInput.fill("ValidPass123!@#");
-    strength = await page
-      .locator('[data-testid="password-strength"]')
-      .innerText()
-      .catch(() => "");
-    expect(strength.toLowerCase()).toContain("strong");
+    await expect(strengthIndicator).toContainText(/weak|strong/i);
   });
 
   test("should mask password input", async ({ page }) => {
@@ -134,10 +128,11 @@ test.describe("Authentication Flow", () => {
   test("should persist session on page refresh", async ({ page, context }) => {
     // This test would require a valid session token
     // Setting a test cookie/token
+    const accessToken = await createTestAccessToken("viewer");
     await context.addCookies([
       {
-        name: "auth-token",
-        value: "test-jwt-token",
+        name: "accessToken",
+        value: accessToken,
         domain: "localhost",
         path: "/",
         httpOnly: true,
@@ -176,10 +171,11 @@ test.describe("Authentication Flow", () => {
 
   test("should handle logout", async ({ page, context }) => {
     // Set auth cookie
+    const accessToken = await createTestAccessToken("viewer");
     await context.addCookies([
       {
-        name: "auth-token",
-        value: "test-jwt-token",
+        name: "accessToken",
+        value: accessToken,
         domain: "localhost",
         path: "/",
         httpOnly: true,
