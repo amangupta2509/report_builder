@@ -1,0 +1,27 @@
+services:
+  app:
+    image: ${APP_IMAGE:-report-builder:latest}
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?ENCRYPTION_KEY is required}
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:?NEXT_PUBLIC_APP_URL is required}
+      NODE_ENV: production
+      PDF_SOURCE_URL: ${PDF_SOURCE_URL:-http://127.0.0.1:3000/report/pdf}
+      PDF_OUTPUT_PATH: ${PDF_OUTPUT_PATH:-/tmp/report.pdf}
+      PDF_COOKIE: ${PDF_COOKIE:-}
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://127.0.0.1:3000', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
