@@ -25,7 +25,7 @@ export async function GET() {
       try {
         const iconFiles = await readdir(iconsPath);
         for (const file of iconFiles) {
-          if (file.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
+          if (file.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
             const label = path.parse(file).name; // Remove extension
             icons.push({
               label,
@@ -43,7 +43,7 @@ export async function GET() {
       try {
         const sensitivityFiles = await readdir(sensitivityPath);
         for (const file of sensitivityFiles) {
-          if (file.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
+          if (file.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
             const label = path.parse(file).name; // Remove extension
             sensitivities.push({
               label,
@@ -68,7 +68,7 @@ export async function GET() {
         success: false,
         error: "Failed to fetch images",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -85,14 +85,14 @@ export async function POST(request: NextRequest) {
     if (!file) {
       return NextResponse.json(
         { success: false, error: "No file provided" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!label) {
       return NextResponse.json(
         { success: false, error: "No label provided" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json(
         { success: false, error: "Invalid folder specified" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -113,7 +113,6 @@ export async function POST(request: NextRequest) {
       "image/jpg",
       "image/png",
       "image/gif",
-      "image/svg+xml",
       "image/webp",
     ];
     if (!allowedTypes.includes(file.type)) {
@@ -122,7 +121,7 @@ export async function POST(request: NextRequest) {
           success: false,
           error: "Invalid file type. Please upload an image file.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -133,7 +132,6 @@ export async function POST(request: NextRequest) {
         "image/jpg": ".jpg",
         "image/png": ".png",
         "image/gif": ".gif",
-        "image/svg+xml": ".svg",
         "image/webp": ".webp",
       };
       return extensions[mimeType] || ".jpg";
@@ -145,7 +143,21 @@ export async function POST(request: NextRequest) {
 
     // Create directory path
     const publicPath = path.join(process.cwd(), "public");
-    const uploadDir = path.join(publicPath, folder);
+    const normalizedFolder = folder
+      .replace(/\\/g, "/")
+      .replace(/\.\./g, "")
+      .replace(/^\/+|\/+$/g, "");
+
+    if (
+      !["addiction/icons", "addiction/sensitivity"].includes(normalizedFolder)
+    ) {
+      return NextResponse.json(
+        { success: false, error: "Invalid folder specified" },
+        { status: 400 },
+      );
+    }
+
+    const uploadDir = path.join(publicPath, normalizedFolder);
     const filePath = path.join(uploadDir, fileName);
 
     // Ensure directory exists
@@ -161,7 +173,7 @@ export async function POST(request: NextRequest) {
     await writeFile(filePath, buffer);
 
     // Generate the public URL
-    const publicUrl = `/${folder}/${fileName}`;
+    const publicUrl = `/${normalizedFolder}/${fileName}`;
 
     return NextResponse.json({
       success: true,
@@ -177,7 +189,7 @@ export async function POST(request: NextRequest) {
         success: false,
         error: "Failed to upload file",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -192,12 +204,27 @@ export async function DELETE(request: NextRequest) {
     if (!fileName || !folder) {
       return NextResponse.json(
         { success: false, error: "Missing file or folder parameter" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const publicPath = path.join(process.cwd(), "public");
-    const filePath = path.join(publicPath, folder, fileName);
+    const normalizedFolder = folder
+      .replace(/\\/g, "/")
+      .replace(/\.\./g, "")
+      .replace(/^\/+|\/+$/g, "");
+
+    if (
+      !["addiction/icons", "addiction/sensitivity"].includes(normalizedFolder)
+    ) {
+      return NextResponse.json(
+        { success: false, error: "Invalid folder specified" },
+        { status: 400 },
+      );
+    }
+
+    const safeFileName = path.basename(fileName);
+    const filePath = path.join(publicPath, normalizedFolder, safeFileName);
 
     // Check if file exists and delete it
     if (existsSync(filePath)) {
@@ -211,7 +238,7 @@ export async function DELETE(request: NextRequest) {
     } else {
       return NextResponse.json(
         { success: false, error: "File not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
   } catch (error) {
@@ -221,7 +248,7 @@ export async function DELETE(request: NextRequest) {
         success: false,
         error: "Failed to delete file",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

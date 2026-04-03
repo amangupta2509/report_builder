@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import {
   createSharePayload,
   hashPassword,
   generateSecureToken,
 } from "@/lib/encryption";
-
-const prisma = new PrismaClient();
 
 /**
  * POST - Create a new share token
@@ -99,8 +97,6 @@ export async function POST(request: NextRequest) {
       { error: "Failed to create share link" },
       { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -175,8 +171,6 @@ export async function GET(request: NextRequest) {
       { error: "Failed to fetch share tokens" },
       { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -211,7 +205,5 @@ export async function DELETE(request: NextRequest) {
       { error: "Failed to revoke share token", details: error.message },
       { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

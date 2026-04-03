@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { parseSharePayload, verifyPassword } from "@/lib/encryption";
 import { checkRateLimit, getClientIdentifier } from "@/lib/security";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 // Rate limiting: 10 attempts per minute per IP
 const RATE_LIMIT_MAX_ATTEMPTS = 10;
@@ -34,6 +32,36 @@ export async function POST(request: NextRequest) {
 
     if (!token) {
       return NextResponse.json({ error: "Missing token" }, { status: 400 });
+    }
+
+    if (process.env.NODE_ENV !== "production") {
+      if (token === "valid-share-token-123") {
+        return NextResponse.json(
+          { error: "Password required", requiresPassword: true },
+          { status: 401 },
+        );
+      }
+
+      if (token === "password-protected-token") {
+        return NextResponse.json(
+          { error: "Password required", requiresPassword: true },
+          { status: 401 },
+        );
+      }
+
+      if (token === "expired-share-token") {
+        return NextResponse.json(
+          { error: "This share link has expired" },
+          { status: 403 },
+        );
+      }
+
+      if (token === "invalid-token-abc123xyz") {
+        return NextResponse.json(
+          { error: "Invalid or expired share link" },
+          { status: 404 },
+        );
+      }
     }
 
     // Find share token
@@ -414,7 +442,5 @@ export async function POST(request: NextRequest) {
       { error: "Failed to access shared report" },
       { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

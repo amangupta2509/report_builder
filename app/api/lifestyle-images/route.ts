@@ -8,8 +8,8 @@ const ALLOWED_IMAGE_TYPES = [
   "image/png",
   "image/gif",
   "image/webp",
-  "image/svg+xml",
 ];
+const ALLOWED_EXTENSIONS = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
 
 // Whitelist of allowed folders to prevent path traversal
 const ALLOWED_FOLDERS = [
@@ -70,7 +70,7 @@ export async function GET(req: NextRequest) {
   try {
     const files = await fs.readdir(folderPath);
     const images = files
-      .filter((file) => /\.(jpg|jpeg|png|gif|svg|webp)$/i.test(file))
+      .filter((file) => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
       .map((file) => ({
         label: file.split(".")[0],
         url: `/${folder}/${file}`,
@@ -112,6 +112,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const fileExtension = path.extname(file.name).toLowerCase();
+    if (!ALLOWED_EXTENSIONS.includes(fileExtension)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid file extension. Only image files allowed.",
+        },
+        { status: 400 },
+      );
+    }
+
     const folderPath = getFolderPath(folder);
     if (!folderPath) {
       return NextResponse.json(
@@ -136,8 +147,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const ext = file.name.split(".").pop() || "png";
-    const safeName = `${label.replace(/\s+/g, "_").toLowerCase()}.${ext}`;
+    const safeName = `${label
+      .replace(/\s+/g, "_")
+      .toLowerCase()}${fileExtension}`;
     const filePath = path.join(folderPath, safeName);
 
     // Ensure the resolved path is within the allowed folder

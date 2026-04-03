@@ -1,5 +1,6 @@
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
 // Configuration
@@ -9,9 +10,8 @@ const ALLOWED_IMAGE_TYPES = [
   "image/png",
   "image/gif",
   "image/webp",
-  "image/svg+xml",
 ];
-const ALLOWED_EXTENSIONS = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"];
+const ALLOWED_EXTENSIONS = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
 
 export async function POST(req: NextRequest) {
   try {
@@ -64,12 +64,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Generate safe filename with timestamp
-    const sanitizedFileName = file.name
-      .replace(/[^a-z0-9._-]/gi, "_")
-      .toLowerCase();
-    const fileName = `${Date.now()}-${sanitizedFileName}`;
-    const filePath = path.join(process.cwd(), "public", "table", fileName);
+    const fileName = `${randomUUID()}-${Date.now()}${fileExtension}`;
+    const uploadDir = path.join(process.cwd(), "public", "table");
+    const filePath = path.join(uploadDir, fileName);
+
+    await mkdir(uploadDir, { recursive: true });
 
     await writeFile(filePath, buffer);
     const publicUrl = `/table/${fileName}`;
