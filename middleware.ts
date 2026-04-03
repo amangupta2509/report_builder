@@ -3,13 +3,17 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-if (!process.env.JWT_SECRET) {
-  throw new Error(
-    "CRITICAL: JWT_SECRET environment variable is not set. Please set a strong secret in your .env file with at least 32 characters.",
-  );
-}
+function getJwtSecret() {
+  const secret = process.env.JWT_SECRET;
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
+  if (!secret) {
+    throw new Error(
+      "CRITICAL: JWT_SECRET environment variable is not set. Please set a strong secret in your .env file with at least 32 characters.",
+    );
+  }
+
+  return new TextEncoder().encode(secret);
+}
 
 // Public routes that don't require authentication
 const publicRoutes = ["/login", "/api/auth/login", "/api/auth/setup"];
@@ -36,7 +40,7 @@ const adminRoutes = [
 
 async function verifyToken(token: string) {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
+    const { payload } = await jwtVerify(token, getJwtSecret());
     return payload;
   } catch (error) {
     return null;
@@ -129,13 +133,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // Add user info to request headers for API routes
-  const response = NextResponse.next();
-  response.headers.set("x-user-id", session.userId as string);
-  response.headers.set("x-user-email", session.email as string);
-  response.headers.set("x-user-role", session.role as string);
+  // Forward user info to downstream server handlers via request headers.
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-user-id", session.userId as string);
+  requestHeaders.set("x-user-email", session.email as string);
+  requestHeaders.set("x-user-role", session.role as string);
 
-  return response;
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {

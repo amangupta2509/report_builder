@@ -67,7 +67,12 @@ export function checkRateLimit(
 export function getClientIdentifier(request: NextRequest): string {
   // Try to get client IP from various headers
   const forwarded = request.headers.get("x-forwarded-for");
-  const ip = forwarded ? forwarded.split(",")[0].trim() : request.ip;
+  const ip =
+    forwarded?.split(",")[0].trim() ||
+    request.headers.get("x-real-ip") ||
+    request.headers.get("cf-connecting-ip") ||
+    request.headers.get("x-vercel-forwarded-for") ||
+    "unknown";
   return ip || "unknown";
 }
 

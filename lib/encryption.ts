@@ -1,26 +1,32 @@
 import crypto from "crypto";
-
-// Validate encryption key at startup
-if (!process.env.ENCRYPTION_KEY) {
-  throw new Error(
-    "CRITICAL: ENCRYPTION_KEY environment variable is not set. Please set a 64-character hex string in your .env file.",
-  );
-}
-
-// Validate key format (should be 64 character hex string = 32 bytes)
-if (!/^[a-f0-9]{64}$/i.test(process.env.ENCRYPTION_KEY)) {
-  throw new Error(
-    "CRITICAL: ENCRYPTION_KEY must be a 64-character hexadecimal string (32 bytes)",
-  );
-}
-
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
 const ALGORITHM = "aes-256-gcm";
 const IV_LENGTH = 16;
 const SALT_LENGTH = 64;
 const TAG_LENGTH = 16;
 const TAG_POSITION = SALT_LENGTH + IV_LENGTH;
 const ENCRYPTED_POSITION = TAG_POSITION + TAG_LENGTH;
+
+function getEncryptionKey() {
+  const key = process.env.ENCRYPTION_KEY;
+
+  if (!key) {
+    throw new Error(
+      "CRITICAL: ENCRYPTION_KEY environment variable is not set. Please set a 64-character hex string in your .env file.",
+    );
+  }
+
+  if (!/^[a-f0-9]{64}$/i.test(key)) {
+    throw new Error(
+      "CRITICAL: ENCRYPTION_KEY must be a 64-character hexadecimal string (32 bytes)",
+    );
+  }
+
+  return key;
+}
+
+function getEncryptionKeyBuffer() {
+  return Buffer.from(getEncryptionKey(), "hex");
+}
 
 interface EncryptedData {
   encrypted: string;
@@ -33,7 +39,7 @@ interface EncryptedData {
  * Encrypt data using AES-256-GCM
  */
 export function encrypt(text: string): string {
-  const key = Buffer.from(ENCRYPTION_KEY, "hex");
+  const key = getEncryptionKeyBuffer();
   const iv = crypto.randomBytes(IV_LENGTH);
   const salt = crypto.randomBytes(SALT_LENGTH);
 
@@ -54,7 +60,7 @@ export function encrypt(text: string): string {
  * Decrypt data using AES-256-GCM
  */
 export function decrypt(encryptedData: string): string {
-  const key = Buffer.from(ENCRYPTION_KEY, "hex");
+  const key = getEncryptionKeyBuffer();
   const buffer = Buffer.from(encryptedData, "base64url");
 
   const salt = buffer.subarray(0, SALT_LENGTH);
@@ -96,8 +102,19 @@ export async function verifyPassword(
 
   return new Promise((resolve, reject) => {
     crypto.pbkdf2(password, salt, 100000, 64, "sha512", (err, derivedKey) => {
-      if (err) reject(err);
-      resolve(key === derivedKey.toString("hex"));
+      if (err) {
+        return reject(err);
+      }
+
+      const expectedKey = Buffer.from(key, "hex");
+      const actualKey = Buffer.from(derivedKey);
+
+      if (expectedKey.length !== actualKey.length) {
+        resolve(false);
+        return;
+      }
+
+      resolve(crypto.timingSafeEqual(expectedKey, actualKey));
     });
   });
 }
