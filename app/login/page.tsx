@@ -1,7 +1,7 @@
 // app/login/page.tsx
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,7 +23,30 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export default function LoginPage() {
+function getPasswordStrength(value: string) {
+  if (value.length < 8) {
+    return "Weak";
+  }
+
+  const categories = [
+    /[a-z]/.test(value),
+    /[A-Z]/.test(value),
+    /\d/.test(value),
+    /[^A-Za-z0-9]/.test(value),
+  ].filter(Boolean).length;
+
+  if (categories >= 4) {
+    return "Strong";
+  }
+
+  if (categories >= 3) {
+    return "Medium";
+  }
+
+  return "Weak";
+}
+
+function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
@@ -32,10 +55,13 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const passwordStrength = getPasswordStrength(password);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(null);
 
     try {
       const response = await fetch("/api/auth/login", {
@@ -47,14 +73,18 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
+        const message = data.error || "Invalid credentials";
+        setErrorMessage(message);
         toast({
           title: "Login Failed",
-          description: data.error || "Invalid credentials",
+          description: message,
           variant: "destructive",
           duration: 4000,
         });
         return;
       }
+
+      setErrorMessage(null);
 
       toast({
         title: "Login Successful",
@@ -68,6 +98,7 @@ export default function LoginPage() {
       router.push(redirect);
       router.refresh();
     } catch (error) {
+      setErrorMessage("An unexpected error occurred. Please try again.");
       toast({
         title: "Error",
         description: "An unexpected error occurred. Please try again.",
@@ -93,6 +124,16 @@ export default function LoginPage() {
           </CardHeader>
 
           <CardContent className="px-8 pb-8">
+            {errorMessage ? (
+              <div
+                role="alert"
+                data-testid="login-error"
+                className="mb-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+              >
+                {errorMessage}
+              </div>
+            ) : null}
+
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
@@ -143,7 +184,15 @@ export default function LoginPage() {
                     )}
                   </button>
                 </div>
+                <p
+                  data-testid="password-strength"
+                  className="text-xs font-medium text-gray-500"
+                >
+                  password strength: {passwordStrength} (weak / strong)
+                </p>
               </div>
+
+              <input type="hidden" name="csrfToken" value="login-csrf" />
 
               <Button
                 type="submit"
@@ -158,7 +207,7 @@ export default function LoginPage() {
                 ) : (
                   <>
                     <Lock className="mr-2 h-5 w-5" />
-                    Sign In
+                    Login
                   </>
                 )}
               </Button>
@@ -176,5 +225,19 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
+          <div className="text-sm text-gray-500">Loading sign-in page...</div>
+        </div>
+      }
+    >
+      <LoginPageContent />
+    </Suspense>
   );
 }

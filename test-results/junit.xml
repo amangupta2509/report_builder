@@ -1,0 +1,158 @@
+<testsuites id="" name="" tests="72" failures="0" skipped="0" errors="0" time="72.285629">
+<testsuite name="admin-dashboard.spec.ts" timestamp="2026-04-03T09:55:02.441Z" hostname="chromium" tests="15" failures="0" skipped="0" time="67.894" errors="0">
+<testcase name="Admin Dashboard &amp; Management › should display admin dashboard" classname="admin-dashboard.spec.ts" time="7.094">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should prevent non-admin access" classname="admin-dashboard.spec.ts" time="7.011">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should display user management section" classname="admin-dashboard.spec.ts" time="7.047">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should list users with pagination" classname="admin-dashboard.spec.ts" time="7.243">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should allow creating new user" classname="admin-dashboard.spec.ts" time="7.109">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should validate user creation form" classname="admin-dashboard.spec.ts" time="7.111">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should allow editing user role" classname="admin-dashboard.spec.ts" time="2.601">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should allow deactivating user" classname="admin-dashboard.spec.ts" time="2.771">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should display system settings" classname="admin-dashboard.spec.ts" time="2.599">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should allow changing system settings" classname="admin-dashboard.spec.ts" time="2.547">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should display audit logs" classname="admin-dashboard.spec.ts" time="2.375">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should allow filtering audit logs" classname="admin-dashboard.spec.ts" time="2.412">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should export audit logs" classname="admin-dashboard.spec.ts" time="3.393">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should have breadcrumb navigation" classname="admin-dashboard.spec.ts" time="3.3">
+</testcase>
+<testcase name="Admin Dashboard &amp; Management › should show confirmation before destructive actions" classname="admin-dashboard.spec.ts" time="3.281">
+</testcase>
+</testsuite>
+<testsuite name="authentication.spec.ts" timestamp="2026-04-03T09:55:02.441Z" hostname="chromium" tests="10" failures="0" skipped="0" time="44.993" errors="0">
+<testcase name="Authentication Flow › should display login page" classname="authentication.spec.ts" time="3.454">
+</testcase>
+<testcase name="Authentication Flow › should reject invalid email format" classname="authentication.spec.ts" time="3.824">
+</testcase>
+<testcase name="Authentication Flow › should reject weak password" classname="authentication.spec.ts" time="3.637">
+</testcase>
+<testcase name="Authentication Flow › should show password strength indicator" classname="authentication.spec.ts" time="2.931">
+</testcase>
+<testcase name="Authentication Flow › should mask password input" classname="authentication.spec.ts" time="2.691">
+</testcase>
+<testcase name="Authentication Flow › should handle login with valid credentials" classname="authentication.spec.ts" time="8.045">
+</testcase>
+<testcase name="Authentication Flow › should show error message for invalid credentials" classname="authentication.spec.ts" time="7.472">
+</testcase>
+<testcase name="Authentication Flow › should persist session on page refresh" classname="authentication.spec.ts" time="6.14">
+</testcase>
+<testcase name="Authentication Flow › should have secure cookie attributes" classname="authentication.spec.ts" time="2.089">
+</testcase>
+<testcase name="Authentication Flow › should handle logout" classname="authentication.spec.ts" time="4.71">
+</testcase>
+</testsuite>
+<testsuite name="file-upload.spec.ts" timestamp="2026-04-03T09:55:02.441Z" hostname="chromium" tests="9" failures="0" skipped="0" time="38.823" errors="0">
+<testcase name="File Upload &amp; Data Entry › should accept valid image uploads" classname="file-upload.spec.ts" time="5.223">
+</testcase>
+<testcase name="File Upload &amp; Data Entry › should reject invalid file types" classname="file-upload.spec.ts" time="5.067">
+</testcase>
+<testcase name="File Upload &amp; Data Entry › should show file size validation" classname="file-upload.spec.ts" time="5.274">
+</testcase>
+<testcase name="File Upload &amp; Data Entry › should handle drag and drop file upload" classname="file-upload.spec.ts" time="4.452">
+</testcase>
+<testcase name="File Upload &amp; Data Entry › should clear file selection" classname="file-upload.spec.ts" time="4.173">
+</testcase>
+<testcase name="File Upload &amp; Data Entry › should validate form fields before submission" classname="file-upload.spec.ts" time="4.07">
+</testcase>
+<testcase name="File Upload &amp; Data Entry › should show loading state during upload" classname="file-upload.spec.ts" time="3.933">
+</testcase>
+<testcase name="File Upload &amp; Data Entry › should maintain form data on validation error" classname="file-upload.spec.ts" time="4.152">
+</testcase>
+<testcase name="File Upload &amp; Data Entry › should show success message after upload" classname="file-upload.spec.ts" time="2.479">
+</testcase>
+</testsuite>
+<testsuite name="report-sharing.spec.ts" timestamp="2026-04-03T09:55:02.441Z" hostname="chromium" tests="13" failures="0" skipped="0" time="55.26" errors="0">
+<testcase name="Report Sharing &amp; Access Control › should display share button on report" classname="report-sharing.spec.ts" time="2.287">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should open share dialog" classname="report-sharing.spec.ts" time="2.39">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should validate recipient email before sharing" classname="report-sharing.spec.ts" time="2.289">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should prevent sharing with own email" classname="report-sharing.spec.ts" time="2.191">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should generate secure share token" classname="report-sharing.spec.ts" time="2.072">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should allow accessing shared report with token" classname="report-sharing.spec.ts" time="7.168">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should reject invalid share token" classname="report-sharing.spec.ts" time="7.231">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should require password verification for shared access" classname="report-sharing.spec.ts" time="8.77">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should expire share token after timeframe" classname="report-sharing.spec.ts" time="7.173">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should list active shares" classname="report-sharing.spec.ts" time="4.189">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should revoke share access" classname="report-sharing.spec.ts" time="4.187">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should display share expiry information" classname="report-sharing.spec.ts" time="2.791">
+</testcase>
+<testcase name="Report Sharing &amp; Access Control › should allow setting share password" classname="report-sharing.spec.ts" time="2.522">
+</testcase>
+</testsuite>
+<testsuite name="report-viewing.spec.ts" timestamp="2026-04-03T09:55:02.441Z" hostname="chromium" tests="10" failures="0" skipped="0" time="33.395" errors="0">
+<testcase name="Report Viewing &amp; Navigation › should display report list page" classname="report-viewing.spec.ts" time="6.501">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should navigate between report sections" classname="report-viewing.spec.ts" time="3.448">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should display report data correctly" classname="report-viewing.spec.ts" time="6.234">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should have print functionality" classname="report-viewing.spec.ts" time="3.351">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should have PDF download functionality" classname="report-viewing.spec.ts" time="3.303">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should handle missing report gracefully" classname="report-viewing.spec.ts" time="2.351">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should display report metadata" classname="report-viewing.spec.ts" time="2.182">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should be responsive on mobile" classname="report-viewing.spec.ts" time="2.232">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should have keyboard navigation" classname="report-viewing.spec.ts" time="2.207">
+</testcase>
+<testcase name="Report Viewing &amp; Navigation › should maintain scroll position on navigation" classname="report-viewing.spec.ts" time="1.586">
+</testcase>
+</testsuite>
+<testsuite name="security-validation.spec.ts" timestamp="2026-04-03T09:55:02.441Z" hostname="chromium" tests="15" failures="0" skipped="0" time="43.225" errors="0">
+<testcase name="Security &amp; Input Validation › should prevent XSS via form input" classname="security-validation.spec.ts" time="2.33">
+</testcase>
+<testcase name="Security &amp; Input Validation › should escape HTML in rendered output" classname="security-validation.spec.ts" time="2.383">
+</testcase>
+<testcase name="Security &amp; Input Validation › should have CSRF token in forms" classname="security-validation.spec.ts" time="2.381">
+</testcase>
+<testcase name="Security &amp; Input Validation › should validate email format" classname="security-validation.spec.ts" time="2.74">
+</testcase>
+<testcase name="Security &amp; Input Validation › should enforce password requirements" classname="security-validation.spec.ts" time="2.08">
+</testcase>
+<testcase name="Security &amp; Input Validation › should trim whitespace from inputs" classname="security-validation.spec.ts" time="1.849">
+</testcase>
+<testcase name="Security &amp; Input Validation › should prevent SQL injection patterns" classname="security-validation.spec.ts" time="2.63">
+</testcase>
+<testcase name="Security &amp; Input Validation › should sanitize user-generated content" classname="security-validation.spec.ts" time="2.622">
+</testcase>
+<testcase name="Security &amp; Input Validation › should enforce file upload restrictions" classname="security-validation.spec.ts" time="2.597">
+</testcase>
+<testcase name="Security &amp; Input Validation › should have security headers" classname="security-validation.spec.ts" time="3.237">
+</testcase>
+<testcase name="Security &amp; Input Validation › should enforce same-origin policy" classname="security-validation.spec.ts" time="2.442">
+</testcase>
+<testcase name="Security &amp; Input Validation › should rate limit form submissions" classname="security-validation.spec.ts" time="6.798">
+</testcase>
+<testcase name="Security &amp; Input Validation › should not expose sensitive data in DOM" classname="security-validation.spec.ts" time="3.097">
+</testcase>
+<testcase name="Security &amp; Input Validation › should validate input length restrictions" classname="security-validation.spec.ts" time="3.053">
+</testcase>
+<testcase name="Security &amp; Input Validation › should use secure authentication method" classname="security-validation.spec.ts" time="2.986">
+</testcase>
+</testsuite>
+</testsuites>
