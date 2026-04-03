@@ -1,9 +1,7 @@
 // app/api/auth/logout/route.ts
 import { NextResponse } from "next/server";
 import { destroySession, getSession } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function POST() {
   try {
@@ -25,7 +23,5 @@ export async function POST() {
   } catch (error) {
     console.error("Logout error:", error);
     return NextResponse.json({ error: "Logout failed" }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

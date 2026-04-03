@@ -1,11 +1,9 @@
 // app/api/auth/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { verifyPassword } from "@/lib/encryption";
 import { createSession } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-
-const prisma = new PrismaClient();
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -24,7 +22,7 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.errors[0].message },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,11 +37,11 @@ export async function POST(request: NextRequest) {
       await logAuditEvent(
         "login_failed",
         { email, reason: "user_not_found" },
-        request
+        request,
       );
       return NextResponse.json(
         { error: "Invalid email or password" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -52,29 +50,29 @@ export async function POST(request: NextRequest) {
       await logAuditEvent(
         "login_failed",
         { email, reason: "account_inactive" },
-        request
+        request,
       );
       return NextResponse.json(
         { error: "Account is disabled. Please contact support." },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
     // Check if account is locked
     if (user.lockedUntil && user.lockedUntil > new Date()) {
       const remainingTime = Math.ceil(
-        (user.lockedUntil.getTime() - Date.now()) / 1000 / 60
+        (user.lockedUntil.getTime() - Date.now()) / 1000 / 60,
       );
       await logAuditEvent(
         "login_failed",
         { email, reason: "account_locked" },
-        request
+        request,
       );
       return NextResponse.json(
         {
           error: `Account is locked due to multiple failed login attempts. Try again in ${remainingTime} minutes.`,
         },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
@@ -99,7 +97,7 @@ export async function POST(request: NextRequest) {
       await logAuditEvent(
         "login_failed",
         { email, reason: "invalid_password", attempts: newAttempts },
-        request
+        request,
       );
 
       if (shouldLock) {
@@ -108,7 +106,7 @@ export async function POST(request: NextRequest) {
             error:
               "Account locked due to multiple failed login attempts. Try again in 15 minutes.",
           },
-          { status: 429 }
+          { status: 429 },
         );
       }
 
@@ -117,7 +115,7 @@ export async function POST(request: NextRequest) {
         {
           error: `Invalid email or password. ${attemptsRemaining} attempt(s) remaining.`,
         },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -143,7 +141,7 @@ export async function POST(request: NextRequest) {
     await logAuditEvent(
       "login_success",
       { userId: user.id, email: user.email },
-      request
+      request,
     );
 
     return NextResponse.json({
@@ -159,17 +157,15 @@ export async function POST(request: NextRequest) {
     console.error("Login error:", error);
     return NextResponse.json(
       { error: "An error occurred during login" },
-      { status: 500 }
+      { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
 async function logAuditEvent(
   action: string,
   details: any,
-  request: NextRequest
+  request: NextRequest,
 ) {
   try {
     await prisma.auditLog.create({
