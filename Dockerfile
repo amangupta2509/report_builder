@@ -3,6 +3,7 @@ ENV PNPM_HOME=/pnpm
 ENV PATH=/pnpm:$PATH
 ENV NEXT_TELEMETRY_DISABLED=1
 
+USER root
 RUN corepack enable
 
 FROM base AS deps

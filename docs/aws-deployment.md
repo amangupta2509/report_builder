@@ -59,6 +59,25 @@ docker compose --env-file .env.production -f docker-compose.aws.yml up -d
 
 If you are using an ECR image, set `APP_IMAGE` before starting the stack.
 
+## Single EC2 host
+
+If you want MySQL and the app on the same EC2 instance, use [docker-compose.yml](../docker-compose.yml) instead of the AWS app-only file.
+
+Use the Compose v1 command that is installed on your server:
+
+```bash
+docker-compose --env-file .env.production up -d mysql
+docker-compose --env-file .env.production up -d app
+```
+
+For this setup, `DATABASE_URL` must use the internal Docker service name:
+
+```env
+DATABASE_URL=mysql://report_user:<MYSQL_PASSWORD>@mysql:3306/report_builder
+```
+
+Do not use `mysql-host` or the EC2 public IP inside `DATABASE_URL`. The app container reaches MySQL over the private Compose network.
+
 ## Database migrations
 
 The runtime image is trimmed down for serving the app, so run migrations from the builder stage when you need Prisma CLI access:
