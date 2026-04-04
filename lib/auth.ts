@@ -109,7 +109,7 @@ export async function createSession(user: User) {
   // Set access token
   cookieStore.set("accessToken", accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: false,
     sameSite: "lax",
     maxAge: SESSION_DURATION,
     path: "/",
@@ -118,7 +118,7 @@ export async function createSession(user: User) {
   // Set refresh token
   cookieStore.set("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: false,
     sameSite: "lax",
     maxAge: REFRESH_TOKEN_DURATION,
     path: "/",
