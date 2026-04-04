@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Create session
-    await createSession({
+    const session = await createSession({
       id: user.id,
       email: user.email,
       name: user.name,
@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
       request,
     );
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       user: {
         id: user.id,
@@ -153,6 +153,9 @@ export async function POST(request: NextRequest) {
         role: user.role,
       },
     });
+
+    // Session already set by createSession() with accessToken cookie
+    return response;
   } catch (error: any) {
     console.error("Login error:", error);
     return NextResponse.json(
