@@ -209,35 +209,35 @@ const AdminPageContent = () => {
   const [newReportName, setNewReportName] = useState("");
   const [showAddReportModal, setShowAddReportModal] = useState(false);
 
-  const [activeTab, setActiveTab] = useState("");
+  // PRODUCTION FIX: Primary state-based tab management
+  // Don't rely on searchParams for UI state switching
+  const [activeTab, setActiveTab] = useState<string>("settings");
 
-  // Load from localStorage on mount
-
+  // Initialize from sessionStorage on mount only
   useEffect(() => {
-    const urlTab = searchParams.get("tab");
-    if (urlTab) {
-      setActiveTab(urlTab);
-      return;
-    }
     if (typeof window !== "undefined") {
       const saved = sessionStorage.getItem("activeTab");
-      if (saved) setActiveTab(saved);
+      if (saved) {
+        setActiveTab(saved);
+      }
     }
-  }, [searchParams]);
+  }, []); // Only run on mount
 
+  // Persist activeTab to sessionStorage (for page refresh recovery)
   useEffect(() => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("activeTab", activeTab);
     }
   }, [activeTab]);
 
+  // Optional: Sync URL for sharing (but don't depend on it for state)
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("patientIndex", String(selectedPatientIndex));
     params.set("reportIndex", String(selectedReportIndex));
-    params.set("tab", activeTab);
+    params.set("tab", activeTab); // Now this is just for URL, not for state
     router.replace(`?${params.toString()}`, { scroll: false });
-  }, [selectedPatientIndex, selectedReportIndex, activeTab]);
+  }, [selectedPatientIndex, selectedReportIndex, activeTab, searchParams, router]);
 
   useEffect(() => {
     const len = selectedPatient?.reports?.length ?? 0;
