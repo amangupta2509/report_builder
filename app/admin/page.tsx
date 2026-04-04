@@ -226,6 +226,7 @@ const AdminPageContent = () => {
   // Persist activeTab to sessionStorage (for page refresh recovery)
   useEffect(() => {
     if (typeof window !== "undefined") {
+      console.log("🔄 ACTIVE TAB CHANGED:", activeTab);
       sessionStorage.setItem("activeTab", activeTab);
     }
   }, [activeTab]);
@@ -237,7 +238,13 @@ const AdminPageContent = () => {
     params.set("reportIndex", String(selectedReportIndex));
     params.set("tab", activeTab); // Now this is just for URL, not for state
     router.replace(`?${params.toString()}`, { scroll: false });
-  }, [selectedPatientIndex, selectedReportIndex, activeTab, searchParams, router]);
+  }, [
+    selectedPatientIndex,
+    selectedReportIndex,
+    activeTab,
+    searchParams,
+    router,
+  ]);
 
   useEffect(() => {
     const len = selectedPatient?.reports?.length ?? 0;
@@ -1829,6 +1836,9 @@ const AdminPageContent = () => {
           )}
         </div>
 
+        {/* DIAGNOSTIC: Log current tab value */}
+        {void console.log("📊 TAB VALUE IN RENDER:", activeTab)}
+
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="w-full overflow-x-auto scrollbar-hide mb-4 sm:mb-6">
             <TabsList className="flex gap-1 sm:gap-2 min-w-max bg-white shadow-sm px-2 sm:px-4 py-2 rounded-md border border-gray-200">
@@ -1976,6 +1986,12 @@ const AdminPageContent = () => {
 
           <div className="w-full overflow-x-auto">
             <TabsContent className="w-full min-w-0" value="patient-info">
+              {
+                void console.log(
+                  "✅ RENDERING PATIENT-INFO TAB - activeTab:",
+                  activeTab,
+                )
+              }
               <PatientInfoAdmin
                 patientInfo={selectedPatient?.info}
                 updatePatientInfo={updatePatientInfo}
@@ -1985,6 +2001,12 @@ const AdminPageContent = () => {
             </TabsContent>
 
             <TabsContent className="w-full min-w-0" value="content">
+              {
+                void console.log(
+                  "✅ RENDERING CONTENT TAB - activeTab:",
+                  activeTab,
+                )
+              }
               <ContentAdmin
                 content={selectedReport.content}
                 updateContent={updateReportContent}
@@ -2534,6 +2556,12 @@ const AdminPageContent = () => {
             </TabsContent>
 
             <TabsContent className="w-full min-w-0" value="preview">
+              {
+                void console.log(
+                  "✅ RENDERING PREVIEW TAB - activeTab:",
+                  activeTab,
+                )
+              }
               {selectedReport && selectedPatient ? (
                 <ReportPreview
                   selectedReport={selectedReport}
