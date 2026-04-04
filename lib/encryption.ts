@@ -98,25 +98,51 @@ export async function verifyPassword(
   password: string,
   hash: string,
 ): Promise<boolean> {
-  const [salt, key] = hash.split(":");
+  try {
+    // Safety check: validate hash format
+    if (!hash || !hash.includes(":")) {
+      console.error("Invalid stored password format:", hash);
+      return false;
+    }
 
-  return new Promise((resolve, reject) => {
-    crypto.pbkdf2(password, salt, 100000, 64, "sha512", (err, derivedKey) => {
-      if (err) {
-        return reject(err);
-      }
+    const parts = hash.split(":");
+    if (parts.length !== 2) {
+      console.error(
+        "Password split failed: expected 2 parts, got",
+        parts.length,
+      );
+      return false;
+    }
 
-      const expectedKey = Buffer.from(key, "hex");
-      const actualKey = Buffer.from(derivedKey);
+    const salt = parts[0];
+    const key = parts[1];
 
-      if (expectedKey.length !== actualKey.length) {
-        resolve(false);
-        return;
-      }
+    if (!salt || !key) {
+      console.error("Salt or key missing:", { salt, key });
+      return false;
+    }
 
-      resolve(crypto.timingSafeEqual(expectedKey, actualKey));
+    return new Promise((resolve, reject) => {
+      crypto.pbkdf2(password, salt, 100000, 64, "sha512", (err, derivedKey) => {
+        if (err) {
+          return reject(err);
+        }
+
+        const expectedKey = Buffer.from(key, "hex");
+        const actualKey = Buffer.from(derivedKey);
+
+        if (expectedKey.length !== actualKey.length) {
+          resolve(false);
+          return;
+        }
+
+        resolve(crypto.timingSafeEqual(expectedKey, actualKey));
+      });
     });
-  });
+  } catch (error) {
+    console.error("verifyPassword error:", error);
+    return false;
+  }
 }
 
 /**
