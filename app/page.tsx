@@ -23,7 +23,7 @@ export default function HomePage() {
     <div className="flex flex-col items-center w-full justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       {/* Quick Actions */}
       <div className="w-200 items-center grid gap-6 my-12">
-        <Link href="/admin?tab=patient-info">
+        <Link href="/admin?tab=preview">
           <Card className="hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-blue-500 to-blue-600 text-white cursor-pointer transform hover:scale-105">
             <CardContent className="p-6 text-center">
               {/* <Settings className="h-12 w-12 mx-auto mb-4" /> */}

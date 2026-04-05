@@ -225,14 +225,13 @@ const AdminPageContent = () => {
 
   // 🔥 FIX: Read tab parameter from URL and update activeTab state
   // This fixes the bug where clicking navigation buttons changes URL but not UI
-  // OPTIMIZATION: Only update if tab actually changed (prevent re-render loop)
   useEffect(() => {
     const tab = searchParams.get("tab");
-    if (tab && tab !== activeTab) {
+    if (tab) {
       console.log("📍 URL TAB PARAM DETECTED:", tab);
       setActiveTab(tab);
     }
-  }, [searchParams, activeTab]);
+  }, [searchParams]);
 
   // Persist activeTab to sessionStorage (for page refresh recovery)
   useEffect(() => {
@@ -241,21 +240,6 @@ const AdminPageContent = () => {
       sessionStorage.setItem("activeTab", activeTab);
     }
   }, [activeTab]);
-
-  // Optional: Sync URL for sharing (but don't depend on it for state)
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("patientIndex", String(selectedPatientIndex));
-    params.set("reportIndex", String(selectedReportIndex));
-    params.set("tab", activeTab); // Now this is just for URL, not for state
-    router.replace(`?${params.toString()}`, { scroll: false });
-  }, [
-    selectedPatientIndex,
-    selectedReportIndex,
-    activeTab,
-    searchParams,
-    router,
-  ]);
 
   useEffect(() => {
     const len = selectedPatient?.reports?.length ?? 0;
