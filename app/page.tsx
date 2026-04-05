@@ -1,7 +1,9 @@
+"use client";
+
 import { CardDescription } from "@/components/ui/card";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 import {
   Settings,
   FileText,
@@ -19,19 +21,22 @@ import {
 } from "lucide-react";
 
 export default function HomePage() {
+  const router = useRouter();
+
   return (
     <div className="flex flex-col items-center w-full justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       {/* Quick Actions */}
       <div className="w-200 items-center grid gap-6 my-12">
-        <Link href="/admin?tab=preview">
-          <Card className="hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-blue-500 to-blue-600 text-white cursor-pointer transform hover:scale-105">
-            <CardContent className="p-6 text-center">
-              {/* <Settings className="h-12 w-12 mx-auto mb-4" /> */}
-              <h3 className="font-bold text-lg">Report Generator</h3>
-              {/* <p className="text-blue-100 text-sm">Manage all data</p> */}
-            </CardContent>
-          </Card>
-        </Link>
+        <Card
+          onClick={() => router.push("/admin?tab=preview")}
+          className="hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-blue-500 to-blue-600 text-white cursor-pointer transform hover:scale-105"
+        >
+          <CardContent className="p-6 text-center">
+            {/* <Settings className="h-12 w-12 mx-auto mb-4" /> */}
+            <h3 className="font-bold text-lg">Report Generator</h3>
+            {/* <p className="text-blue-100 text-sm">Manage all data</p> */}
+          </CardContent>
+        </Card>
       </div>
 
       {/* Report Sections */}
