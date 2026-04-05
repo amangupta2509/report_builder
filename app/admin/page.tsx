@@ -225,13 +225,14 @@ const AdminPageContent = () => {
 
   // 🔥 FIX: Read tab parameter from URL and update activeTab state
   // This fixes the bug where clicking navigation buttons changes URL but not UI
+  // OPTIMIZATION: Only update if tab actually changed (prevent re-render loop)
   useEffect(() => {
     const tab = searchParams.get("tab");
-    if (tab) {
+    if (tab && tab !== activeTab) {
       console.log("📍 URL TAB PARAM DETECTED:", tab);
       setActiveTab(tab);
     }
-  }, [searchParams]);
+  }, [searchParams, activeTab]);
 
   // Persist activeTab to sessionStorage (for page refresh recovery)
   useEffect(() => {
