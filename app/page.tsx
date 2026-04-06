@@ -10,7 +10,7 @@ export default function HomePage() {
       <button
         onClick={() => {
           alert("CLICKED");
-          window.location.href = "/login";
+          window.location.href = "/admin?tab=preview";
         }}
         style={{
           padding: "20px",
