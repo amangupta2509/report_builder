@@ -209,34 +209,13 @@ const AdminPageContent = () => {
   const [newReportName, setNewReportName] = useState("");
   const [showAddReportModal, setShowAddReportModal] = useState(false);
 
-  // PRODUCTION FIX: Primary state-based tab management
-  // Don't rely on searchParams for UI state switching
-  const [activeTab, setActiveTab] = useState<string>("settings");
+  // PRODUCTION FIX: Read tab from URL on initial state
+  const initialTab = searchParams.get("tab") || "settings";
+  const [activeTab, setActiveTab] = useState<string>(initialTab);
 
-  // Initialize from sessionStorage on mount only
+  // Persist activeTab to sessionStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const saved = sessionStorage.getItem("activeTab");
-      if (saved) {
-        setActiveTab(saved);
-      }
-    }
-  }, []); // Only run on mount
-
-  // 🔥 FIX: Read tab parameter from URL and update activeTab state
-  // This fixes the bug where clicking navigation buttons changes URL but not UI
-  useEffect(() => {
-    const tab = searchParams.get("tab");
-    if (tab) {
-      console.log("📍 URL TAB PARAM DETECTED:", tab);
-      setActiveTab(tab);
-    }
-  }, [searchParams]);
-
-  // Persist activeTab to sessionStorage (for page refresh recovery)
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      console.log("🔄 ACTIVE TAB CHANGED:", activeTab);
       sessionStorage.setItem("activeTab", activeTab);
     }
   }, [activeTab]);
