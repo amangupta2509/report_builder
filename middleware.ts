@@ -3,6 +3,15 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
+// Type definition for session payload
+type SessionPayload = {
+  userId?: string;
+  email?: string;
+  role?: string;
+  iat?: number;
+  exp?: number;
+};
+
 function getJwtSecret() {
   const secret = process.env.JWT_SECRET;
 
@@ -38,11 +47,11 @@ const adminRoutes = [
   "/api/share-report",
 ];
 
-async function verifyToken(token: string) {
+async function verifyToken(token: string): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(token, getJwtSecret());
     console.log("TOKEN PAYLOAD:", payload);
-    return payload;
+    return payload as SessionPayload;
   } catch (error) {
     console.error("TOKEN VERIFICATION ERROR:", error);
     return null;
@@ -105,7 +114,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Verify token
-  const session = await verifyToken(accessToken);
+  const session = (await verifyToken(accessToken)) as SessionPayload | null;
 
   if (!session) {
     // Clear invalid token
