@@ -73,7 +73,7 @@ export default function GeneticParametersAdmin({
   const handleCategoryChange = (
     categoryIndex: number,
     field: keyof GeneticCategory,
-    value: string | boolean | number
+    value: string | boolean | number,
   ): void => {
     const updated = [...categories];
     (updated[categoryIndex] as any)[field] = value;
@@ -83,7 +83,7 @@ export default function GeneticParametersAdmin({
   const handleParameterChange = (
     categoryIndex: number,
     paramIndex: number,
-    value: string
+    value: string,
   ): void => {
     const updated = [...categories];
     updated[categoryIndex].parameters[paramIndex] = value;
@@ -98,7 +98,7 @@ export default function GeneticParametersAdmin({
 
   const handleFileChange = async (
     categoryIndex: number,
-    file: File
+    file: File,
   ): Promise<void> => {
     const formData = new FormData();
     formData.append("file", file);
@@ -156,7 +156,7 @@ export default function GeneticParametersAdmin({
     if (!deleteDialog.categoryId) return;
 
     const updated = categories.filter(
-      (cat) => cat.id !== deleteDialog.categoryId
+      (cat) => cat.id !== deleteDialog.categoryId,
     );
     onUpdateCategories(updated);
 
@@ -198,7 +198,7 @@ export default function GeneticParametersAdmin({
     const updated = [...categories];
     updated[deleteDialog.categoryIndex].parameters.splice(
       deleteDialog.paramIndex,
-      1
+      1,
     );
     onUpdateCategories(updated);
 
@@ -304,7 +304,7 @@ export default function GeneticParametersAdmin({
             <div className="min-w-full border border-gray-300 rounded-lg">
               {filteredCategories.map((category, categoryIndex) => {
                 const actualIndex = categories.findIndex(
-                  (cat) => cat.id === category.id
+                  (cat) => cat.id === category.id,
                 );
                 return (
                   <div
@@ -325,7 +325,7 @@ export default function GeneticParametersAdmin({
                                   handleCategoryChange(
                                     actualIndex,
                                     "category",
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                                 className="text-center font-bold text-sm bg-white"
@@ -443,7 +443,7 @@ export default function GeneticParametersAdmin({
                                           handleParameterChange(
                                             actualIndex,
                                             paramIndex,
-                                            e.target.value
+                                            e.target.value,
                                           )
                                         }
                                         placeholder="Parameter name"
@@ -455,7 +455,7 @@ export default function GeneticParametersAdmin({
                                         onClick={() =>
                                           removeParameter(
                                             actualIndex,
-                                            paramIndex
+                                            paramIndex,
                                           )
                                         }
                                         className="h-7 w-7 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
@@ -471,7 +471,7 @@ export default function GeneticParametersAdmin({
                                     )
                                   )}
                                 </div>
-                              )
+                              ),
                             )}
                           </div>
 
@@ -501,7 +501,7 @@ export default function GeneticParametersAdmin({
                                   handleCategoryChange(
                                     actualIndex,
                                     "category",
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                                 className="text-center font-bold text-sm bg-white"
@@ -608,7 +608,7 @@ export default function GeneticParametersAdmin({
                             <tbody>
                               {Array.from({
                                 length: Math.ceil(
-                                  category.parameters.length / 3
+                                  category.parameters.length / 3,
                                 ),
                               }).map((_, rowIndex) => (
                                 <tr key={rowIndex}>
@@ -616,7 +616,7 @@ export default function GeneticParametersAdmin({
                                     const paramIndex =
                                       colIndex *
                                         Math.ceil(
-                                          category.parameters.length / 3
+                                          category.parameters.length / 3,
                                         ) +
                                       rowIndex;
                                     const parameter =
@@ -635,7 +635,7 @@ export default function GeneticParametersAdmin({
                                                 handleParameterChange(
                                                   actualIndex,
                                                   paramIndex,
-                                                  e.target.value
+                                                  e.target.value,
                                                 )
                                               }
                                               placeholder="Parameter name"
@@ -649,7 +649,7 @@ export default function GeneticParametersAdmin({
                                                 onClick={() =>
                                                   removeParameter(
                                                     actualIndex,
-                                                    paramIndex
+                                                    paramIndex,
                                                   )
                                                 }
                                                 className="h-7 w-7 p-0  text-red-500"

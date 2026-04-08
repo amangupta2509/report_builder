@@ -179,7 +179,7 @@ export default function ShareManagement({
   const handleRevokeToken = async (tokenId: string) => {
     if (
       !confirm(
-        "Are you sure you want to revoke this share link? It will no longer be accessible."
+        "Are you sure you want to revoke this share link? It will no longer be accessible.",
       )
     ) {
       return;
@@ -436,7 +436,7 @@ export default function ShareManagement({
                       <span>
                         {token.expiresAt
                           ? `Expires: ${new Date(
-                              token.expiresAt
+                              token.expiresAt,
                             ).toLocaleDateString()}`
                           : "Never expires"}
                       </span>

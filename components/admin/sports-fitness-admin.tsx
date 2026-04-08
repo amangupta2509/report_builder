@@ -56,7 +56,7 @@ interface SportsFitnessAdminProps {
   updateSportsAndFitness: (
     section: keyof SportsAndFitness | "quote" | "description" | "customImages",
     field: string,
-    data: FieldData | string | { label: string; url: string } | null
+    data: FieldData | string | { label: string; url: string } | null,
   ) => void;
   onSave: () => void;
   onReset: () => void;
@@ -88,7 +88,7 @@ export default function SportsFitnessAdmin({
       (key) =>
         !["quote", "description", "customImages"].includes(key) &&
         typeof sportsAndFitness[key] === "object" &&
-        !Array.isArray(sportsAndFitness[key])
+        !Array.isArray(sportsAndFitness[key]),
     );
   };
 
@@ -271,7 +271,7 @@ export default function SportsFitnessAdmin({
       updateSportsAndFitness(
         deleteConfirm.section as keyof SportsAndFitness,
         deleteConfirm.target,
-        null
+        null,
       );
 
       toast({
@@ -284,11 +284,11 @@ export default function SportsFitnessAdmin({
       updateSportsAndFitness(
         deleteConfirm.target as keyof SportsAndFitness,
         "__delete_category__",
-        null
+        null,
       );
 
       const categories = getCategories().filter(
-        (cat) => cat !== deleteConfirm.target
+        (cat) => cat !== deleteConfirm.target,
       );
       setActiveSection(categories[0] || "");
 
@@ -335,7 +335,7 @@ export default function SportsFitnessAdmin({
   const handleFieldUpdate = (
     section: string,
     field: string,
-    data: Partial<FieldData>
+    data: Partial<FieldData>,
   ) => {
     const currentSection = sportsAndFitness[section];
     if (typeof currentSection === "object" && !Array.isArray(currentSection)) {
@@ -358,7 +358,7 @@ export default function SportsFitnessAdmin({
   const renderExerciseField = (
     section: string,
     field: string,
-    data: FieldData
+    data: FieldData,
   ) => {
     const selectedImageKey = data.level?.toLowerCase();
     const imageUrl =
@@ -664,11 +664,11 @@ export default function SportsFitnessAdmin({
                           return renderExerciseField(
                             activeSection,
                             fieldKey,
-                            fieldData
+                            fieldData,
                           );
                         }
                         return null;
-                      }
+                      },
                     )}
                 </div>
               </div>
@@ -726,7 +726,7 @@ export default function SportsFitnessAdmin({
                     size="sm"
                     onClick={async () => {
                       const confirm = window.confirm(
-                        `Delete image "${label}"?`
+                        `Delete image "${label}"?`,
                       );
                       if (!confirm) return;
 
@@ -736,7 +736,7 @@ export default function SportsFitnessAdmin({
                           `/api/sports-images?file=${fileName}`,
                           {
                             method: "DELETE",
-                          }
+                          },
                         );
                         const result = await res.json();
 

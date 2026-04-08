@@ -74,12 +74,12 @@ interface Props {
   addField: (
     categoryId: string,
     fieldName: string,
-    status: HealthConditionStatus["status"]
+    status: HealthConditionStatus["status"],
   ) => void;
   updateFieldStatus: (
     categoryId: string,
     fieldName: string,
-    updated: Partial<HealthConditionStatus>
+    updated: Partial<HealthConditionStatus>,
   ) => void;
   deleteField: (categoryId: string, fieldName: string) => void;
   deleteCategory: (categoryId: string) => void;
@@ -135,7 +135,7 @@ export default function LifestyleConditionsAdmin({
   const toggleEditLabel = (
     categoryId: string,
     field: string,
-    key: EditableLabelKey
+    key: EditableLabelKey,
   ) => {
     setEditingLabels((prev) => ({
       ...prev,
@@ -241,7 +241,7 @@ export default function LifestyleConditionsAdmin({
               Lifestyle Conditions
             </CardTitle>
           </CardHeader>
-          
+
           <div className="text-end mt-4">
             <Button onClick={onSave}>
               <Save className="h-3 w-3 mr-2" />
@@ -359,7 +359,7 @@ export default function LifestyleConditionsAdmin({
         <div className="space-y-6">
           {Object.entries(lifestyleConditions)
             .filter(
-              ([categoryId]) => !["quote", "description"].includes(categoryId)
+              ([categoryId]) => !["quote", "description"].includes(categoryId),
             )
             .map(([categoryId, conditions]) => {
               const fieldMap = conditions as Record<
@@ -581,8 +581,8 @@ export default function LifestyleConditionsAdmin({
                                         level === "low"
                                           ? "/lifestylesensetivelevel/1.png"
                                           : level === "medium"
-                                          ? "/lifestylesensetivelevel/2.png"
-                                          : "/lifestylesensetivelevel/3.png"
+                                            ? "/lifestylesensetivelevel/2.png"
+                                            : "/lifestylesensetivelevel/3.png"
                                       }
                                       alt={`${level} sensitivity`}
                                       className="w-14 h-14 sm:w-16 sm:h-16 object-contain"
@@ -591,7 +591,7 @@ export default function LifestyleConditionsAdmin({
                                       {level}
                                     </p>
                                   </div>
-                                )
+                                ),
                               )}
                             </div>
                           </div>
@@ -626,7 +626,7 @@ export default function LifestyleConditionsAdmin({
                                               field,
                                               {
                                                 [labelKey]: e.target.value,
-                                              }
+                                              },
                                             )
                                           }
                                           placeholder={`Label for ${key}`}
@@ -638,7 +638,7 @@ export default function LifestyleConditionsAdmin({
                                             toggleEditLabel(
                                               categoryId,
                                               field,
-                                              labelKey
+                                              labelKey,
                                             )
                                           }
                                           className="h-8 w-8"
@@ -661,7 +661,7 @@ export default function LifestyleConditionsAdmin({
                                             toggleEditLabel(
                                               categoryId,
                                               field,
-                                              labelKey
+                                              labelKey,
                                             )
                                           }
                                           className="h-8 w-8"

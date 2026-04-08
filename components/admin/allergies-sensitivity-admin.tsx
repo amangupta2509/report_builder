@@ -38,7 +38,7 @@ import {
 interface AllergiesSensitivityAdminProps {
   allergiesAndSensitivity: AllergiesAndSensitivity;
   updateAllergiesAndSensitivity: (
-    data: Partial<AllergiesAndSensitivity>
+    data: Partial<AllergiesAndSensitivity>,
   ) => void;
   onSave: () => void;
   onReset: () => void;
@@ -58,13 +58,13 @@ export default function AllergiesSensitivityAdmin({
 }: AllergiesSensitivityAdminProps) {
   const [quote, setQuote] = useState(allergiesAndSensitivity.quote || "");
   const [description, setDescription] = useState(
-    allergiesAndSensitivity.description || ""
+    allergiesAndSensitivity.description || "",
   );
   const [generalAdvice, setGeneralAdvice] = useState(
-    allergiesAndSensitivity.generalAdvice || ""
+    allergiesAndSensitivity.generalAdvice || "",
   );
   const [entries, setEntries] = useState<Record<string, AllergyEntry>>(
-    allergiesAndSensitivity.data || {}
+    allergiesAndSensitivity.data || {},
   );
   const [newTitle, setNewTitle] = useState("");
   const [images, setImages] = useState<Record<string, string>>({});
@@ -73,7 +73,7 @@ export default function AllergiesSensitivityAdmin({
   const [showImageModal, setShowImageModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedImageField, setSelectedImageField] = useState<string | null>(
-    null
+    null,
   );
 
   // New state for confirmations and notifications
@@ -139,12 +139,14 @@ export default function AllergiesSensitivityAdmin({
       formData.append("file", imageFile);
       formData.append(
         "label",
-        imageLabel.trim().toLowerCase().replace(/\s+/g, "_")
+        imageLabel.trim().toLowerCase().replace(/\s+/g, "_"),
       );
       formData.append("folder", "allergies");
 
       const res = await fetch("/api/allergies-image", {
-        method: "POST",        credentials: "include",        body: formData,
+        method: "POST",
+        credentials: "include",
+        body: formData,
       });
 
       const json = await res.json();
@@ -166,7 +168,7 @@ export default function AllergiesSensitivityAdmin({
   const handleFieldChange = (
     key: string,
     field: keyof AllergyEntry,
-    value: string
+    value: string,
   ) => {
     const updated = {
       ...entries,
@@ -556,12 +558,12 @@ export default function AllergiesSensitivityAdmin({
                       setImages(updated);
                       showNotification(
                         "success",
-                        "Image deleted successfully!"
+                        "Image deleted successfully!",
                       );
                     } else {
                       showNotification(
                         "error",
-                        json.error || "Failed to delete image"
+                        json.error || "Failed to delete image",
                       );
                     }
                   } catch (err) {
