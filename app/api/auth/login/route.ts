@@ -131,12 +131,12 @@ export async function POST(request: NextRequest) {
 
     // Create session
     const session = await createSession({
-      id: user.id,
+      userId: user.id,
       email: user.email,
       name: user.name,
       role: user.role as "admin" | "viewer",
       createdAt: user.createdAt,
-    });
+    } as any);
 
     await logAuditEvent(
       "login_success",

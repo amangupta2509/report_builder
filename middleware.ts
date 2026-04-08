@@ -41,8 +41,10 @@ const adminRoutes = [
 async function verifyToken(token: string) {
   try {
     const { payload } = await jwtVerify(token, getJwtSecret());
+    console.log("TOKEN PAYLOAD:", payload);
     return payload;
   } catch (error) {
+    console.error("TOKEN VERIFICATION ERROR:", error);
     return null;
   }
 }
