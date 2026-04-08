@@ -58,7 +58,9 @@ export default function SleepRestAdmin({
 
   useEffect(() => {
     const fetchImages = async () => {
-      const res = await fetch("/api/sleep-image");
+      const res = await fetch("/api/sleep-image", {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.success) {
         const map: Record<string, string> = {};

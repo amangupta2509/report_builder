@@ -107,7 +107,9 @@ export default function AllergiesSensitivityAdmin({
 
   useEffect(() => {
     const fetchImages = async () => {
-      const res = await fetch("/api/allergies-image");
+      const res = await fetch("/api/allergies-image", {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.success) {
         const map: Record<string, string> = {};
@@ -142,8 +144,7 @@ export default function AllergiesSensitivityAdmin({
       formData.append("folder", "allergies");
 
       const res = await fetch("/api/allergies-image", {
-        method: "POST",
-        body: formData,
+        method: "POST",        credentials: "include",        body: formData,
       });
 
       const json = await res.json();

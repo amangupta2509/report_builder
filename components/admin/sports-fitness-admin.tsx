@@ -306,7 +306,9 @@ export default function SportsFitnessAdmin({
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await fetch("/api/sports-images");
+        const res = await fetch("/api/sports-images", {
+          credentials: "include",
+        });
         const data = await res.json();
 
         if (data.success) {

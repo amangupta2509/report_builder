@@ -86,7 +86,9 @@ export default function DigestiveHealthAdmin({
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await fetch("/api/digestive-images");
+        const res = await fetch("/api/digestive-images", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.success) {
           const imageMap: Record<string, string> = {};

@@ -29,7 +29,10 @@ function ReportPreviewPageContent() {
 
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/patients-data", { cache: "no-store" });
+        const res = await fetch("/api/patients-data", {
+          cache: "no-store",
+          credentials: "include",
+        });
         if (!res.ok) throw new Error(`API error ${res.status}`);
         const patients = await res.json();
 

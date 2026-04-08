@@ -75,7 +75,9 @@ export default function ShareManagement({
   // Load existing share tokens
   const loadShareTokens = async () => {
     try {
-      const response = await fetch(`/api/share-report?reportId=${reportId}`);
+      const response = await fetch(`/api/share-report?reportId=${reportId}`, {
+        credentials: "include",
+      });
       if (response.ok) {
         const data = await response.json();
         setShareTokens(data.shareTokens || []);
@@ -103,6 +105,7 @@ export default function ShareManagement({
 
       const response = await fetch("/api/share-report", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           reportId,
@@ -185,6 +188,7 @@ export default function ShareManagement({
     try {
       const response = await fetch(`/api/share-report?tokenId=${tokenId}`, {
         method: "DELETE",
+        credentials: "include",
       });
 
       if (!response.ok) {

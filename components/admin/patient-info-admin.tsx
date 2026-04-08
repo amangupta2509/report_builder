@@ -51,6 +51,7 @@ export default function PatientInfoAdmin({
     try {
       const res = await fetch("/api/upload-signature", {
         method: "POST",
+        credentials: "include",
         body: formData,
       });
 

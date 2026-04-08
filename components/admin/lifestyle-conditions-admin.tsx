@@ -151,7 +151,9 @@ export default function LifestyleConditionsAdmin({
 
   const loadAvailableImages = async () => {
     try {
-      const res = await fetch("/api/lifestyle-images?folder=lifestyle");
+      const res = await fetch("/api/lifestyle-images?folder=lifestyle", {
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success) {
         setAvailableImages(data.images);
@@ -176,6 +178,7 @@ export default function LifestyleConditionsAdmin({
     try {
       const response = await fetch("/api/lifestyle-images", {
         method: "POST",
+        credentials: "include",
         body: formData,
       });
 

@@ -106,6 +106,7 @@ export default function GeneticParametersAdmin({
     try {
       const res = await fetch("/api/upload-image", {
         method: "POST",
+        credentials: "include",
         body: formData,
       });
 

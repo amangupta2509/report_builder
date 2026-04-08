@@ -70,9 +70,10 @@ import PDFGenerator from "@/components/admin/pdf-generator";
 import MetabolicCoreAdmin from "@/components/admin/metabolic-core-admin";
 import GeneticParametersAdmin from "@/components/admin/genetic-parameters-admin";
 import GenomicAnalysisAdmin from "@/components/admin/GenomicAnalysisAdmin";
+import { generateUUID } from "@/lib/uuid-utils";
 
 const getEmptyReport = (name?: string): Report => ({
-  id: crypto.randomUUID(),
+  id: generateUUID(),
   name: name || "", // Add the name field
   content: {
     introduction: "",
@@ -154,7 +155,7 @@ const getEmptyReport = (name?: string): Report => ({
 });
 
 const getEmptyPatient = (): Patient => ({
-  id: crypto.randomUUID(),
+  id: generateUUID(),
   info: {
     name: "",
     gender: "MALE",
@@ -233,7 +234,9 @@ const AdminPageContent = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("/api/patients-data");
+        const response = await fetch("/api/patients-data", {
+          credentials: "include",
+        });
         if (response.ok) {
           const data = await response.json();
           if (Array.isArray(data) && data.length > 0) {
@@ -302,7 +305,7 @@ const AdminPageContent = () => {
     }
 
     const newPatient: Patient = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       info: {
         name: "",
         gender: "MALE",
@@ -402,6 +405,7 @@ const AdminPageContent = () => {
       // Call API to delete in DB
       await fetch(`/api/patients-data?reportId=${reportToDelete.id}`, {
         method: "DELETE",
+        credentials: "include",
       });
 
       // Update local state
@@ -457,6 +461,7 @@ const AdminPageContent = () => {
       // Call API to delete in DB
       await fetch(`/api/patients-data?patientId=${patientToDelete.id}`, {
         method: "DELETE",
+        credentials: "include",
       });
 
       // Update local state
@@ -537,6 +542,7 @@ const AdminPageContent = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(patients),
       });
 

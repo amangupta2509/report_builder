@@ -67,7 +67,9 @@ export default function GenesAddictionAdmin({
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await fetch("/api/addiction-images");
+        const res = await fetch("/api/addiction-images", {
+          credentials: "include",
+        });
         const json = await res.json();
 
         if (json.success && json.icons && json.sensitivities) {
@@ -115,6 +117,7 @@ export default function GenesAddictionAdmin({
 
     const res = await fetch("/api/addiction-images", {
       method: "POST",
+      credentials: "include",
       body: formData,
     });
 
