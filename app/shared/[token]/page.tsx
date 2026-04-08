@@ -149,7 +149,8 @@ export default function SharedReportPage() {
 
     try {
       const response = await fetch("/api/shared-access", {
-        method: \"POST\",\n        credentials: \"include\",
+        method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           token,
