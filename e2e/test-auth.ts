@@ -38,7 +38,7 @@ export async function createTestAccessToken(
   const email = role === "admin" ? "admin@example.com" : "viewer@example.com";
   const name = role === "admin" ? "Admin User" : "Viewer User";
 
-  return new SignJWT({ userId, email, name, role })
+  return new SignJWT({ userId, email, name, role: role.toLowerCase() })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt(now)
     .setExpirationTime("8h")

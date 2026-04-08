@@ -124,7 +124,7 @@ export async function middleware(request: NextRequest) {
   // Check admin access for protected routes
   const requiresAdmin = adminRoutes.some((route) => pathname.startsWith(route));
 
-  if (requiresAdmin && session.role !== "admin") {
+  if (requiresAdmin && session.role?.toLowerCase() !== "admin") {
     if (pathname.startsWith("/api")) {
       return NextResponse.json(
         { error: "Forbidden: Admin access required" },

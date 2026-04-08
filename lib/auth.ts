@@ -56,7 +56,7 @@ export async function createAccessToken(user: User): Promise<string> {
   return await new SignJWT({
     userId: user.id,
     email: user.email,
-    role: user.role,
+    role: user.role.toLowerCase(),
   })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
